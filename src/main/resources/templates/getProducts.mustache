@@ -1,0 +1,32 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
+{{#products}}
+    <div>
+        <span> {{name}}</span>
+        <i>{{calories}}</i>
+        <i>{{bel}}</i>
+        <i>{{fats}}</i>
+        <i>{{ch}}</i>
+        <span>{{servingSize}} {{servingUnit}}</span>
+        <!-- ... Остальные поля продукта ... -->
+        <!-- Кнопка "Добавить" с правильными атрибутами data-product-id и data-meal-type -->
+        <input type="number" placeholder="Количество" id="quantity">
+        <span>{{servingUnit}}</span>
+        <button class="addProductButton" data-product-id="{{id}}" data-product-unit="{{servingUnit}}" >Добавить</button>
+        <span class="productAddedMessage" style="display:none;">Продукт добавлен</span>
+    </div>
+
+{{/products}}
+
+{{^products}}
+        <form method="post" action="add">
+            <input type="text" name="name" placeholder="Введите название продукта" />
+            <input type="text" name="calories" placeholder="Введите калорийность" />
+            <input type="text" name="bel" placeholder="Введите количество белков" />
+            <input type="text" name="fats" placeholder="Введите количество жиров" />
+            <input type="text" name="ch" placeholder="Введите количество углеводов" />
+            <input type="text" name="servingSize" placeholder="Введите размер порции" />
+            <input type="text" name="servingUnit" placeholder="Единицы измерения размера " />
+            <button type="submit">Добавить</button>
+        </form>
+{{/products}}
+    <button class="hideProductButton">Скрыть</button>
