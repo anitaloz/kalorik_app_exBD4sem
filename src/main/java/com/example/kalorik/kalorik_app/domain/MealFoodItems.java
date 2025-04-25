@@ -1,18 +1,15 @@
 package com.example.kalorik.kalorik_app.domain;
 
 import jakarta.persistence.*;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 
 //Таблица приемов пищи
 @Entity
-public class Meal_food_items {
+@Table(name="meal_food_items")
+public class MealFoodItems {
     @EmbeddedId
     private MealFoodItemId id;
     @ManyToOne
@@ -31,10 +28,10 @@ public class Meal_food_items {
     @Column(length = 50)
     private String unit;
 
-    public Meal_food_items() {
+    public MealFoodItems() {
     }
 
-    public Meal_food_items(MealFoodItemId id, Meals meal, Food food, Float quantity, String unit) {
+    public MealFoodItems(MealFoodItemId id, Meals meal, Food food, Float quantity, String unit) {
         this.id = id;
         this.meal = meal;
         this.food = food;
@@ -129,7 +126,7 @@ public class Meal_food_items {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Meal_food_items that = (Meal_food_items) o;
+        MealFoodItems that = (MealFoodItems) o;
         return Objects.equals(id, that.id);
     }
 
