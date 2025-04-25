@@ -1,26 +1,33 @@
 package com.example.kalorik.kalorik_app.servingwebcontent;
 
-import com.example.kalorik.kalorik_app.domain.Food;
-import com.example.kalorik.kalorik_app.domain.Meal_food_items;
-import com.example.kalorik.kalorik_app.domain.Meals;
-import com.example.kalorik.kalorik_app.repositories.FoodRepo;
-import com.example.kalorik.kalorik_app.repositories.MealProductInfo;
-import com.example.kalorik.kalorik_app.repositories.Meal_food_itemsRepo;
-import com.example.kalorik.kalorik_app.repositories.MealsRepo;
+import com.example.kalorik.kalorik_app.domain.*;
+import com.example.kalorik.kalorik_app.dopclass.DeleteProductRequest;
+import com.example.kalorik.kalorik_app.dopclass.MealProductInfo;
+import com.example.kalorik.kalorik_app.repositories.*;
+import com.example.kalorik.kalorik_app.services.FoodService;
+import com.example.kalorik.kalorik_app.services.MealFoodItemService;
+import com.example.kalorik.kalorik_app.services.MealsService;
+import com.example.kalorik.kalorik_app.services.UserInfoService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model; // Изменили импорт
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
-
+//import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.*;
 
 @Controller
@@ -36,15 +43,180 @@ public class GreetingController {
     @Autowired
     private Meal_food_itemsRepo foodItemRepo;
 
-    @GetMapping("/")
-    public String caloriePage(Model model) {
-        Random random = new Random();
-        int randomCalories = random.nextInt(501) + 1200; // 501 = 1700 - 1200 + 1
-        Double c=foodRepo.sumValueByNameNative("calories");
-        model.addAttribute("calorieCount", randomCalories);
-        model.addAttribute("currentCalories", c);
+    @Autowired
+    UserRepo userRepo;
+    @Autowired
+    UserInfoService userInfoService;
+    @Autowired
+    MealsService mealsService;
+    @Autowired
+    MealFoodItemService itemService;
+    @Autowired
+    FoodService foodService;
 
-        return "main"; // Имя вашего Mustache-шаблона
+    @GetMapping("/login")
+    public String login(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false); // Не создаем новую сессию, если ее нет
+
+        if (request.getParameter("error") != null) {
+            model.addAttribute("error", true); // Передаем флаг error в шаблон
+        }
+
+        if (session != null && session.getAttribute("loginError") != null) {
+            model.addAttribute("loginError", session.getAttribute("loginError")); // Передаем сообщение об ошибке
+            session.removeAttribute("loginError"); // Очищаем сессию, чтобы сообщение не отображалось постоянно
+        }
+
+        return "login.html";
+    }
+
+    @GetMapping("/")
+    public String Log(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated() && !auth.getPrincipal().equals("anonymousUser")) {
+            return "redirect:/main";
+        }
+        return "log.html";
+    }
+
+
+    @GetMapping("/main")
+    String getMain(Model model)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User u=userRepo.findByUsername(auth.getName());
+        if (userInfoService.getUserInfoByUsr(u)==null){
+            return "redirect:/addInfo";
+        }
+        double sumCalories=0.0;
+        UserInfo ui=userInfoService.getUserInfoByUsr(u);
+        Date d=new Date();
+        List<MealFoodItems> breakfastItems=new ArrayList<MealFoodItems>();
+        List<Meals> breakfast=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "breakfast", u);
+        for(Meals m:breakfast)
+        {
+            List<MealFoodItems> br=itemService.findMeal_food_itemsByMeal(m);
+            breakfastItems.addAll(br);
+        }
+        List<MealFoodItems> lunchItems=new ArrayList<MealFoodItems>();
+        List<Meals> lunch=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "lunch", u);
+        for(Meals m:lunch)
+        {
+            List<MealFoodItems> br=itemService.findMeal_food_itemsByMeal(m);
+            lunchItems.addAll(br);
+        }
+        List<MealFoodItems> dinnerItems=new ArrayList<MealFoodItems>();
+        List<Meals> dinner=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "dinner", u);
+        for(Meals m:dinner)
+        {
+            List<MealFoodItems> br=itemService.findMeal_food_itemsByMeal(m);
+            dinnerItems.addAll(br);
+        }
+        double sumbel=0.0;
+        double sumch=0.0;
+        double sumfats=0.0;
+        if(!breakfastItems.isEmpty()) {
+            for (MealFoodItems m : breakfastItems) {
+                sumCalories += m.getFood().getCalories() * m.getQuantity() / m.getFood().getServingSize();
+                sumbel+=m.getFood().getBel()*m.getQuantity()/m.getFood().getServingSize();
+                sumfats+=m.getFood().getFats()*m.getQuantity()/m.getFood().getServingSize();
+                sumch+=m.getFood().getCh()*m.getQuantity()/m.getFood().getServingSize();
+            }
+        }
+        if(!lunchItems.isEmpty()) {
+            for (MealFoodItems m : lunchItems) {
+                sumCalories += m.getFood().getCalories() * m.getQuantity() / m.getFood().getServingSize();
+                sumbel+=m.getFood().getBel()*m.getQuantity()/m.getFood().getServingSize();
+                sumfats+=m.getFood().getFats()*m.getQuantity()/m.getFood().getServingSize();
+                sumch+=m.getFood().getCh()*m.getQuantity()/m.getFood().getServingSize();
+            }
+        }
+        if(!dinnerItems.isEmpty()) {
+            for (MealFoodItems m : dinnerItems) {
+                sumCalories += m.getFood().getCalories() * m.getQuantity() / m.getFood().getServingSize();
+                sumbel+=m.getFood().getBel()*m.getQuantity()/m.getFood().getServingSize();
+                sumfats+=m.getFood().getFats()*m.getQuantity()/m.getFood().getServingSize();
+                sumch+=m.getFood().getCh()*m.getQuantity()/m.getFood().getServingSize();
+            }
+        }
+        double belNum=ui.getWeightKg().doubleValue()*1.5;
+        double chNum=ui.getWeightKg().doubleValue()*2;
+        double fatsNum=ui.getWeightKg().doubleValue()*0.8;
+        model.addAttribute("caloriesNum", ui.getCaloriesnum());
+        model.addAttribute("breakfastItems", breakfastItems);
+        model.addAttribute("lunchItems", lunchItems);
+        model.addAttribute("dinnerItems", dinnerItems);
+        model.addAttribute("sumCalories", sumCalories);
+        model.addAttribute("sumFats", sumfats);
+        model.addAttribute("sumBel", sumbel);
+        model.addAttribute("sumCh", sumch);
+        model.addAttribute("chNum", chNum);
+        model.addAttribute("belNum", belNum);
+        model.addAttribute("fatsNum", fatsNum);
+        return "main.html";
+    }
+
+
+    @GetMapping("/addInfo")
+    String getAddInfo(Model model)
+    {
+        return "addInfo.html";
+    }
+
+    @PostMapping("/addInfo")
+    String postAddInfo(@RequestParam String firstName,
+                       @RequestParam String lastName,
+                       @RequestParam(value = "dateOfBirth", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateOfBirth,
+                       @RequestParam (defaultValue = "")String gender,
+                       @RequestParam (defaultValue = "0") Integer heightCm,
+                       @RequestParam (defaultValue = "0") BigDecimal weightKg,
+                       @RequestParam String activityLevel,
+                       @RequestParam (defaultValue = "0") Integer caloriesNum,
+                       @RequestParam String purpose,
+                       RedirectAttributes redirectAttributes){
+        String firstNameError = userInfoService.validateFirstName(firstName);
+        String lastNameError = userInfoService.validateLastName(lastName);
+        //String dateOfBirthError = validateDateOfBirth(dateOfBirth);
+        String genderError = userInfoService.validateGender(gender);
+        String heightCmError = userInfoService.validateHeightCm(heightCm);
+        String weightKgError = userInfoService.validateWeightKg(weightKg);
+        String activityLevelError = userInfoService.validateActivityLevel(activityLevel);
+        String caloriesNumError = userInfoService.validateCaloriesNum(caloriesNum);
+        String purposeError = userInfoService.validatePurpose(purpose);
+
+
+        if (firstNameError != null || lastNameError != null  ||
+                genderError != null || heightCmError != null || weightKgError != null ||
+                activityLevelError != null || caloriesNumError != null || purposeError != null) {
+
+            redirectAttributes.addFlashAttribute("firstNameError", firstNameError);
+            redirectAttributes.addFlashAttribute("lastNameError", lastNameError);
+            //redirectAttributes.addFlashAttribute("dateOfBirthError", dateOfBirthError);
+            redirectAttributes.addFlashAttribute("genderError", genderError);
+            redirectAttributes.addFlashAttribute("heightCmError", heightCmError);
+            redirectAttributes.addFlashAttribute("weightKgError", weightKgError);
+            redirectAttributes.addFlashAttribute("activityLevelError", activityLevelError);
+            redirectAttributes.addFlashAttribute("caloriesNumError", caloriesNumError);
+            redirectAttributes.addFlashAttribute("purposeError", purposeError);
+
+            // Сохраняем значения полей, чтобы вернуть их в форму
+            redirectAttributes.addFlashAttribute("firstName", firstName);
+            redirectAttributes.addFlashAttribute("lastName", lastName);
+            redirectAttributes.addFlashAttribute("dateOfBirth", dateOfBirth);
+            redirectAttributes.addFlashAttribute("gender", gender);
+            redirectAttributes.addFlashAttribute("heightCm", heightCm);
+            redirectAttributes.addFlashAttribute("weightKg", weightKg);
+            redirectAttributes.addFlashAttribute("activityLevel", activityLevel);
+            redirectAttributes.addFlashAttribute("caloriesNum", caloriesNum);
+            redirectAttributes.addFlashAttribute("purpose", purpose);
+
+            return "redirect:/addInfo"; // Возвращаемся на форму
+        }
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User usr= userRepo.findByUsername(auth.getName());
+        UserInfo ui=new UserInfo(firstName, lastName, dateOfBirth, gender, heightCm, weightKg, activityLevel, caloriesNum, purpose, usr);
+        userInfoService.save(ui);
+        return "redirect:/main";
     }
 
     @GetMapping("/getProducts") // Измененный URL
@@ -64,8 +236,13 @@ public class GreetingController {
             @RequestParam("mealDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date mealDate,
             @RequestParam("mealTitle") String mealTitle) {
 
-        List<MealProductInfo> mealProducts = foodRepo.findByMealDateAndMealTitle(mealTitle, mealDate);
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User u=userRepo.findByUsername(auth.getName());
+        List<MealProductInfo> mealProducts = foodService.findByMealDateAndMealTitle(mealTitle,mealDate, u.getId());
+        for(MealProductInfo m: mealProducts)
+        {
+            System.out.println(m.getId());
+        }
         // Создаем карту (Map) для JSON ответа
         Map<String, List<MealProductInfo>> response = new HashMap<>();
         response.put("mealProducts", mealProducts);
@@ -96,28 +273,47 @@ public class GreetingController {
     @PostMapping("/addProductToMeal")
     public ResponseEntity<?> addProductToMeal(@RequestBody AddProductRequest request, Model model) {
         try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            User u=userRepo.findByUsername(auth.getName());
             // 1. Получаем продукт из базы данных по ID
             Food food = foodRepo.findById(request.getProductId())
                     .orElseThrow(() -> new IllegalArgumentException("Продукт с ID " + request.getProductId() + " не найден"));
 
             // 2. Создаем новую сущность Meal
             Meals meal = new Meals();
-            meal.setMeal_date(new Date());
-            meal.setMeal_title(request.getMealTitle());
-
-            Meal_food_items.MealFoodItemId mealFoodItemId = new Meal_food_items.MealFoodItemId(meal.getId(), request.getProductId());
-
-            // 5. Создаем Meal_food_items и устанавливаем значения
-            Meal_food_items item = new Meal_food_items();
-            item.setId(mealFoodItemId); // Устанавливаем составной ключ!
-            item.setMeal(meal);
-            item.setFood(food);
-            item.setUnit(request.getUnit());
-            item.setQuantity(request.getQuantity());
-
-            // 3. Сохраняем сущность Meal в базу данных
-            mealsRepo.save(meal);
-            foodItemRepo.save(item);
+            meal.setMealDate(new Date());
+            meal.setMealTitle(request.getMealTitle());
+            meal.setUser(u);
+            if(!(mealsService.findMealsByMealDateAndMealTitleAndUser(meal.getMealDate(), meal.getMealTitle(),meal.getUser()).isEmpty()))
+            {
+                meal=mealsService.findMealsByMealDateAndMealTitleAndUser(meal.getMealDate(), meal.getMealTitle(),meal.getUser()).getFirst();
+            }
+            else {
+                mealsRepo.save(meal);
+            }
+            MealFoodItems.MealFoodItemId mealFoodItemId = new MealFoodItems.MealFoodItemId(meal.getId(), request.getProductId());
+            List<MealFoodItems> items=itemService.findMeal_food_itemsByMeal(meal);
+            if(!items.isEmpty())
+            {
+                for(MealFoodItems i:items)
+                {
+                    if(i.getFood().equals(food))
+                    {
+                        i.setQuantity(i.getQuantity()+request.getQuantity());
+                        itemService.save(i);
+                    }
+                }
+            }
+            else {
+                // 5. Создаем Meal_food_items и устанавливаем значения
+                MealFoodItems item = new MealFoodItems();
+                item.setId(mealFoodItemId); // Устанавливаем составной ключ!
+                item.setMeal(meal);
+                item.setFood(food);
+                item.setUnit(request.getUnit());
+                item.setQuantity(request.getQuantity());
+                foodItemRepo.save(item);
+            }
             String s="Продукт добавлен";
             model.addAttribute("status", s);
             return ResponseEntity.ok().build();
@@ -127,6 +323,27 @@ public class GreetingController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка добавления продукта");
+        }
+    }
+
+    @PostMapping("/deleteProductFromMeal")
+    public ResponseEntity<?> deleteProductFromMeal(@RequestBody DeleteProductRequest request) {
+        try {
+            //  Извлечение mealTitle и productId из request
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            User u=userRepo.findByUsername(auth.getName());
+            String mealTitle = request.getMealTitle();
+            Long productId = request.getProductId();
+            Date mealDate = request.getMealDate();
+            Meals meal=mealsService.findMealsByMealDateAndMealTitleAndUser(mealDate, mealTitle, u).getFirst();
+            Food food=foodService.findFoodById(productId);
+            // Логика удаления продукта из приема пищи
+            itemService.deleteMealFoodItemsByMealAndFood(meal, food);
+            return ResponseEntity.ok().build(); // Успешное удаление
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка удаления продукта");
         }
     }
 
@@ -149,6 +366,8 @@ public class GreetingController {
         public String getProductSize() { return productSize; }
         public void setProductSize(String productSize) { this.productSize = productSize; }
     }
+
+
 
 
 }

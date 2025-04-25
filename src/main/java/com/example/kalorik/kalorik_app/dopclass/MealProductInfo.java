@@ -1,4 +1,4 @@
-package com.example.kalorik.kalorik_app.repositories;
+package com.example.kalorik.kalorik_app.dopclass;
 
 public interface MealProductInfo {
     String getName();
@@ -8,4 +8,8 @@ public interface MealProductInfo {
     Float getCh();
     Float getQuantity();
     String getUnit();
+    Long getId();
+    Float getServingsize();
+    String getServingunit();
+
 }

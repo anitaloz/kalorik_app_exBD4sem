@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (!resultsContainer) {
             console.error(`Error: Results container with ID '${resultsContainerId}' not found in the DOM.`);
-            return; // Exit the function if the container is missing
+            return;
         }
 
         const params = new URLSearchParams({
@@ -195,57 +195,67 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const url = '/getMealProducts?' + params.toString();
 
-        console.log(`Fetching data from URL: ${url}`); // Log the URL for debugging
+        console.log(`Fetching data from URL: ${url}`);
 
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`); // Include status in error
+                    throw new Error(`Network response was not ok: ${response.status} ${response.statusText}`);
                 }
                 return response.json();
             })
             .then(data => {
-                console.log('Data received from server:', data); // Log the entire data object
+                console.log('Data received from server:', data);
 
                 if (data && data.mealProducts) {
                     const mealProducts = data.mealProducts;
 
-                    if (Array.isArray(mealProducts) && mealProducts.length >= 0) {  // Check if it's an array
+                    if (Array.isArray(mealProducts) && mealProducts.length >= 0) {
                         try {
+                            // **Предварительная обработка данных (расчет калорий):**
+                            const processedMealProducts = mealProducts.map(product => {
+                                const calculatedCalories = (product.calories / product.servingsize) * product.quantity;
+                                const calculatedBel = (product.bel / product.servingsize) * product.quantity;
+                                const calculatedCh = (product.ch/ product.servingsize) * product.quantity;
+                                const calculatedFats = (product.fats / product.servingsize) * product.quantity;
+                                return {
+                                    ...product, // Копируем существующие свойства
+                                    calculatedCalories: calculatedCalories.toFixed(2), // Добавляем новое свойство
+                                    calculatedBel: calculatedBel.toFixed(2), // Добавляем новое свойство
+                                    calculatedCh: calculatedCh.toFixed(2), // Добавляем новое свойство
+                                    calculatedFats: calculatedFats.toFixed(2) // Добавляем новое свойство
+                                };
+                            });
+
+
                             const template = `
-                                <h3>Съедено</h3>
-                                {{#mealProducts}}
-                                    <div>
-                                        <span>{{name}}</span> - <span>{{quantity}} {{unit}}</span><br>
-                                        <i>Калории: {{calories}}</i>,
-                                        <i>Белки: {{bel}}</i>,
-                                        <i>Жиры: {{fats}}</i>,
-                                        <i>Углеводы: {{ch}}</i>
-                                    </div>
-                                {{/mealProducts}}
-                                {{^mealProducts}}
-                                    <p>Нет данных для приема пищи.</p>
-                                {{/mealProducts}}
-                                <button class="hideShowContButton">Скрыть</button>
-                        `;
-                            const html = Mustache.render(template, { mealProducts: mealProducts });
+                <h3>Съедено</h3>
+                {{#mealProducts}}
+                    <div class="meal-item" data-product-id="{{id}}">
+                        <span>{{name}}</span> - <span>{{quantity}} {{unit}}</span><br>
+                        <i>Калории: {{calculatedCalories}}</i>,
+                        <i>Белки: {{calculatedBel}}</i>,
+                        <i>Жиры: {{calculatedFats}}</i>,
+                        <i>Углеводы: {{calculatedCh}}</i>
+                        <button class="deleteProductButton" data-product-id="{{id}}">Удалить</button>
+                    </div>
+                {{/mealProducts}}
+                {{^mealProducts}}
+                    <p>Нет данных для приема пищи.</p>
+                {{/mealProducts}}
+                <button class="hideShowContButton">Скрыть</button>
+            `;
+
+                            // **Передаем обработанные данные в Mustache:**
+                            const html = Mustache.render(template, { mealProducts: processedMealProducts });
                             resultsContainer.innerHTML = html;
 
+                            // Обработчики событий
+                            attachEventHandlers(resultsContainer, mealTitle, mealDate);
 
-                            const hideButtons = resultsContainer.querySelectorAll('.hideShowContButton');
-                            hideButtons.forEach(button => {
-                                button.addEventListener('click', function(event) {
-                                    event.preventDefault();
 
-                                    // Находим родительский элемент 'out' кнопки.  Предполагается, что кнопка hide находится внутри формы или контейнера 'out'.
-                                    const outhide = button.closest('.show'); // Находим ближайшего родителя с классом 'out'
-                                    if (outhide) {
-                                        outhide.style.display = 'none';
-                                    }
-                                });
-                            });
                         } catch (mustacheError) {
-                            console.error('Mustache rendering error:', mustacheError); // Log the Mustache error specifically
+                            console.error('Mustache rendering error:', mustacheError);
                             resultsContainer.innerHTML = '<p>Ошибка при рендеринге шаблона.</p>';
                         }
 
@@ -263,10 +273,61 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
+    function attachEventHandlers(resultsContainer, mealTitle, mealDate) {
+        const hideButtons = resultsContainer.querySelectorAll('.hideShowContButton');
+        hideButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const outhide = button.closest('.show');
+                if (outhide) {
+                    outhide.style.display = 'none';
+                }
+            });
+        });
+
+        const deleteButtons = resultsContainer.querySelectorAll('.deleteProductButton');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+                const productId = this.dataset.productId;
+                deleteProduct(productId, mealTitle, mealDate);
+            });
+        });
+    }
+
+
+    function deleteProduct(productId, mealTitle, mealDate) {
+        fetch('/deleteProductFromMeal', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                productId: productId,
+                mealTitle: mealTitle,
+                mealDate: mealDate
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                console.log('Продукт удален');
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Ошибка удаления продукта:', error);
+                alert('Ошибка удаления продукта из приема пищи.');
+            });
+    }
 
 
 
-    function addProductToMeal(productId, mealTitle, quantity, unit, productSize) {
+
+
+
+                            function addProductToMeal(productId, mealTitle, quantity, unit, productSize) {
         // Отправляем данные на сервер
         fetch('/addProductToMeal', {
             method: 'POST',
@@ -286,16 +347,17 @@ document.addEventListener("DOMContentLoaded", function() {
                     throw new Error('Network response was not ok');
                 }
                 console.log('Продукт добавлен в прием пищи');
-                const addButton = document.querySelector(`.addProductButton[data-product-id="${productId}"]`); // находим кнопку
-                const addedMessage = addButton.nextElementSibling; // Берем следующий элемент (span)
-
-                //  Отображаем сообщение
-                addedMessage.style.display = 'inline';
-
-                //  Скрываем сообщение через 3 секунды (опционально)
-                setTimeout(() => {
-                    addedMessage.style.display = 'none';
-                }, 3000);
+                window.location.reload();
+                // const addButton = document.querySelector(`.addProductButton[data-product-id="${productId}"]`); // находим кнопку
+                // const addedMessage = addButton.nextElementSibling; // Берем следующий элемент (span)
+                //
+                // //  Отображаем сообщение
+                // addedMessage.style.display = 'inline';
+                //
+                // //  Скрываем сообщение через 3 секунды (опционально)
+                // setTimeout(() => {
+                //     addedMessage.style.display = 'none';
+                // }, 3000);
             })
             .catch(error => {
                 console.error('Ошибка добавления продукта:', error);

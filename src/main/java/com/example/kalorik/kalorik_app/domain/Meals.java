@@ -2,7 +2,6 @@ package com.example.kalorik.kalorik_app.domain;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -13,23 +12,26 @@ public class Meals {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Используем IDENTITY для автоинкремента
     private Long id;
     @Temporal(TemporalType.DATE)
-    private Date meal_date;
-    private String meal_title;
+    @Column(name="meal_date")
+    private Date mealDate;
+    @Column(name="meal_title")
+    private String mealTitle;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false) // username больше не может быть null
+    private User user;
     public Meals(){}
 
-    public Meals (Date meal_date, String meal_title)
+    public Meals (Date mealDate, String mealTitle, User user)
     {
-        this.meal_date=meal_date;
-        this.meal_title=meal_title;
+        this.mealDate=mealDate;
+        this.mealTitle=mealTitle;
+        this.user=user;
     }
 
     public Date getMeal_date() {
-        return meal_date;
+        return mealDate;
     }
 
-    public String getMeal_title() {
-        return meal_title;
-    }
 
     public Long getId() {
         return id;
@@ -39,11 +41,28 @@ public class Meals {
         this.id = id;
     }
 
-    public void setMeal_date(Date meal_date) {
-        this.meal_date = meal_date;
+
+    public String getMealTitle() {
+        return mealTitle;
     }
 
-    public void setMeal_title(String meal_title) {
-        this.meal_title = meal_title;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setMealTitle(String mealTitle) {
+        this.mealTitle = mealTitle;
+    }
+
+    public Date getMealDate() {
+        return mealDate;
+    }
+
+    public void setMealDate(Date mealDate) {
+        this.mealDate = mealDate;
     }
 }
