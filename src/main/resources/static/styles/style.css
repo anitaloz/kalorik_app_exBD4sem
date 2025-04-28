@@ -1,3 +1,89 @@
 .out{color:red;}
 
 button{border-color:darkred;}
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
+
+.profile-container {
+     background-color: #fff;
+     padding: 20px;
+     border-radius: 8px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     max-width: 600px; /* Optional: Limit the width */
+     margin: auto;       /* Optional: Center the container */
+ }
+
+.profile-item {
+    margin-bottom: 10px;
+}
+
+.profile-label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.purposes-container {
+    background-color: #fff;
+    padding: 20px;
+
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Optional: Limit the width */
+    margin: auto;
+    margin-top:5%;/* Optional: Center the container */
+}
+
+.purposes-item {
+    margin-bottom: 10px;
+}
+
+.purposes-label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.edit-button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+ .invalid-feedback {
+     display: none;
+     width: 100%;
+     margin-top: 0.25rem;
+     font-size: 0.875em;
+     color: #dc3545; /* Красный цвет для сообщений об ошибках */
+ }
+
+input:invalid + .invalid-feedback,
+select:invalid + .invalid-feedback {
+    display: block;
+}

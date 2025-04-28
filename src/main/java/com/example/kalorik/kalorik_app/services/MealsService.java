@@ -28,4 +28,8 @@ public class MealsService {
         mealsRepo.save(meal);
     }
 
+    public void delete(Meals meal)
+    {
+        mealsRepo.delete(meal);
+    }
 }

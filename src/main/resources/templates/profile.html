@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Profile</title>
+        <meta charset="UTF-8">
+        <title>User Profile</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+
+</head>
+<body>
+<div class="header">
+    <nav>
+        <ul class="px-3 mx-sm-2">
+            <li><a th:href="@{/}">Главная</a></li>
+            <li><a href="">Рецепты</a></li>
+            <li><form th:action="@{/logout}" method="post">
+                <input type="submit" value="Выйти"/>
+            </form></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="profile-container" th:if="${editProfileMode == false}">
+    <span th:text="${UI.usr.username}"></span>
+    <h1>Профиль</h1>
+
+    <div class="profile-item">
+        <span class="profile-label">Имя:</span>
+        <span th:text="${UI.firstName}"></span>
+    </div>
+
+    <div class="profile-item">
+        <span class="profile-label">Фамилия:</span>
+        <span th:text="${UI.lastName}"></span>
+    </div>
+
+    <div class="profile-item">
+        <span class="profile-label">Дата рождения:</span>
+        <span th:text="${#dates.format(UI.dateOfBirth, 'dd.MM.yyyy')}"></span>
+    </div>
+
+    <div class="profile-item">
+        <span class="profile-label">Пол:</span>
+        <span th:text="${UI.gender}"></span>
+    </div>
+
+    <div class="profile-item">
+        <span class="profile-label">Рост (см):</span>
+        <span th:text="${UI.heightCm}"></span>
+    </div>
+
+    <div class="profile-item">
+        <span class="profile-label">Уровень активности:</span>
+        <span th:text="${UI.activityLevel}"></span>
+    </div>
+    <button class="edit-button" onclick="location.href='/profile/editMainInfo'">Редактировать</button>
+</div>
+
+<div class="profile-container" th:if="${editProfileMode == true}">
+    <form action="/profile/MainInfoSave" method="post">
+        <span th:text="${UI.usr.username}"></span>
+        <h1>Профиль</h1>
+
+        <div class="form-group">
+            <label class="form-label" for="firstName">Имя:</label>
+            <input type="text" class="form-input" id="firstName" name="firstName" th:value="${UI.firstName}" required minlength="2" maxlength="50" pattern="[А-Яа-яЁёA-Za-zs-]+"/>
+            <div class="invalid-feedback">Пожалуйста, введите корректное имя (от 2 до 50 символов, только буквы и пробелы).</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="lastName">Фамилия:</label>
+            <input type="text" class="form-input" id="lastName" name="lastName" th:value="${UI.lastName}" required minlength="2" maxlength="50" pattern="[А-Яа-яЁёA-Za-zs-]+"/>
+            <div class="invalid-feedback">Пожалуйста, введите корректную фамилию (от 2 до 50 символов, только буквы и пробелы).</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="dateOfBirth">Дата рождения:</label>
+            <input type="date" class="form-input" id="dateOfBirth" name="dateOfBirth" th:value="${UI.dateOfBirth}" required/>
+            <div class="invalid-feedback">Пожалуйста, введите дату рождения.</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="gender">Пол:</label>
+            <select class="form-input" id="gender" name="gender" required>
+                <option value="" disabled selected>Выберите пол</option>
+                <option value="Мужской" th:selected="${UI.gender == 'Мужской'}">Мужской</option>
+                <option value="Женский" th:selected="${UI.gender == 'Женский'}">Женский</option>
+            </select>
+            <div class="invalid-feedback">Пожалуйста, выберите пол.</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="heightCm">Рост (см):</label>
+            <input type="number" class="form-input" id="heightCm" name="heightCm" th:value="${UI.heightCm}" required min="1" max="300"/>
+            <div class="invalid-feedback">Пожалуйста, введите корректный рост (от 1 до 300 см).</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="activityLevel">Уровень активности:</label>
+            <select class="form-input" id="activityLevel" name="activityLevel" required>
+                <option value="Сидячий" th:selected="${activityLevel == 'Сидячий'}">Сидячий</option>
+                <option value="Легкая активность" th:selected="${UI.activityLevel == 'Легкая активность'}">Легкая активность</option>
+                <option value="Умеренная активность" th:selected="${UI.activityLevel == 'Умеренная активность'}">Умеренная активность</option>
+                <option value="Высокая активность" th:selected="${UI.activityLevel == 'Высокая активность'}">Высокая активность</option>
+                <option value="Очень высокая активность" th:selected="${UI.activityLevel == 'Очень высокая активность'}">Очень высокая активность</option>
+            </select>
+        </div>
+        <button type="submit" class="edit-button">Сохранить</button>
+        <button type="button" class="edit-button" onclick="location.href='/profile'">Отмена</button>
+    </form>
+</div>
+<div th:if="${editMode == false}">
+        <div class="purposes-container">
+            <h2>Цели</h2>
+            <div class="purposes-item">
+                <span class="purposes-label">Цель: </span>
+                <span th:text="${UI.purpose}"></span>
+            </div>
+            <div class="purposes-item">
+                <span class="purposes-label">Калории: </span>
+                <span th:text="${UI.caloriesnum}"></span>
+            </div>
+            <div class="purposes-item">
+                <span class="purposes-label">Текущий вес: </span>
+                <span th:text="${UI.weightKg}"></span>
+            </div>
+            <div class="purposes-item" th:if="${UI.purpose == 'похудение'}">
+                <span class="purposes-label">Желаемый вес: </span>
+                <span th:text="${UI.desiredWeight}"></span>
+            </div>
+            <button class="edit-button" onclick="location.href='/profile/editPurposes'">Редактировать</button>
+        </div>
+
+
+    </div>
+<div th:if="${editMode == true}">
+    <form action="/profile/save" method="post">
+        <div class="form-group">
+            <label class="form-label" for="purpose">Цель:</label>
+            <input type="text" class="form-input" id="purpose" name="purpose" th:value="${UI.purpose}" required minlength="3" maxlength="100"/>
+            <div class="invalid-feedback">Пожалуйста, введите цель (от 3 до 100 символов).</div>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="caloriesnum">Калории:</label>
+            <input type="number" class="form-input" id="caloriesnum" name="caloriesnum" th:value="${UI.caloriesnum}" required min="1000" max="10000"/>
+            <div class="invalid-feedback">Пожалуйста, введите количество калорий (от 1000 до 10000).</div>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="weightKg">Текущий вес:</label>
+            <input type="number" step="0.01" class="form-input" id="weightKg" name="weightKg" th:value="${UI.weightKg}" required min="30" max="300"/>
+            <div class="invalid-feedback">Пожалуйста, введите текущий вес (от 30 до 300 кг).</div>
+        </div>
+        <div class="form-group" th:if="${UI.purpose == 'похудение'}">
+            <label class="form-label" for="desiredWeight">Желаемый вес:</label>
+            <input type="number" step="0.01" class="form-input" id="desiredWeight" name="desiredWeight" th:value="${UI.desiredWeight}" required min="30" max="300" th:max="${UI.weightKg}"/>
+            <div class="invalid-feedback">Пожалуйста, введите желаемый вес (от 30 до 300 кг, не больше текущего).</div>
+        </div>
+        <button type="submit" class="edit-button">Save</button>
+        <button type="button" class="edit-button" onclick="location.href='/profile'">Cancel</button>
+    </form>
+</div>
+</body>
+</html>

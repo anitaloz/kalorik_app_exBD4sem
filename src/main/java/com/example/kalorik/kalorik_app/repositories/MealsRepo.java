@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface MealsRepo extends CrudRepository<Meals, Long> {
     List<Meals> findMealsByMealDateAndMealTitleAndUser(Date date, String meal_title, User user);
+
 }

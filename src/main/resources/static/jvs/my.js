@@ -38,32 +38,36 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('BreakfastShow').addEventListener('click', () => {
-        let currentDate = new Date();
-        let formattedDate = currentDate.toLocaleDateString('en-CA'); // 'en-CA' для YYYY-MM-DD
+
+        const l=document.getElementById('inputDate');
+        const dateString=l.value;
+        //let currentDate = new Date(dateString);
+
+        //let formattedDate = currentDate.toLocaleDateString('en-CA'); // 'en-CA' для YYYY-MM-DD
         const outh = showContainerBF.closest('.show');
         if (outh.style.display === 'none')
             outh.style.display = 'block';
-        showProducts('showContainerBF', 'breakfast', formattedDate);
+        showProducts('showContainerBF', 'breakfast', dateString);
     });
 
     document.getElementById('LunchShow').addEventListener('click', () => {
-        let currentDate = new Date();
-        let formattedDate = currentDate.toLocaleDateString('en-CA'); // 'en-CA' для YYYY-MM-DD
+        const l=document.getElementById('inputDate');
+        const dateString=l.value;// 'en-CA' для YYYY-MM-DD
         const outh = showContainerL.closest('.show');
         if (outh.style.display === 'none')
             outh.style.display = 'block';
-        showProducts('showContainerL', 'lunch', formattedDate);
+        showProducts('showContainerL', 'lunch', dateString);
     });
 
     document.getElementById('DinnerShow').addEventListener('click', () => {
-        let currentDate = new Date();
-        let formattedDate = currentDate.toLocaleDateString('en-CA'); // 'en-CA' для YYYY-MM-DD
+        const l=document.getElementById('inputDate');
+        const dateString=l.value;
         const outh = showContainerD.closest('.show');
         if (outh.style.display === 'none') {
             outh.style.display = 'block';
             breakfastResults.style.display='none';
         }
-        showProducts('showContainerD', 'dinner', formattedDate);
+        showProducts('showContainerD', 'dinner', dateString);
     });
 
     lunchButton.addEventListener('click', () => {
@@ -154,8 +158,10 @@ document.addEventListener("DOMContentLoaded", function() {
                             alert('Пожалуйста, введите корректное количество.');
                             return;
                         }
-
-                        addProductToMeal(productId, mealTitle, quantity, productUnit, productSize);  //Передаем unit
+                        const l=document.getElementById('inputDate');
+                        const dateString=l.value;
+                        let inputDate=new Date(dateString);
+                        addProductToMeal(productId, mealTitle, quantity, productUnit, productSize, inputDate);  //Передаем unit
                     });
                 });
 
@@ -327,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-                            function addProductToMeal(productId, mealTitle, quantity, unit, productSize) {
+    function addProductToMeal(productId, mealTitle, quantity, unit, productSize, inputDate) {
         // Отправляем данные на сервер
         fetch('/addProductToMeal', {
             method: 'POST',
@@ -339,7 +345,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 mealTitle: mealTitle,
                 quantity: quantity,
                 unit: unit,
-                productSize: productSize
+                productSize: productSize,
+                inputDate: inputDate
             })
         })
             .then(response => {

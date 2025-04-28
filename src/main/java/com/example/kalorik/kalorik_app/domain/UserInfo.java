@@ -1,8 +1,12 @@
 package com.example.kalorik.kalorik_app.domain;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
@@ -27,6 +31,7 @@ public class UserInfo {
 
     @Column(name = "date_of_birth")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
     @Column(name = "gender", length = 10)
@@ -50,6 +55,33 @@ public class UserInfo {
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username", nullable = false) // username больше не может быть null
     private User usr;
+    @Column(name="desired_weight")
+    private BigDecimal desiredWeight;
+
+    public Integer calculateAge() {
+        if (dateOfBirth == null) {
+            return null; // Or throw an exception, or return a default value
+        }
+
+        LocalDate birthDate = dateOfBirth.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+
+        return Period.between(birthDate, currentDate).getYears();
+    }
+
+    @Transient
+    private Integer age = calculateAge();
+    // Method to calculate age
+
+
+
+    public BigDecimal getDesiredWeight() {
+        return desiredWeight;
+    }
+
+    public void setDesiredWeight(BigDecimal desiredWeight) {
+        this.desiredWeight = desiredWeight;
+    }
 
     // Конструкторы
     public UserInfo() {
@@ -66,6 +98,15 @@ public class UserInfo {
         this.caloriesnum=caloriesnum;
         this.purpose=purpose;
         this.usr=usr;
+        this.age=calculateAge();
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     @Override

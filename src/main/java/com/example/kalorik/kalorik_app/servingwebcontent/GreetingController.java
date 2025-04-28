@@ -28,6 +28,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 //import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 @Controller
@@ -81,7 +83,7 @@ public class GreetingController {
 
 
     @GetMapping("/main")
-    String getMain(Model model)
+    String getMain(@RequestParam(value = "inputDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate, Model model)
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userRepo.findByUsername(auth.getName());
@@ -91,6 +93,12 @@ public class GreetingController {
         double sumCalories=0.0;
         UserInfo ui=userInfoService.getUserInfoByUsr(u);
         Date d=new Date();
+        if(inputDate!=null)
+            d=inputDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = dateFormat.format(d);
+        String formattedDate2 = dateFormat2.format(d);
         List<MealFoodItems> breakfastItems=new ArrayList<MealFoodItems>();
         List<Meals> breakfast=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "breakfast", u);
         for(Meals m:breakfast)
@@ -142,6 +150,36 @@ public class GreetingController {
         double belNum=ui.getWeightKg().doubleValue()*1.5;
         double chNum=ui.getWeightKg().doubleValue()*2;
         double fatsNum=ui.getWeightKg().doubleValue()*0.8;
+        List<Meals> brf=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "breakfast", u);
+        List<String> brfmfiSTRING=new ArrayList<String>();
+
+        if(!brf.isEmpty())
+        {
+            List<MealFoodItems> brfmfi=itemService.findMeal_food_itemsByMeal(brf.getFirst());
+            for(MealFoodItems m:brfmfi) {
+                brfmfiSTRING.add(m.getFood().getName());
+            }
+        }
+        List<Meals> lnch=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "lunch", u);
+        List<String> lnchSTRING=new ArrayList<String>();
+
+        if(!lnch.isEmpty())
+        {
+            List<MealFoodItems> lnchmfi=itemService.findMeal_food_itemsByMeal(lnch.getFirst());
+            for(MealFoodItems m:lnchmfi) {
+                lnchSTRING.add(m.getFood().getName());
+            }
+        }
+        List<Meals> dn=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "dinner", u);
+        List<String> dnSTRING=new ArrayList<String>();
+
+        if(!dn.isEmpty())
+        {
+            List<MealFoodItems> dnmfi=itemService.findMeal_food_itemsByMeal(dn.getFirst());
+            for(MealFoodItems m:dnmfi) {
+                dnSTRING.add(m.getFood().getName());
+            }
+        }
         model.addAttribute("caloriesNum", ui.getCaloriesnum());
         model.addAttribute("breakfastItems", breakfastItems);
         model.addAttribute("lunchItems", lunchItems);
@@ -153,6 +191,11 @@ public class GreetingController {
         model.addAttribute("chNum", chNum);
         model.addAttribute("belNum", belNum);
         model.addAttribute("fatsNum", fatsNum);
+        model.addAttribute("inputDate", formattedDate);
+        model.addAttribute("SHOWDate", formattedDate2);
+        model.addAttribute("brfmfi", brfmfiSTRING);
+        model.addAttribute("lnchmfi", lnchSTRING);
+        model.addAttribute("dnmfi", lnchSTRING);
         return "main.html";
     }
 
@@ -238,15 +281,11 @@ public class GreetingController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userRepo.findByUsername(auth.getName());
-        List<MealProductInfo> mealProducts = foodService.findByMealDateAndMealTitle(mealTitle,mealDate, u.getId());
-        for(MealProductInfo m: mealProducts)
-        {
-            System.out.println(m.getId());
-        }
+        List<MealProductInfo> mealProducts = foodService.findByMealDateAndMealTitle(mealTitle, mealDate, u.getId());
+        System.out.println("xxx "+mealDate);
         // Создаем карту (Map) для JSON ответа
         Map<String, List<MealProductInfo>> response = new HashMap<>();
         response.put("mealProducts", mealProducts);
-        System.out.println();
         return ResponseEntity.ok(response); // Возвращаем JSON
     }
 
@@ -281,7 +320,7 @@ public class GreetingController {
 
             // 2. Создаем новую сущность Meal
             Meals meal = new Meals();
-            meal.setMealDate(new Date());
+            meal.setMealDate(request.getInputDate());
             meal.setMealTitle(request.getMealTitle());
             meal.setUser(u);
             if(!(mealsService.findMealsByMealDateAndMealTitleAndUser(meal.getMealDate(), meal.getMealTitle(),meal.getUser()).isEmpty()))
@@ -339,6 +378,11 @@ public class GreetingController {
             Food food=foodService.findFoodById(productId);
             // Логика удаления продукта из приема пищи
             itemService.deleteMealFoodItemsByMealAndFood(meal, food);
+            List<MealFoodItems> lmfi= itemService.findMeal_food_itemsByMeal(meal);
+            if(lmfi.isEmpty())
+            {
+                mealsService.delete(meal);
+            }
             return ResponseEntity.ok().build(); // Успешное удаление
 
         } catch (Exception e) {
@@ -353,8 +397,9 @@ public class GreetingController {
         private Float quantity;
         private String unit;
         private String productSize;
-
+        private Date inputDate;
         // Геттеры и сеттеры
+        public Date getInputDate(){return inputDate; }
         public Long getProductId() { return productId; }
         public void setProductId(Long productId) { this.productId = productId; }
         public String getMealTitle() { return mealTitle; }
@@ -367,21 +412,4 @@ public class GreetingController {
         public void setProductSize(String productSize) { this.productSize = productSize; }
     }
 
-
-
-
 }
-
-//    @PostMapping("/")  // Изменили mapping на "/filter"
-//    public String filter(@RequestParam String filter, Model model) { // Изменили тип Model
-//        Iterable<Food> products;
-//        if (filter != null && !filter.isEmpty()) {
-//            products = foodRepo.findByName(filter);
-//        } else {
-//            products = foodRepo.findAll();
-//        }
-//        model.addAttribute("products", products); // Используем addAttribute
-//        return "main";
-//    }
-
-

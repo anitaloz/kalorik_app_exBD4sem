@@ -2,11 +2,29 @@
 <head>
     <title>Main Page</title>
     <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
     <script src="jvs/my.js"></script>
 </head>
 <body>
-    <h1>Сводка</h1>
+    <div class="header">
+        <nav>
+            <ul class="px-3 mx-sm-2">
+                <li><a th:href="@{/profile}">Профиль</a></li>
+                <li><a href="">Рецепты</a></li>
+                <li><form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Выйти"/>
+                </form></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="date-control">
+        <form th:action="@{/main}" method="get">
+            <label for="inputDate">Дата: </label>
+            <input type="date" id="inputDate" name="inputDate" th:value="${inputDate != null ? inputDate: ''}"/>
+            <button class="df" type="submit">Посмотреть</button>
+        </form>
+    </div>
+    <h1 th:text="${SHOWDate}"></h1>
     <span th:text="${sumCalories}"></span>
     <span>/</span>
     <span th:text="${caloriesNum}"></span>
@@ -25,7 +43,12 @@
     <br>
     <div class="meals">
         <h2>Завтрак</h2>
+        <div th:each="mfi, iterStat : ${brfmfi}">
+            <span th:text="${mfi}"></span>
+            <span th:unless="${iterStat.last}">,</span>
+        </div>
     <!--    по этой кнопке открывается поиск продуктов -->
+
         <button id="BreakfastAdd">Добавить</button>
         <button id="BreakfastShow">Посмотреть</button>
         <div class="out">
@@ -37,6 +60,10 @@
         </div>
 
         <h2>Обед</h2>
+        <div th:each="mfi, iterStat : ${lnchmfi}">
+            <span th:text="${mfi}"></span>
+            <span th:unless="${iterStat.last}">,</span>
+        </div>
         <!--    по этой кнопке открывается поиск продуктов -->
         <button id="LunchAdd">Добавить</button>
         <button id="LunchShow">Посмотреть</button>
@@ -49,6 +76,10 @@
         </div>
 
         <h2>Ужин</h2>
+        <div th:each="mfi, iterStat : ${dnmfi}">
+            <span th:text="${mfi}"></span>
+            <span th:unless="${iterStat.last}">,</span>
+        </div>
         <!--    по этой кнопке открывается поиск продуктов -->
         <button id="DinnerAdd">Добавить</button>
         <button id="DinnerShow">Посмотреть</button>
