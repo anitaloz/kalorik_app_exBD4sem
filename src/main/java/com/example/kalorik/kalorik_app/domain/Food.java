@@ -18,13 +18,14 @@ public class Food {
     @Column(name = "serving_size") // Явно указываем имя столбца
     private Float servingSize;//вес/размер порции
 
-    @Column(name = "serving_unit")
-    private String servingUnit;//единица измерения порции
+    @ManyToOne
+    @JoinColumn(name = "serving_unit", referencedColumnName = "id", nullable = false)
+    private ServingUnits servingUnit;//единица измерения порции
 
     public Food(){
 
     }
-    public Food(String name, Float calories, Float bel, Float fats, Float ch, Float servingSize, String servingUnit)
+    public Food(String name, Float calories, Float bel, Float fats, Float ch, Float servingSize, ServingUnits servingUnit)
     {
         this.name=name;
         this.calories=calories;
@@ -86,11 +87,11 @@ public class Food {
         return servingSize;
     }
 
-    public String getServingUnit() {
+    public ServingUnits getServingUnit() {
         return servingUnit;
     }
 
-    public void setServingUnit(String servingUnit) {
+    public void setServingUnit(ServingUnits servingUnit) {
         this.servingUnit = servingUnit;
     }
 

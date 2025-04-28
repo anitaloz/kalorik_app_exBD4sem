@@ -38,6 +38,8 @@ public class GreetingController {
 
     @Autowired
     private FoodRepo foodRepo;
+    @Autowired
+    private ServingUnitRepo servingUnitRepo;
 
     @Autowired
     private MealsRepo mealsRepo;
@@ -195,7 +197,7 @@ public class GreetingController {
         model.addAttribute("SHOWDate", formattedDate2);
         model.addAttribute("brfmfi", brfmfiSTRING);
         model.addAttribute("lnchmfi", lnchSTRING);
-        model.addAttribute("dnmfi", lnchSTRING);
+        model.addAttribute("dnmfi", dnSTRING);
         return "main.html";
     }
 
@@ -270,7 +272,9 @@ public class GreetingController {
         } else {
             products = foodRepo.findAll();
         }
+        Iterable<ServingUnits> su=servingUnitRepo.findAll();
         model.addAttribute("products", products);
+        model.addAttribute("servingUnits", su);
         return "getProducts";  // Возвращаем только список продуктов
     }
 
@@ -298,10 +302,11 @@ public class GreetingController {
             @RequestParam Float fats, // Float
             @RequestParam Float ch, // Float
             @RequestParam Float servingSize, // Float и servingSize
-            @RequestParam String servingUnit,
+            @RequestParam Long servingUnit,
             Model model) { // Изменили тип Model
 
-        Food f = new Food(name, calories, bel, fats, ch, servingSize, servingUnit);
+        ServingUnits su=servingUnitRepo.findServingUnitsById(servingUnit);
+        Food f = new Food(name, calories, bel, fats, ch, servingSize, su);
         foodRepo.save(f);
         return new RedirectView("/");
     }
@@ -349,7 +354,6 @@ public class GreetingController {
                 item.setId(mealFoodItemId); // Устанавливаем составной ключ!
                 item.setMeal(meal);
                 item.setFood(food);
-                item.setUnit(request.getUnit());
                 item.setQuantity(request.getQuantity());
                 foodItemRepo.save(item);
             }

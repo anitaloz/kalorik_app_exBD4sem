@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <h3>Съедено</h3>
                 {{#mealProducts}}
                     <div class="meal-item" data-product-id="{{id}}">
-                        <span>{{name}}</span> - <span>{{quantity}} {{unit}}</span><br>
+                        <span>{{name}}</span> - <span>{{quantity}} {{servingunit}}</span><br>
                         <i>Калории: {{calculatedCalories}}</i>,
                         <i>Белки: {{calculatedBel}}</i>,
                         <i>Жиры: {{calculatedFats}}</i>,

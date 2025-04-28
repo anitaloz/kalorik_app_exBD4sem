@@ -25,18 +25,14 @@ public class MealFoodItems {
     @Column(nullable = false)
     private Float quantity;
 
-    @Column(length = 50)
-    private String unit;
-
     public MealFoodItems() {
     }
 
-    public MealFoodItems(MealFoodItemId id, Meals meal, Food food, Float quantity, String unit) {
+    public MealFoodItems(MealFoodItemId id, Meals meal, Food food, Float quantity) {
         this.id = id;
         this.meal = meal;
         this.food = food;
         this.quantity = quantity;
-        this.unit = unit;
     }
 
     public MealFoodItemId getId() {
@@ -70,14 +66,7 @@ public class MealFoodItems {
     public void setQuantity(Float quantity) {
         this.quantity = quantity;
     }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
+    
 
     @Embeddable
     public static class MealFoodItemId implements Serializable {

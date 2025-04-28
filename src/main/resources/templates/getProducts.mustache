@@ -15,9 +15,9 @@
         <i>{{bel}}</i>
         <i>{{fats}}</i>
         <i>{{ch}}</i>
-        <span>{{servingSize}} {{servingUnit}}</span>
+        <span>{{servingSize}} {{servingUnit.name}}</span>
         <input type="number" placeholder="Количество" id="quantity">
-        <span>{{servingUnit}}</span>
+        <span>{{servingUnit.name}}</span>
         <button class="addProductButton" data-product-id="{{id}}" data-product-unit="{{servingUnit}}" >Добавить</button>
         <span class="productAddedMessage" style="display:none;">Продукт добавлен</span>
     </div>
@@ -26,13 +26,27 @@
 
 {{^products}}
         <form method="post" action="add">
-            <input type="text" name="name" placeholder="Введите название продукта" />
+            <label>
+                <input type="text" name="name" placeholder="Введите название продукта" />
+            </label>
+            <label>
             <input type="text" name="calories" placeholder="Введите калорийность" />
-            <input type="text" name="bel" placeholder="Введите количество белков" />
-            <input type="text" name="fats" placeholder="Введите количество жиров" />
-            <input type="text" name="ch" placeholder="Введите количество углеводов" />
-            <input type="text" name="servingSize" placeholder="Введите размер порции" />
-            <input type="text" name="servingUnit" placeholder="Единицы измерения размера " />
+            </label>
+            <label>
+            <input type="text" name="bel" placeholder="Введите количество белков" /></label>
+            <label>
+            <input type="text" name="fats" placeholder="Введите количество жиров" /></label>
+            <label>
+            <input type="text" name="ch" placeholder="Введите количество углеводов" /></label>
+            <label>
+            <input type="text" name="servingSize" placeholder="Введите размер порции" /></label>
+            <label>
+                <select name="servingUnit">
+                    <option value="">-- Выберите единицу измерения --</option>
+                    {{#servingUnits}}
+                        <option value="{{id}}">{{name}}</option>
+                    {{/servingUnits}}
+                </select></label>
             <button type="submit">Добавить</button>
         </form>
 {{/products}}

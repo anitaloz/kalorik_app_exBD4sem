@@ -100,7 +100,7 @@
         <div class="form-group">
             <label class="form-label" for="activityLevel">Уровень активности:</label>
             <select class="form-input" id="activityLevel" name="activityLevel" required>
-                <option value="Сидячий" th:selected="${activityLevel == 'Сидячий'}">Сидячий</option>
+                <option value="Сидячий" th:selected="${UI.activityLevel == 'Сидячий'}">Сидячий</option>
                 <option value="Легкая активность" th:selected="${UI.activityLevel == 'Легкая активность'}">Легкая активность</option>
                 <option value="Умеренная активность" th:selected="${UI.activityLevel == 'Умеренная активность'}">Умеренная активность</option>
                 <option value="Высокая активность" th:selected="${UI.activityLevel == 'Высокая активность'}">Высокая активность</option>
