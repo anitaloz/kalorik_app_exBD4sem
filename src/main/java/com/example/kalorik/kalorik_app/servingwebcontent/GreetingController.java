@@ -339,14 +339,26 @@ public class GreetingController {
             List<MealFoodItems> items=itemService.findMeal_food_itemsByMeal(meal);
             if(!items.isEmpty())
             {
+                int fl=0;
                 for(MealFoodItems i:items)
                 {
                     if(i.getFood().equals(food))
                     {
+                        fl=1;
                         i.setQuantity(i.getQuantity()+request.getQuantity());
                         itemService.save(i);
                     }
                 }
+                if(fl==0)
+                {
+                    MealFoodItems item = new MealFoodItems();
+                    item.setId(mealFoodItemId); // Устанавливаем составной ключ!
+                    item.setMeal(meal);
+                    item.setFood(food);
+                    item.setQuantity(request.getQuantity());
+                    itemService.save(item);
+                }
+
             }
             else {
                 // 5. Создаем Meal_food_items и устанавливаем значения
@@ -355,7 +367,7 @@ public class GreetingController {
                 item.setMeal(meal);
                 item.setFood(food);
                 item.setQuantity(request.getQuantity());
-                foodItemRepo.save(item);
+                itemService.save(item);
             }
             String s="Продукт добавлен";
             model.addAttribute("status", s);
