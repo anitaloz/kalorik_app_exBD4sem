@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class ProfileController {
@@ -50,10 +51,30 @@ public class ProfileController {
 
     // Save the updated profile data
     @PostMapping("profile/save")
-    public String savePurposes(@ModelAttribute("UI") UserInfo userInfo) {
+    public String savePurposes(@ModelAttribute("UI") UserInfo userInfo, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userService.findByUsername(auth.getName());
         UserInfo ui=userInfoService.getUserInfoByUsr(u);
+
+        String weightKgError = userInfoService.validateWeightKg(userInfo.getWeightKg());
+        String caloriesNumError = userInfoService.validateCaloriesNum(userInfo.getCaloriesnum());
+        String purposeError = userInfoService.validatePurpose(userInfo.getPurpose());
+        String desiredWeightError=userInfoService.validateDesiredWeight(userInfo.getDesiredWeight());
+
+        if (weightKgError != null ||
+                desiredWeightError != null || caloriesNumError != null || purposeError != null) {
+
+            redirectAttributes.addFlashAttribute("weightKgError", weightKgError);
+            redirectAttributes.addFlashAttribute("desiredWeightError", desiredWeightError);
+            redirectAttributes.addFlashAttribute("caloriesNumError", caloriesNumError);
+            redirectAttributes.addFlashAttribute("purposeError", purposeError);
+
+            // Сохраняем значения полей, чтобы вернуть их в форму
+            redirectAttributes.addFlashAttribute("UI", userInfo);
+
+            return "redirect:/profile/editPurposes"; // Возвращаемся на форму
+        }
+
         ui.setDesiredWeight(userInfo.getDesiredWeight());
         ui.setCaloriesnum(userInfo.getCaloriesnum());
         ui.setPurpose(userInfo.getPurpose());
@@ -76,9 +97,35 @@ public class ProfileController {
     }
 
     @PostMapping("profile/MainInfoSave")
-    public String saveProfile(@ModelAttribute("UI") UserInfo userInfo) {
+    public String saveProfile(@ModelAttribute("UI") UserInfo userInfo, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userService.findByUsername(auth.getName());
+
+        String firstNameError = userInfoService.validateFirstName(userInfo.getFirstName());
+        String lastNameError = userInfoService.validateLastName(userInfo.getLastName());
+        //String dateOfBirthError = validateDateOfBirth(dateOfBirth);
+        String genderError = userInfoService.validateGender(userInfo.getGender());
+        String heightCmError = userInfoService.validateHeightCm(userInfo.getHeightCm());
+        String activityLevelError = userInfoService.validateActivityLevel(userInfo.getActivityLevel());
+
+        if (firstNameError != null || lastNameError != null  ||
+                genderError != null || heightCmError != null ||
+                activityLevelError != null) {
+
+            redirectAttributes.addFlashAttribute("firstNameError", firstNameError);
+            redirectAttributes.addFlashAttribute("lastNameError", lastNameError);
+            //redirectAttributes.addFlashAttribute("dateOfBirthError", dateOfBirthError);
+            redirectAttributes.addFlashAttribute("genderError", genderError);
+            redirectAttributes.addFlashAttribute("heightCmError", heightCmError);
+            redirectAttributes.addFlashAttribute("activityLevelError", activityLevelError);
+
+            // Сохраняем значения полей, чтобы вернуть их в форму
+            redirectAttributes.addFlashAttribute("UI", userInfo);
+
+            return "redirect:/profile/editMainInfo"; // Возвращаемся на форму
+        }
+
+
         UserInfo ui=userInfoService.getUserInfoByUsr(u);
         ui.setFirstName(userInfo.getFirstName());
         ui.setLastName(userInfo.getLastName());

@@ -102,6 +102,12 @@ public class UserInfoService {
         }
         return null;
     }
+    public String validateDesiredWeight(BigDecimal desiredWeight) {
+        if (desiredWeight!= null && (desiredWeight.compareTo(BigDecimal.ZERO) <= 0 ||desiredWeight.compareTo(new BigDecimal("300.00")) > 0)) {
+            return "Желаемый вес должен быть между 0.01 и 300кг";
+        }
+        return null;
+    }
 
     public String validateCaloriesNum(Integer caloriesNum) {
         if(caloriesNum==0)

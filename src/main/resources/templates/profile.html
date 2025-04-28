@@ -64,20 +64,21 @@
 
         <div class="form-group">
             <label class="form-label" for="firstName">Имя:</label>
-            <input type="text" class="form-input" id="firstName" name="firstName" th:value="${UI.firstName}" required minlength="2" maxlength="50" pattern="[А-Яа-яЁёA-Za-zs-]+"/>
-            <div class="invalid-feedback">Пожалуйста, введите корректное имя (от 2 до 50 символов, только буквы и пробелы).</div>
+            <input type="text" class="form-input" id="firstName" name="firstName" th:value="${UI.firstName}"/>
+            <span th:if="${firstNameError != null}" th:text="${firstNameError}" class="text-danger"></span>
+
         </div>
 
         <div class="form-group">
             <label class="form-label" for="lastName">Фамилия:</label>
-            <input type="text" class="form-input" id="lastName" name="lastName" th:value="${UI.lastName}" required minlength="2" maxlength="50" pattern="[А-Яа-яЁёA-Za-zs-]+"/>
-            <div class="invalid-feedback">Пожалуйста, введите корректную фамилию (от 2 до 50 символов, только буквы и пробелы).</div>
+            <input type="text" class="form-input" id="lastName" name="lastName" th:value="${UI.lastName}"/>
+            <span th:if="${lastNameError != null}" th:text="${lastNameError}" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label class="form-label" for="dateOfBirth">Дата рождения:</label>
-            <input type="date" class="form-input" id="dateOfBirth" name="dateOfBirth" th:value="${UI.dateOfBirth}" required/>
-            <div class="invalid-feedback">Пожалуйста, введите дату рождения.</div>
+            <input type="date" class="form-input" id="dateOfBirth" name="dateOfBirth" th:value="${UI.dateOfBirth}"/>
+            <span th:if="${dateOfBirthError != null}" th:text="${dateOfBirthError}" class="text-danger"></span>
         </div>
 
         <div class="form-group">
@@ -87,13 +88,13 @@
                 <option value="Мужской" th:selected="${UI.gender == 'Мужской'}">Мужской</option>
                 <option value="Женский" th:selected="${UI.gender == 'Женский'}">Женский</option>
             </select>
-            <div class="invalid-feedback">Пожалуйста, выберите пол.</div>
+            <span th:if="${genderError != null}" th:text="${genderError}" class="text-danger"></span>
         </div>
 
         <div class="form-group">
             <label class="form-label" for="heightCm">Рост (см):</label>
-            <input type="number" class="form-input" id="heightCm" name="heightCm" th:value="${UI.heightCm}" required min="1" max="300"/>
-            <div class="invalid-feedback">Пожалуйста, введите корректный рост (от 1 до 300 см).</div>
+            <input type="number" class="form-input" id="heightCm" name="heightCm" th:value="${UI.heightCm}"/>
+            <span th:if="${heightCmError != null}" th:text="${heightCmError}" class="text-danger"></span>
         </div>
 
         <div class="form-group">
@@ -105,6 +106,7 @@
                 <option value="Высокая активность" th:selected="${UI.activityLevel == 'Высокая активность'}">Высокая активность</option>
                 <option value="Очень высокая активность" th:selected="${UI.activityLevel == 'Очень высокая активность'}">Очень высокая активность</option>
             </select>
+            <span th:if="${activityLevelError != null}" th:text="${activityLevelError}" class="text-danger"></span>
         </div>
         <button type="submit" class="edit-button">Сохранить</button>
         <button type="button" class="edit-button" onclick="location.href='/profile'">Отмена</button>
@@ -138,23 +140,23 @@
     <form action="/profile/save" method="post">
         <div class="form-group">
             <label class="form-label" for="purpose">Цель:</label>
-            <input type="text" class="form-input" id="purpose" name="purpose" th:value="${UI.purpose}" required minlength="3" maxlength="100"/>
-            <div class="invalid-feedback">Пожалуйста, введите цель (от 3 до 100 символов).</div>
+            <input type="text" class="form-input" id="purpose" name="purpose" th:value="${UI.purpose}"/>
+            <span th:if="${purposeError != null}" th:text="${purposeError}" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label class="form-label" for="caloriesnum">Калории:</label>
-            <input type="number" class="form-input" id="caloriesnum" name="caloriesnum" th:value="${UI.caloriesnum}" required min="1000" max="10000"/>
-            <div class="invalid-feedback">Пожалуйста, введите количество калорий (от 1000 до 10000).</div>
+            <label class="form-label" for="caloriesNum">Калории:</label>
+            <input type="number" class="form-input" id="caloriesnum" name="caloriesnum" th:value="${UI.caloriesnum}"/>
+            <span th:if="${caloriesNumError != null}" th:text="${caloriesNumError}" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label class="form-label" for="weightKg">Текущий вес:</label>
-            <input type="number" step="0.01" class="form-input" id="weightKg" name="weightKg" th:value="${UI.weightKg}" required min="30" max="300"/>
-            <div class="invalid-feedback">Пожалуйста, введите текущий вес (от 30 до 300 кг).</div>
+            <input type="number" step="0.01" class="form-input" id="weightKg" name="weightKg" th:value="${UI.weightKg}"/>
+            <span th:if="${weightKgError != null}" th:text="${weightKgError}" class="text-danger"></span>
         </div>
         <div class="form-group" th:if="${UI.purpose == 'похудение'}">
             <label class="form-label" for="desiredWeight">Желаемый вес:</label>
-            <input type="number" step="0.01" class="form-input" id="desiredWeight" name="desiredWeight" th:value="${UI.desiredWeight}" required min="30" max="300" th:max="${UI.weightKg}"/>
-            <div class="invalid-feedback">Пожалуйста, введите желаемый вес (от 30 до 300 кг, не больше текущего).</div>
+            <input type="number" step="0.01" class="form-input" id="desiredWeight" name="desiredWeight" th:value="${UI.desiredWeight}"/>
+            <span th:if="${desiredWeightError != null}" th:text="${desiredWeightError}" class="text-danger"></span>
         </div>
         <button type="submit" class="edit-button">Save</button>
         <button type="button" class="edit-button" onclick="location.href='/profile'">Cancel</button>
