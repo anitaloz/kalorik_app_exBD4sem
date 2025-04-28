@@ -49,7 +49,8 @@ create table user_info
     weight_kg      numeric(5, 2),
     activity_level varchar(50),
     caloriesnum    integer,
-    purpose        varchar(30)
+    purpose        varchar(30),
+    desired_weight numeric(5, 2)
 );
 
 create table user_role
