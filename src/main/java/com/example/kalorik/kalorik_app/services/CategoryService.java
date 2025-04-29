@@ -28,41 +28,31 @@ public class CategoryService {
     }
 
     public Categories getCategoryByNameCaseInsensitive(String name) {
-        return categoryRepository.findByNameCaseInsensitive(name);
+        return categoryRepository.findByNameIgnoreCase(name);
+    }
+
+    public Categories getCategoryByName(String name) {
+        return categoryRepository.findByNameIgnoreCase(name);
     }
 
     public List<Categories> getCategoriesByNameContaining(String name) {
         return categoryRepository.findByNameContaining(name);
     }
 
+    // public List<Categories> getCategoriesByNameContaining(String name) {
+    //     return categoryRepository.findByNameContainingIgnoreCase(name);
+    // }
+
     public List<Categories> getCategoriesByIdsOrName(Set<Long> ids, String name) {
         return categoryRepository.findByIdsOrName(ids, name);
     }
 
-    public List<Object[]> getCategoriesWithRecipeCount() {
-        return categoryRepository.findCategoriesWithRecipeCount();
-    }
+    // public List<Object[]> getCategoriesWithRecipeCount() {
+    //     return categoryRepository.findCategoriesWithRecipeCount();
+    // }
 
     public Categories saveCategory(Categories category) {
         return categoryRepository.save(category);
-    }
-
-    public void deleteCategory(Long id) {
-        categoryRepository.deleteById(id);
-    }
-
-    public Categories updateCategory(Long id, Categories updatedCategory) {
-        Optional<Categories> existingCategory = categoryRepository.findById(id);
-
-        if (existingCategory.isPresent()) {
-            Categories category = existingCategory.get();
-            category.setName(updatedCategory.getName());
-            // Update other fields as needed
-            return categoryRepository.save(category);
-        } else {
-            // Handle the case where the category doesn't exist (e.g., throw an exception)
-            throw new ResourceNotFoundException("Category not found with id: " + id);
-        }
     }
 
     // Custom Exception for Resource Not Found

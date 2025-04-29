@@ -1,7 +1,6 @@
 package com.example.kalorik.kalorik_app.domain;
 
 import jakarta.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity

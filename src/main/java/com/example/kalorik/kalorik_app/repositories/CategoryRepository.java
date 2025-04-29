@@ -14,12 +14,13 @@ import java.util.Set;
 public interface CategoryRepository extends JpaRepository<Categories, Long> {
 
     // Использование LOWER для регистронезависимого поиска
-    @Query("SELECT c FROM Category c WHERE LOWER(c.name) = LOWER(:name)")
-    Categories findByNameCaseInsensitive(@Param("name") String name);
+    Categories findByNameIgnoreCase(String name);
 
     // Оптимизированный поиск по части имени с индексацией
-    @Query("SELECT c FROM Category c WHERE c.name ILIKE %:name%")
+    @Query("SELECT c FROM Categories c WHERE c.name ILIKE %:name%")
     List<Categories> findByNameContaining(@Param("name") String name);
+
+    //List<Categories> findByNameContainingIgnoreCase(String name);
 
     // Использование UNION ALL для эффективного поиска по нескольким критериям
     @Query(value = """
@@ -30,6 +31,6 @@ public interface CategoryRepository extends JpaRepository<Categories, Long> {
     List<Categories> findByIdsOrName(@Param("ids") Set<Long> ids, @Param("name") String name);
 
     // Получение категорий с количеством рецептов
-    @Query("SELECT c, COUNT(r) FROM Category c LEFT JOIN c.recipes r GROUP BY c.id")
-    List<Object[]> findCategoriesWithRecipeCount();
+    // @Query("SELECT c, COUNT(r) FROM Category c LEFT JOIN c.recipes r GROUP BY c.id")
+    // List<Object[]> findCategoriesWithRecipeCount();
 }
