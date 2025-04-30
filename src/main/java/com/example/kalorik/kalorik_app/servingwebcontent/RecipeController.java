@@ -75,6 +75,7 @@ public class RecipeController {
         model.addAttribute("searchQuery", search);
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("selectedProductIds", productIds);
+        
         return "recipes";
     }
 }

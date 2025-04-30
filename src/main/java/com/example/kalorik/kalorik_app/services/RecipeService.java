@@ -4,6 +4,7 @@ import com.example.kalorik.kalorik_app.domain.Categories;
 import com.example.kalorik.kalorik_app.domain.Food;
 import com.example.kalorik.kalorik_app.domain.Recipes;
 import com.example.kalorik.kalorik_app.repositories.RecipeRepository;
+import com.example.kalorik.kalorik_app.services.CategoryService.ResourceNotFoundException;
 
 import jakarta.persistence.criteria.Join;
 
@@ -95,6 +96,12 @@ public class RecipeService {
             query.distinct(true);
             return null;
         };
+    }
+
+     @Transactional(readOnly = true)
+    public Recipes getRecipeWithDetails(Long id) {
+        return recipeRepository.findByIdWithDetails(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Рецепт с ID " + id + " не найден"));
     }
 }
 

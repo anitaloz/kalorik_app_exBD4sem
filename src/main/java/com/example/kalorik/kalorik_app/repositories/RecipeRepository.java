@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.example.kalorik.kalorik_app.domain.Recipes;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.List;
 import java.util.Set;
 @Repository
@@ -48,4 +49,8 @@ public interface RecipeRepository extends JpaRepository<Recipes, Long> {
      // Базовый метод для поиска с фильтрами
     @EntityGraph(attributePaths = {"categories", "products"})
     List<Recipes> findAll(Specification<Recipes> spec);
+
+    @EntityGraph(attributePaths = {"products", "categories"})
+    @Query("SELECT r FROM Recipes r WHERE r.id = :id")
+    Optional<Recipes> findByIdWithDetails(@Param("id") Long id);
 }
