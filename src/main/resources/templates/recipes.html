@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -40,6 +40,16 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <nav>
+            <ul class="px-3 mx-sm-2">
+                <li><a th:href="@{/}">Главная</a></li>
+                <li><form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Выйти"/>
+                </form></li>
+            </ul>
+        </nav>
+    </div>
     <div class="container mt-4">
         <h1 class="mb-4">Рецепты</h1>
         
@@ -83,21 +93,6 @@
                 <a th:href="@{/recipes}" class="btn btn-outline-secondary">Сбросить</a>
             </form>
             
-            <div class="selected-filters mt-3" th:if="${searchQuery != null || selectedCategoryId != null || (selectedProductIds != null && !selectedProductIds.isEmpty())}">
-                <span class="fw-bold">Выбрано: </span>
-                <span th:if="${searchQuery != null}" class="badge bg-primary badge-filter">
-                    Поиск: <span th:text="${searchQuery}"></span>
-                    <a th:href="@{/recipes(categoryId=${selectedCategoryId}, productIds=${selectedProductIds})}" class="text-white ms-2">×</a>
-                </span>
-                <span th:if="${selectedCategoryId != null}" class="badge bg-success badge-filter">
-                    Категория: <span th:text="${categories.?[id == selectedCategoryId].get(0).name}"></span>
-                    <a th:href="@{/recipes(search=${searchQuery}, productIds=${selectedProductIds})}" class="text-white ms-2">×</a>
-                </span>
-                <span th:each="productId : ${selectedProductIds}" class="badge bg-info text-dark badge-filter">
-                    Продукт: <span th:text="${allProducts.?[id == productId].get(0).name}"></span>
-                    <a th:href="@{/recipes(search=${searchQuery}, categoryId=${selectedCategoryId}, productIds=${selectedProductIds != null ? selectedProductIds.stream().filter(p -> p != productId).collect(T(java.util.List)) : null})}" class="text-dark ms-2">×</a>
-                </span>
-            </div>
         </div>
         
         <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
@@ -180,10 +175,10 @@
         });
     </script>
 </body>
-</html> -->
+</html>
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -200,17 +195,14 @@
 <body>
     <h1>Список рецептов</h1>
     
-    <!-- Панель поиска -->
     <div class="search-panel">
         <form method="get" action="/recipes">
-            <!-- Поиск по названию -->
             <div class="search-option">
                 <label>Поиск по названию:</label>
                 <input type="text" name="search" placeholder="Введите название..." 
                        th:value="${searchQuery} ?: ''">
             </div>
             
-            <!-- Фильтр по категории -->
             <div class="search-option">
                 <label>Фильтр по категории:</label>
                 <select name="categoryId" onchange="this.form.submit()">
@@ -223,7 +215,6 @@
                 </select>
             </div>
             
-            <!-- Поиск по продуктам -->
             <div class="search-option">
                 <label>Поиск по продуктам:</label>
                 <select name="productIds" multiple>
@@ -235,7 +226,6 @@
                 </select>
             </div>
             
-            <!-- Кнопки действий -->
             <div class="search-actions">
                 <button type="submit">Применить фильтры</button>
                 <a th:href="@{/recipes}" class="button">Сбросить все</a>
@@ -243,7 +233,6 @@
         </form>
     </div>
     
-    <!-- Результаты -->
     <div th:each="recipe : ${recipes}" class="recipe">
         <h2 th:text="${recipe.name}"></h2>
         <p th:text="${recipe.text}"></p>
@@ -265,7 +254,6 @@
         <p>Рецепты не найдены. Попробуйте изменить критерии поиска.</p>
     </div>
 
-    <!-- Простой JavaScript для удобства -->
     <script>
         // Сброс мультиселекта при нажатии "Сбросить все"
         document.querySelector('a[href="/recipes"]').addEventListener('click', function() {
@@ -275,4 +263,4 @@
         });
     </script>
 </body>
-</html>
+</html> -->
