@@ -1,5 +1,7 @@
 package com.example.kalorik.kalorik_app.repositories;
 
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,7 +27,7 @@ public interface RecipeRepository extends JpaRepository<Recipes, Long> {
 
     // Использование IN для поиска по нескольким продуктам
     @Query("SELECT DISTINCT r FROM Recipes r JOIN FETCH r.products p WHERE p.id IN :productIds")
-    List<Recipes> findByProductIds(@Param("productIds") Set<Long> productIds);
+    List<Recipes> findByProductIds(@Param("productIds") List<Long> productIds);
 
     // Оптимизированный запрос для поиска по нескольким категориям
     @Query("SELECT r FROM Recipes r JOIN r.categories c WHERE c.id IN :categoryIds " +
@@ -39,4 +41,11 @@ public interface RecipeRepository extends JpaRepository<Recipes, Long> {
            WHERE to_tsvector('english', name  ' '  text) @@ to_tsquery('english', :query)
            """, nativeQuery = true)
     List<Recipes> fullTextSearch(@Param("query") String query);
+
+    // @Query("SELECT DISTINCT r FROM Recipes r JOIN r.products p WHERE p.id IN :productIds")
+    // List<Recipes> findByProducts_IdIn(@Param("productIds") List<Long> productIds);
+
+     // Базовый метод для поиска с фильтрами
+    @EntityGraph(attributePaths = {"categories", "products"})
+    List<Recipes> findAll(Specification<Recipes> spec);
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.kalorik.kalorik_app.domain.Recipes;
 import com.example.kalorik.kalorik_app.services.CategoryService;
+import com.example.kalorik.kalorik_app.services.FoodService;
 import com.example.kalorik.kalorik_app.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,39 +29,54 @@ public class RecipeController {
     
     private final RecipeService recipeService;
     private final CategoryService categoryService;
+    private final FoodService productService; // Новый сервис
 
     @Autowired
-    public RecipeController(RecipeService recipeService, CategoryService categoryService) {
+    public RecipeController(RecipeService recipeService, 
+                          CategoryService categoryService,
+                          FoodService productService) {
         this.recipeService = recipeService;
         this.categoryService = categoryService;
+        this.productService = productService;
     }
 
     @GetMapping
     public String showRecipes(
         @RequestParam(required = false) String search,
         @RequestParam(required = false) Long categoryId,
+        @RequestParam(required = false) List<Long> productIds, // Новый параметр
         Model model) {
         
         List<Recipes> recipes;
         
-        if (search != null && !search.isEmpty()) {
-            // Поиск по названию
+        if (search != null || categoryId != null || (productIds != null && !productIds.isEmpty())) {
+            recipes = recipeService.findBySearchParams(search, categoryId, productIds);
+        }else if (search != null && !search.isEmpty()) {
             recipes = recipeService.findByNameContainingIgnoreCase(search);
             model.addAttribute("searchQuery", search);
         } else if (categoryId != null) {
-            // Фильтр по категории
             recipes = recipeService.findByCategoryId(categoryId);
             model.addAttribute("selectedCategoryId", categoryId);
+        } else if (productIds != null && !productIds.isEmpty()) {
+            recipes = recipeService.findByProductIds(productIds);
+            model.addAttribute("selectedProductIds", productIds);
         } else {
-            // Все рецепты
             recipes = recipeService.getAllRecipes();
+        }
+
+        model.addAttribute("allProducts", productService.getAllProducts());
+        if (productIds != null) {
+            model.addAttribute("selectedProductIds", productIds);
         }
         
         model.addAttribute("recipes", recipes);
         model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("allProducts", productService.getAllProducts());
+        model.addAttribute("searchQuery", search);
+        model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute("selectedProductIds", productIds);
         return "recipes";
     }
-
 }
 
 // @Controller

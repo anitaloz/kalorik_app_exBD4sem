@@ -6,7 +6,10 @@
     <style>
         .recipe { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
         .search-panel { background: #f5f5f5; padding: 20px; margin-bottom: 30px; }
-        .category-filter { margin-top: 15px; }
+        .search-option { margin: 15px 0; }
+        .search-option label { display: block; margin-bottom: 5px; font-weight: bold; }
+        select[multiple] { min-height: 100px; width: 100%; padding: 5px; }
+        .search-actions { margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -15,14 +18,15 @@
     <!-- Панель поиска -->
     <div class="search-panel">
         <form method="get" action="/recipes">
-            <div>
-                <input type="text" name="search" placeholder="Поиск по названию..." 
+            <!-- Поиск по названию -->
+            <div class="search-option">
+                <label>Поиск по названию:</label>
+                <input type="text" name="search" placeholder="Введите название..." 
                        th:value="${searchQuery} ?: ''">
-                <button type="submit">Искать</button>
-                <a th:href="@{/recipes}">Сбросить</a>
             </div>
             
-            <div class="category-filter">
+            <!-- Фильтр по категории -->
+            <div class="search-option">
                 <label>Фильтр по категории:</label>
                 <select name="categoryId" onchange="this.form.submit()">
                     <option value="">Все категории</option>
@@ -32,6 +36,24 @@
                             th:selected="${selectedCategoryId} == ${category.id}">
                     </option>
                 </select>
+            </div>
+            
+            <!-- Поиск по продуктам -->
+            <div class="search-option">
+                <label>Поиск по продуктам:</label>
+                <select name="productIds" multiple>
+                    <option th:each="product : ${allProducts}"
+                            th:value="${product.id}"
+                            th:text="${product.name}"
+                            th:selected="${selectedProductIds != null and selectedProductIds.contains(product.id)}">
+                    </option>
+                </select>
+            </div>
+            
+            <!-- Кнопки действий -->
+            <div class="search-actions">
+                <button type="submit">Применить фильтры</button>
+                <a th:href="@{/recipes}" class="button">Сбросить все</a>
             </div>
         </form>
     </div>
@@ -57,6 +79,16 @@
     <div th:if="${recipes.empty}">
         <p>Рецепты не найдены. Попробуйте изменить критерии поиска.</p>
     </div>
+
+    <!-- Простой JavaScript для удобства -->
+    <script>
+        // Сброс мультиселекта при нажатии "Сбросить все"
+        document.querySelector('a[href="/recipes"]').addEventListener('click', function() {
+            Array.from(document.querySelectorAll('select[multiple] option')).forEach(opt => {
+                opt.selected = false;
+            });
+        });
+    </script>
 </body>
 </html>
 

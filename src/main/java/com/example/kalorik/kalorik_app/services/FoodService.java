@@ -43,4 +43,8 @@ public class FoodService {
     {
         return foodRepo.findFoodById(id);
     }
+
+    public List<Food> getAllProducts() {
+        return foodRepo.findAll();
+    }
 }

@@ -1,8 +1,14 @@
 package com.example.kalorik.kalorik_app.services;
 
+import com.example.kalorik.kalorik_app.domain.Categories;
+import com.example.kalorik.kalorik_app.domain.Food;
 import com.example.kalorik.kalorik_app.domain.Recipes;
 import com.example.kalorik.kalorik_app.repositories.RecipeRepository;
+
+import jakarta.persistence.criteria.Join;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +53,49 @@ public class RecipeService {
     //     return recipeRepository.findById(id)
     //             .orElseThrow(() -> new ResourceNotFoundException("Recipe not found"));
     // }
+
+    @Transactional(readOnly = true)
+    public List<Recipes> findByProductIds(List<Long> productIds) {
+        return recipeRepository.findByProductIds(productIds);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Recipes> findBySearchParams(String name, Long categoryId, List<Long> productIds) {
+        Specification<Recipes> spec = Specification.where(null);
+        
+        if (name != null && !name.isEmpty()) {
+            spec = spec.and((root, query, cb) -> 
+                cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+        }
+        
+        if (categoryId != null) {
+            spec = spec.and((root, query, cb) -> {
+                Join<Recipes, Categories> categories = root.join("categories");
+                return cb.equal(categories.get("id"), categoryId);
+            });
+        }
+        
+        if (productIds != null && !productIds.isEmpty()) {
+            spec = spec.and((root, query, cb) -> {
+                // Для поиска рецептов, содержащих ВСЕ выбранные продукты
+                Join<Recipes, Food> products = root.join("products");
+                return products.get("id").in(productIds);
+            });
+            
+            // Добавляем distinct через отдельный Specification
+            spec = spec.and(distinct());
+        }
+        
+        return recipeRepository.findAll(spec);
+    }
+    
+    // Вспомогательный метод для distinct
+    private Specification<Recipes> distinct() {
+        return (root, query, cb) -> {
+            query.distinct(true);
+            return null;
+        };
+    }
 }
 
 
