@@ -4,10 +4,7 @@ import com.example.kalorik.kalorik_app.domain.*;
 import com.example.kalorik.kalorik_app.dopclass.DeleteProductRequest;
 import com.example.kalorik.kalorik_app.dopclass.MealProductInfo;
 import com.example.kalorik.kalorik_app.repositories.*;
-import com.example.kalorik.kalorik_app.services.FoodService;
-import com.example.kalorik.kalorik_app.services.MealFoodItemService;
-import com.example.kalorik.kalorik_app.services.MealsService;
-import com.example.kalorik.kalorik_app.services.UserInfoService;
+import com.example.kalorik.kalorik_app.services.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -28,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 //import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -57,6 +55,8 @@ public class GreetingController {
     MealFoodItemService itemService;
     @Autowired
     FoodService foodService;
+    @Autowired
+    private BodyService bodyService;
 
     @GetMapping("/login")
     public String login(HttpServletRequest request, Model model) {
@@ -81,6 +81,40 @@ public class GreetingController {
             return "redirect:/main";
         }
         return "log.html";
+    }
+
+    @PostMapping("/main")
+    String postMain(@RequestParam LocalDate shDt,  @RequestParam BigDecimal currentWeight)
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User u=userRepo.findByUsername(auth.getName());
+        Date d=BodyService.convertLocalDateToDate(shDt);
+        System.out.println(shDt);
+        List<Body> bodyList=bodyService.findBodiesByUserAndDt(u, d);
+        Body b;
+        if(bodyList.isEmpty()) {
+            b = new Body();
+            b.setDt(d);
+            b.setWeight(currentWeight);
+            b.setHeight(userInfoService.getUserInfoByUsr(u).getHeightCm());
+            b.setUser(u);
+        }
+        else{
+            b=bodyList.getFirst();
+            b.setWeight(currentWeight);
+        }
+        bodyService.save(b);
+        UserInfo ui=userInfoService.getUserInfoByUsr(u);
+        ui.setWeightKg(currentWeight);
+        userInfoService.save(ui);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(d);
+
+        // Создаем URL для редиректа с параметром inputDate
+        String redirectUrl = "redirect:/main?inputDate=" + formattedDate;
+
+        // Возвращаем URL для редиректа
+        return redirectUrl;
     }
 
 
@@ -182,6 +216,7 @@ public class GreetingController {
                 dnSTRING.add(m.getFood().getName());
             }
         }
+        BigDecimal w=userInfoService.getUserInfoByUsr(u).getWeightKg().setScale(1, RoundingMode.HALF_UP);;
         model.addAttribute("caloriesNum", ui.getCaloriesnum());
         model.addAttribute("breakfastItems", breakfastItems);
         model.addAttribute("lunchItems", lunchItems);
@@ -198,6 +233,7 @@ public class GreetingController {
         model.addAttribute("brfmfi", brfmfiSTRING);
         model.addAttribute("lnchmfi", lnchSTRING);
         model.addAttribute("dnmfi", dnSTRING);
+        model.addAttribute("currentWeight", w);
         return "main.html";
     }
 
@@ -261,6 +297,13 @@ public class GreetingController {
         User usr= userRepo.findByUsername(auth.getName());
         UserInfo ui=new UserInfo(firstName, lastName, dateOfBirth, gender, heightCm, weightKg, activityLevel, caloriesNum, purpose, usr);
         userInfoService.save(ui);
+        Date d=new Date();
+        Body b=new Body();
+        b.setDt(d);
+        b.setWeight(ui.getWeightKg());
+        b.setHeight(ui.getHeightCm());
+        b.setUser(usr);
+        bodyService.save(b);
         return "redirect:/main";
     }
 

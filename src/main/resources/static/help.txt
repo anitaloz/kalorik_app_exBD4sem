@@ -117,6 +117,23 @@ create table recipe_category (
   REFERENCES categories(id)
 );
 
+
+create table body
+(
+    id      bigserial
+        primary key,
+    user_id bigint
+        references usr
+        constraint fk_body
+            references usr,
+    weight  numeric(5, 2),
+    height  integer,
+    dt      date
+);
+
+
+
+
 --УДАЛЕНИЕ И НАЧАЛО АЙДИ С 1 (пример)
 TRUNCATE TABLE recipes CASCADE;
 ALTER SEQUENCE recipes_id_seq RESTART WITH 1;
