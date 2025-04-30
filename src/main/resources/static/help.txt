@@ -1,3 +1,15 @@
+drop table if exists recipe_category;
+drop table if exists categories;
+drop table if exists recipe_product;
+drop table if exists recipes;
+drop table if exists user_role;
+drop table if exists user_info;
+drop table if exists meal_food_items;
+drop table if exists meals;
+drop table if exists usr;
+drop table if exists food;
+drop table if exists serving_units;
+
 create table serving_units
 (
     id bigserial primary key,
@@ -73,10 +85,48 @@ create table user_role
     primary key (user_id, roles)
 );
 
+create table recipes (
+ id bigserial PRIMARY KEY,
+ name VARCHAR(100),
+ text TEXT
+);
+create table recipe_product (
+ recipe_id bigserial,
+ product_id bigserial,
+ PRIMARY KEY(recipe_id, product_id),
+ CONSTRAINT fk_recipe
+  FOREIGN KEY (recipe_id )
+  REFERENCES recipes(id),
+ CONSTRAINT fk_product
+  FOREIGN KEY (product_id)
+  REFERENCES food(id)
+);
+create table categories (
+ id bigserial PRIMARY KEY,
+ name varchar(50)
+);
+create table recipe_category (
+ recipe_id bigserial,
+ category_id bigserial,
+ PRIMARY KEY(recipe_id, category_id),
+ CONSTRAINT fk_recipe
+  FOREIGN KEY (recipe_id )
+  REFERENCES recipes(id),
+ CONSTRAINT fk_category
+  FOREIGN KEY (category_id)
+  REFERENCES categories(id)
+);
+
+--УДАЛЕНИЕ И НАЧАЛО АЙДИ С 1 (пример)
+TRUNCATE TABLE recipes CASCADE;
+ALTER SEQUENCE recipes_id_seq RESTART WITH 1;
+TRUNCATE TABLE food CASCADE;
+ALTER SEQUENCE food_id_seq RESTART WITH 1;
+TRUNCATE TABLE categories CASCADE;
+ALTER SEQUENCE categories_id_seq RESTART WITH 1;
+
 -- Inserting some basic food items
-
 -- Заполнение таблицы serving_units
-
 INSERT INTO serving_units (name) VALUES ('грамм');
 INSERT INTO serving_units (name) VALUES ('штука');
 INSERT INTO serving_units (name) VALUES ('столовая ложка');
@@ -124,9 +174,7 @@ INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size)
 VALUES ('Гречка (вареная)', 110, 4.5, 1.5, 20, 1, 100); -- 100 грамм
 
 
-
-
-//ДЛЯ ПРОВЕРКИ РЕЦЕПТОВ ЮЗАЛА ВОТ ЭТО
+--ДЛЯ ПРОВЕРКИ РЕЦЕПТОВ ЮЗАЛА ВОТ ЭТО
 -- Заполнение таблицы продуктов (food)
 INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
 -- Молочные продукты
@@ -182,10 +230,3 @@ INSERT INTO recipe_category (recipe_id, category_id) VALUES
 -- Творожная запеканка
 (4, 1), (4, 4), (4, 7);
 
-//УДАЛЕНИЕ И НАЧАЛО АЙДИ С 1 (пример)
-TRUNCATE TABLE recipes CASCADE;
-ALTER SEQUENCE recipes_id_seq RESTART WITH 1;
-TRUNCATE TABLE food CASCADE;
-ALTER SEQUENCE food_id_seq RESTART WITH 1;
-TRUNCATE TABLE categories CASCADE;
-ALTER SEQUENCE categories_id_seq RESTART WITH 1;
