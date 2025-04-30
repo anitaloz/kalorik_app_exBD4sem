@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -43,7 +43,6 @@
     <div class="container mt-4">
         <h1 class="mb-4">Рецепты</h1>
         
-        <!-- Фильтры -->
         <div class="filter-section">
             <form th:action="@{/recipes}" method="get">
                 <div class="row">
@@ -84,7 +83,6 @@
                 <a th:href="@{/recipes}" class="btn btn-outline-secondary">Сбросить</a>
             </form>
             
-            <!-- Выбранные фильтры -->
             <div class="selected-filters mt-3" th:if="${searchQuery != null || selectedCategoryId != null || (selectedProductIds != null && !selectedProductIds.isEmpty())}">
                 <span class="fw-bold">Выбрано: </span>
                 <span th:if="${searchQuery != null}" class="badge bg-primary badge-filter">
@@ -102,7 +100,6 @@
             </div>
         </div>
         
-        <!-- Модальное окно для полного рецепта -->
         <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -137,7 +134,6 @@
             </div>
         </div>
         
-        <!-- Список рецептов -->
         <div class="row" th:if="${!recipes.isEmpty()}">
             <div class="col-md-4 col-lg-3 mb-4" th:each="recipe : ${recipes}">
                 <div class="card recipe-card">
@@ -158,7 +154,6 @@
             </div>
         </div>
         
-        <!-- Сообщение, если рецептов не найдено -->
         <div class="alert alert-info" th:if="${recipes.isEmpty()}">
             Рецепты не найдены. Попробуйте изменить параметры поиска.
         </div>
@@ -185,10 +180,10 @@
         });
     </script>
 </body>
-</html>
+</html> -->
 
 
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -280,4 +275,4 @@
         });
     </script>
 </body>
-</html> -->
+</html>
