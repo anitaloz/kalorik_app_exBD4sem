@@ -19,6 +19,8 @@ public interface RecipeRepository extends JpaRepository<Recipes, Long> {
     // Поиск рецептов по названию (регистронезависимый)
     List<Recipes> findByNameContainingIgnoreCase(String name);
 
+    Optional<Recipes>findById(Long id);
+
     // Оптимизированный запрос для поиска по категории с явным JOIN
     @Query("SELECT distinct r FROM Recipes r JOIN FETCH r.categories c WHERE c.id = :categoryId")
     List<Recipes> findByCategoryId(@Param("categoryId") Long categoryId);

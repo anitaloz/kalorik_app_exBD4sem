@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.kalorik.kalorik_app.domain.Recipes;
 import com.example.kalorik.kalorik_app.services.CategoryService;
+import com.example.kalorik.kalorik_app.services.CategoryService.ResourceNotFoundException;
 import com.example.kalorik.kalorik_app.services.FoodService;
 import com.example.kalorik.kalorik_app.services.RecipeService;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,7 @@ public class RecipeController {
         @RequestParam(required = false) String search,
         @RequestParam(required = false) Long categoryId,
         @RequestParam(required = false) List<Long> productIds, // Новый параметр
+        @RequestParam(required = false) Long recipeId,
         Model model) {
         
         List<Recipes> recipes;
@@ -67,6 +69,13 @@ public class RecipeController {
         model.addAttribute("allProducts", productService.getAllProducts());
         if (productIds != null) {
             model.addAttribute("selectedProductIds", productIds);
+        }
+
+        //добавлено если что удалить
+        if (recipeId != null) {
+            Recipes fullRecipe = recipeService.getRecipeById(recipeId)
+                .orElseThrow(() -> new ResourceNotFoundException("Recipe not found"));
+            model.addAttribute("fullRecipe", fullRecipe);
         }
         
         model.addAttribute("recipes", recipes);

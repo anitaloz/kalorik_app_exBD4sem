@@ -2,6 +2,196 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рецепты</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .recipe-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .recipe-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .full-recipe-img {
+            max-height: 400px;
+            object-fit: cover;
+        }
+        .filter-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .selected-filters {
+            margin-bottom: 15px;
+        }
+        .badge-filter {
+            margin-right: 5px;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">Рецепты</h1>
+        
+        <!-- Фильтры -->
+        <div class="filter-section">
+            <form th:action="@{/recipes}" method="get">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="search" class="form-label">Поиск</label>
+                            <input type="text" class="form-control" id="search" name="search" 
+                                th:value="${searchQuery} ?: ''">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="categoryId" class="form-label">Категория</label>
+                            <select class="form-select" id="categoryId" name="categoryId">
+                                <option value="">Все категории</option>
+                                <option th:each="category : ${categories}"
+                                        th:value="${category.id}"
+                                        th:text="${category.name}"
+                                        th:selected="${selectedCategoryId} == ${category.id}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="mb-3">
+                            <label for="productIds" class="form-label">Продукты</label>
+                            <select class="form-select" id="productIds" name="productIds" multiple>
+                                <option th:each="product : ${allProducts}"
+                                        th:value="${product.id}"
+                                        th:text="${product.name}"
+                                        th:selected="${selectedProductIds != null && selectedProductIds.contains(product.id)}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Применить фильтры</button>
+                <a th:href="@{/recipes}" class="btn btn-outline-secondary">Сбросить</a>
+            </form>
+            
+            <!-- Выбранные фильтры -->
+            <div class="selected-filters mt-3" th:if="${searchQuery != null || selectedCategoryId != null || (selectedProductIds != null && !selectedProductIds.isEmpty())}">
+                <span class="fw-bold">Выбрано: </span>
+                <span th:if="${searchQuery != null}" class="badge bg-primary badge-filter">
+                    Поиск: <span th:text="${searchQuery}"></span>
+                    <a th:href="@{/recipes(categoryId=${selectedCategoryId}, productIds=${selectedProductIds})}" class="text-white ms-2">×</a>
+                </span>
+                <span th:if="${selectedCategoryId != null}" class="badge bg-success badge-filter">
+                    Категория: <span th:text="${categories.?[id == selectedCategoryId].get(0).name}"></span>
+                    <a th:href="@{/recipes(search=${searchQuery}, productIds=${selectedProductIds})}" class="text-white ms-2">×</a>
+                </span>
+                <span th:each="productId : ${selectedProductIds}" class="badge bg-info text-dark badge-filter">
+                    Продукт: <span th:text="${allProducts.?[id == productId].get(0).name}"></span>
+                    <a th:href="@{/recipes(search=${searchQuery}, categoryId=${selectedCategoryId}, productIds=${selectedProductIds != null ? selectedProductIds.stream().filter(p -> p != productId).collect(T(java.util.List)) : null})}" class="text-dark ms-2">×</a>
+                </span>
+            </div>
+        </div>
+        
+        <!-- Модальное окно для полного рецепта -->
+        <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="recipeModalLabel" th:text="${fullRecipe?.name}"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div th:if="${fullRecipe != null}">
+                            <div class="mb-3">
+                                <h6>Описание:</h6>
+                                <p th:text="${fullRecipe.text}"></p>
+                            </div>
+                            <div class="mb-3">
+                                <h6>Категории:</h6>
+                                <div th:each="category : ${fullRecipe.categories}">
+                                    <span class="badge bg-secondary" th:text="${category.name}"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h6>Продукты:</h6>
+                                <ul>
+                                    <li th:each="product : ${fullRecipe.products}" th:text="${product.name}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Список рецептов -->
+        <div class="row" th:if="${!recipes.isEmpty()}">
+            <div class="col-md-4 col-lg-3 mb-4" th:each="recipe : ${recipes}">
+                <div class="card recipe-card">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${recipe.name}"></h5>
+                        <p class="card-text text-muted" th:text="${#strings.abbreviate(recipe.text, 100)}"></p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span th:each="category : ${recipe.categories}" 
+                                      class="badge bg-secondary me-1"
+                                      th:text="${category.name}"></span>
+                            </div>
+                            <a th:href="@{/recipes(recipeId=${recipe.id}, search=${searchQuery}, categoryId=${selectedCategoryId}, productIds=${selectedProductIds})}" 
+                               class="btn btn-sm btn-outline-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Сообщение, если рецептов не найдено -->
+        <div class="alert alert-info" th:if="${recipes.isEmpty()}">
+            Рецепты не найдены. Попробуйте изменить параметры поиска.
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const recipeId = urlParams.get('recipeId');
+            
+            if (recipeId) {
+                const recipeModal = new bootstrap.Modal(document.getElementById('recipeModal'));
+                recipeModal.show();
+                
+                document.getElementById('recipeModal').addEventListener('hidden.bs.modal', function () {
+                    const newUrl = window.location.pathname + 
+                                  '?search=' + encodeURIComponent(urlParams.get('search') || '') + 
+                                  '&categoryId=' + (urlParams.get('categoryId') || '') + 
+                                  '&productIds=' + (urlParams.get('productIds') || '');
+                    window.history.replaceState({}, document.title, newUrl);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
     <title>Рецепты</title>
     <style>
         .recipe { margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
@@ -90,123 +280,4 @@
         });
     </script>
 </body>
-</html>
-
-
-<!-- <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Recipes App</title>
-    <style>
-        .recipe-card {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-        .search-section {
-            background: #f5f5f5;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        .search-option {
-            margin: 10px 0;
-        }
-    </style>
-</head>
-<body>
-    <h1>Recipes Finder</h1>
-    
-    <div class="search-section">
-        <form method="get" action="/recipes">
-            <div class="search-option">
-                <h3>Search by name:</h3>
-                <input type="text" name="search" placeholder="Recipe name...">
-                <button type="submit">Search</button>
-            </div>
-            
-            <div class="search-option">
-                <h3>Search by category:</h3>
-                <select name="categoryId">
-                    <option value="">Select category</option>
-                    <option th:each="category : ${categories}" 
-                            th:value="${category.id}"
-                            th:text="${category.name}"></option>
-                </select>
-                <button type="submit">Filter</button>
-            </div>
-            
-            <div class="search-option">
-                <h3>Search by products (comma separated IDs):</h3>
-                <input type="text" name="productIds" placeholder="1,2,3">
-                <button type="submit">Find recipes</button>
-            </div>
-            
-            <div class="search-option">
-                <h3>Full text search:</h3>
-                <input type="text" name="fullTextSearch" placeholder="Any text...">
-                <button type="submit">Full search</button>
-            </div>
-            
-            <div>
-                <button type="submit" name="clear" value="true">Show all recipes</button>
-            </div>
-        </form>
-    </div>
-    
-    <h2 th:if="${recipes.empty}">No recipes found</h2>
-    <div th:unless="${recipes.empty}">
-        <h2>Found <span th:text="${recipes.size()}"></span> recipes:</h2>
-        
-        <div th:each="recipe : ${recipes}" class="recipe-card">
-            <h3 th:text="${recipe.name}"></h3>
-            <p th:text="${recipe.description} ?: 'No description'"></p>
-            <p><strong>Ingredients:</strong> 
-               <span th:each="product : ${recipe.products}"
-                     th:text="${product.name} + (${productStat.last} ? '' : ', ')"></span>
-            </p>
-        </div>
-    </div>
-</body>
 </html> -->
-
-<!-- <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Рецепты</title>
-</head>
-<body>
-    <h1>Список рецептов</h1>
-    
-    <div th:if="${message}" th:text="${message}"></div>
-    
-    <div th:unless="${recipes == null or recipes.empty}">
-        <div th:each="recipe : ${recipes}">
-            <h2 th:text="${recipe.name} ?: 'Без названия'"></h2>
-            <p th:text="${recipe.text} ?: 'Нет описания'"></p>
-            
-            <h3>Продукты:</h3>
-            <ul th:if="${recipe.products != null and not recipe.products.empty}">
-                <li th:each="product : ${recipe.products}" 
-                    th:text="${product.name} ?: 'Неизвестный продукт'"></li>
-            </ul>
-            <p th:unless="${recipe.products != null and not recipe.products.empty}">
-                Нет информации о продуктах
-            </p>
-            
-            <h3>Категории:</h3>
-            <ul th:if="${recipe.categories != null and not recipe.categories.empty}">
-                <li th:each="category : ${recipe.categories}" 
-                    th:text="${category.name} ?: 'Без категории'"></li>
-            </ul>
-            <p th:unless="${recipe.categories != null and not recipe.categories.empty}">
-                Нет категорий
-            </p>
-        </div>
-    </div>
-</body>
-</html> -->
-

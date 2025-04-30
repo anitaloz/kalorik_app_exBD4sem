@@ -13,7 +13,9 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.foreign.Linker.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 @Service
 public class RecipeService {
@@ -28,6 +30,10 @@ public class RecipeService {
     @Transactional(readOnly = true)
     public List<Recipes> getAllRecipes() {
         return recipeRepository.findAll();
+    }
+
+    public Optional<Recipes>getRecipeById(Long id){
+        return recipeRepository.findById(id);
     }
 
     // 2. Поиск по названию (без учета регистра)
