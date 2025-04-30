@@ -328,11 +328,6 @@ document.addEventListener("DOMContentLoaded", function() {
             });
     }
 
-
-
-
-
-
     function addProductToMeal(productId, mealTitle, quantity, unit, productSize, inputDate) {
         // Отправляем данные на сервер
         fetch('/addProductToMeal', {
@@ -371,4 +366,23 @@ document.addEventListener("DOMContentLoaded", function() {
                 alert('Ошибка добавления продукта в прием пищи.');
             });
     }
+
+
+
+    const plusButton=document.getElementById("plus");
+    const minusButton=document.getElementById("minus");
+    const currentWeightInput = document.querySelector('.currentWeight');
+
+    minusButton.addEventListener('click', function() {
+        let currentWeight = parseFloat(currentWeightInput.value);
+        currentWeight -= 0.1;
+        currentWeightInput.value = currentWeight.toFixed(1); // Ограничить одним десятичным знаком
+    });
+
+    plusButton.addEventListener('click', function() {
+        let currentWeight = parseFloat(currentWeightInput.value);
+        currentWeight += 0.1;
+        currentWeightInput.value = currentWeight.toFixed(1); // Ограничить одним десятичным знаком
+    });
+
 });

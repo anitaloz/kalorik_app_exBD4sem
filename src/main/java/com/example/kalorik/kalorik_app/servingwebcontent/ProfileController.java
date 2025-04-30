@@ -1,5 +1,6 @@
 package com.example.kalorik.kalorik_app.servingwebcontent;
 
+import com.example.kalorik.kalorik_app.domain.Body;
 import com.example.kalorik.kalorik_app.domain.User;
 import com.example.kalorik.kalorik_app.domain.UserInfo;
 import com.example.kalorik.kalorik_app.services.*;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Date;
 
 @Controller
 public class ProfileController {
@@ -26,6 +29,8 @@ public class ProfileController {
     FoodService foodService;
     @Autowired
     UserService userService;
+    @Autowired
+    BodyService bodyService;
 
     @GetMapping("/profile")
     String getProfile(Model model){
@@ -79,7 +84,13 @@ public class ProfileController {
         ui.setCaloriesnum(userInfo.getCaloriesnum());
         ui.setPurpose(userInfo.getPurpose());
         ui.setWeightKg(userInfo.getWeightKg());
-
+        Date d=new Date();
+        Body b=new Body();
+        b.setDt(d);
+        b.setWeight(userInfo.getWeightKg());
+        b.setHeight(userInfoService.getUserInfoByUsr(u).getHeightCm());
+        b.setUser(u);
+        bodyService.save(b);
         userInfoService.save(ui);
         return "redirect:/profile";
     }
@@ -133,6 +144,8 @@ public class ProfileController {
         ui.setDateOfBirth(userInfo.getDateOfBirth());
         ui.setHeightCm(userInfo.getHeightCm());
         ui.setActivityLevel(userInfo.getActivityLevel());
+
+
         userInfoService.save(ui);
         return "redirect:/profile";
     }

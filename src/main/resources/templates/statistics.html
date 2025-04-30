@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Body Chart</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <link rel="stylesheet" th:href="@{/styles/style.css}">
+</head>
+<body>
+<div class="header">
+    <nav>
+        <ul class="px-3 mx-sm-2">
+            <li><a th:href="@{/}">Главная</a></li>
+            <li><a href="">Рецепты</a></li>
+            <li><a th:href="@{/profile}">Профиль</a></li>
+            <li><form th:action="@{/logout}" method="post">
+                <input type="submit" value="Выйти"/>
+            </form></li>
+        </ul>
+    </nav>
+</div>
+<div class="container">
+
+    <!-- Форма для ввода ID пользователя (если нужно) и выбора диапазона дат-->
+    <form th:action="@{/statistics}" method="get">
+        <div class="mb-3">
+            <label for="startDate" class="form-label">Start Date:</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}">
+        </div>
+
+        <div class="mb-3">
+            <label for="endDate" class="form-label">End Date:</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Chart</button>
+    </form>
+
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <canvas id="weightChart" width="400" height="200"></canvas>
+    <canvas id="heightChart" width="400" height="200"></canvas>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        async function initializeChart() {
+            var labels = /*[[${labels}]]*/ [];
+            var weightData = /*[[${weightData}]]*/ [];
+            var heightData = /*[[${heightData}]]*/ [];
+
+            // Weight Chart
+            const weightChart = new Chart(document.getElementById('weightChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Weight (kg)',
+                        data: weightData,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                    options: {
+                        scales: {
+                            y: {
+                                // Удаляем min: function(...)
+                            }
+                        },
+                        // Добавляем afterLayout
+                        onResize: function(chart, size) {
+                            chart.update();
+                        },
+                        afterLayout: function (chart) {
+                            // Обновляем минимальное значение оси Y после отрисовки графика
+                            const minValue = Math.min(...weightData); // Доступ к weightData вне контекста
+                            const yAxis = chart.scales['y']; // Получаем доступ к шкале Y
+                            yAxis.min = Math.max(0, minValue - 20); // Устанавливаем min, учитывая отрицательные значения
+                            chart.update(); // Перерисовываем график
+                        }
+                    }
+                });
+            }
+            initializeChart();
+        /*]]>*/
+    </script>
+
+</div>
+</body>
+</html>
