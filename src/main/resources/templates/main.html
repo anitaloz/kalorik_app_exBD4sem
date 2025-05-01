@@ -29,6 +29,8 @@
             </ul>
         </nav>
     </div>
+
+<div class="block-main container">
     <div class="date-control">
         <form th:action="@{/main}" method="get">
             <label for="inputDate">Дата: </label>
@@ -56,6 +58,8 @@
     <span>/</span>
     <span th:text="${chNum}"></span>
     <br>
+
+
     <div class="meals">
         <h2>Завтрак</h2>
         <div th:each="mfi, iterStat : ${brfmfi}">
@@ -67,8 +71,8 @@
         <button id="BreakfastAdd">Добавить</button>
         <button id="BreakfastShow">Посмотреть</button>
         <div class="out">
-        <div id="formSearchingContainer1"></div>
-        <div class="results"></div>
+            <div id="formSearchingContainer1"></div>
+            <div class="results container row"></div>
         </div>
         <div class="show">
             <div id="showContainerBF"></div>
@@ -84,7 +88,7 @@
         <button id="LunchShow">Посмотреть</button>
         <div class="out">
         <div id="formSearchingContainer2"></div>
-        <div class="results"></div>
+        <div class="results container row"></div>
         </div>
         <div class="show">
         <div id="showContainerL"></div>
@@ -99,14 +103,16 @@
         <button id="DinnerAdd">Добавить</button>
         <button id="DinnerShow">Посмотреть</button>
         <div class="out">
-        <div id="formSearchingContainer3"></div>
-        <div class="results"></div>
+                <div id="formSearchingContainer3"></div>
+                <div class="results container row"></div>
         </div>
         <div class="show">
             <div id="showContainerD"></div>
         </div>
 
     </div>
+
+
     <div class="body_measure">
         <form action="/main" method="post">
             <button type="button" id="minus">-</button>
@@ -117,6 +123,9 @@
             <button type="submit">Сохранить</button>
         </form>
     </div>
+
+
+</div>
 
 </body>
 
