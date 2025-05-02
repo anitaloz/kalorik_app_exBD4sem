@@ -90,6 +90,16 @@ create table recipes (
  name VARCHAR(100),
  text TEXT
 );
+
+ALTER TABLE recipes ADD COLUMN image_url VARCHAR(255);
+select*from recipes;
+update recipes set image_url='/images/omlet.jpg' where id=1;
+update recipes set image_url='/images/grechka.jpg' where id=2;
+update recipes set image_url='/images/pomidor.jpg' where id=3;
+update recipes set image_url='/images/zapekanka.jpg' where id=4;
+
+
+
 create table recipe_product (
  recipe_id bigserial,
  product_id bigserial,

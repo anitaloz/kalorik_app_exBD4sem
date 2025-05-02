@@ -17,6 +17,9 @@ public class Recipes {
     @Column(name = "text", columnDefinition = "TEXT")
     private String text;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @ManyToMany
     @JoinTable(
             name = "recipe_product",
@@ -71,5 +74,13 @@ public class Recipes {
 
     public void setCategories(Set<Categories> categories) {
         this.categories = categories;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
