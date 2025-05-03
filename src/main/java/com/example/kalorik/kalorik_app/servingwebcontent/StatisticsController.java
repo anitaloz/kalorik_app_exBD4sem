@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.lang.Math.pow;
 
 @Controller
 public class StatisticsController {
@@ -61,10 +64,20 @@ public class StatisticsController {
         List<String> labels = bodyData.stream().map(body -> body.getDt().toString()).collect(Collectors.toList());
         List<Double> weightData = bodyData.stream().map(body -> body.getWeight().doubleValue()).collect(Collectors.toList());
         List<Integer> heightData = bodyData.stream().map(Body::getHeight).collect(Collectors.toList());
-
+        List<Double> imt=new ArrayList<>();
+        for(int i=0; i<weightData.size(); i++)
+        {
+            double h=heightData.get(i).doubleValue()/100;
+            double val=weightData.get(i)/pow(h,2);
+            imt.add(val);
+        }
+        for(int i=0; i<imt.size(); i++)
+        {
+            System.out.println(imt.get(i));
+        }
         model.addAttribute("labels", labels);
         model.addAttribute("weightData", weightData);
-        model.addAttribute("heightData", heightData);
+        model.addAttribute("imtData", imt);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
 

@@ -8,8 +8,7 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
-    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <link rel="stylesheet" th:href="@{/styles/stat.css}">
 </head>
 <body>
 <div class="header">
@@ -45,15 +44,60 @@
         <span th:text="${errorMessage}"></span>
     </div>
 
+    <h2>Вес</h2>
     <canvas id="weightChart" width="400" height="200"></canvas>
-    <canvas id="heightChart" width="400" height="200"></canvas>
+    <br />
+    <h2>ИМТ</h2>
+    <canvas id="imtChart" width="400" height="200"></canvas>
+
+    <br/>
+    <h2>Соответствие индекса массы тела (ИМТ)</h2>
+    <p>Индекс массы тела - это показатель соответствия между массой человека и его ростом.</p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Индекс массы тела</th>
+            <th>Соответствие между массой человека и его ростом</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>16 и менее</td>
+            <td>Выраженный дефицит массы тела</td>
+        </tr>
+        <tr>
+            <td>16 - 18,5</td>
+            <td>Недостаточная (дефицит) масса тела</td>
+        </tr>
+        <tr>
+            <td>18,5 - 25</td>
+            <td>Норма</td>
+        </tr>
+        <tr>
+            <td>25 - 30</td>
+            <td>Избыточная масса тела (предожирение)</td>
+        </tr>
+        <tr>
+            <td>30 - 35</td>
+            <td>Ожирение первой степени</td>
+        </tr>
+        <tr>
+            <td>35 - 40</td>
+            <td>Ожирение второй степени</td>
+        </tr>
+        <tr>
+            <td>40 и более</td>
+            <td>Ожирение третьей степени (морбидное)</td>
+        </tr>
+        </tbody>
+    </table>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
         async function initializeChart() {
             var labels = /*[[${labels}]]*/ [];
             var weightData = /*[[${weightData}]]*/ [];
-            var heightData = /*[[${heightData}]]*/ [];
 
             // Weight Chart
             const weightChart = new Chart(document.getElementById('weightChart'), {
@@ -89,6 +133,70 @@
                 });
             }
             initializeChart();
+        /*]]>*/
+    </script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        async function initializeChart() {
+            var labels = /*[[${labels}]]*/ [];
+            var imtData = /*[[${imtData}]]*/ [];
+
+            // Величины нормального ИМТ
+            const normalImtMin = 18.5;
+            const normalImtMax = 24.9;
+
+            const imtChart = new Chart(document.getElementById('imtChart'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'ИМТ',
+                        data: imtData,
+                        borderColor: 'rgb(192,75,186)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            min: Math.min(...imtData, normalImtMin) - 5, // Учитываем нормальный минимум
+                            max: Math.max(...imtData, normalImtMax) + 5 // и максимум
+                        }
+                    },
+                    plugins: {
+                        beforeDraw: (chart) => {
+                            const {ctx, chartArea: {top, bottom, left, right, width, height}, scales: {x, y}} = chart;
+
+                            // Закрашиваем область нормального ИМТ
+                            const imtMinPixel = y.getPixelForValue(normalImtMin);
+                            const imtMaxPixel = y.getPixelForValue(normalImtMax);
+
+                            ctx.save();
+                            ctx.fillStyle = 'rgba(0, 255, 0, 0.15)'; // Зеленый цвет с прозрачностью
+                            ctx.fillRect(left, imtMaxPixel, width, imtMinPixel - imtMaxPixel); // Рисуем прямоугольник
+                            ctx.restore();
+                        }
+                    }
+                },
+                plugins: [{  //Обязательно нужно зарегистрировать плагин здесь
+                    id: 'normalImtBackground',
+                    beforeDraw: (chart) => {  //Эта функция будет выполнена перед отрисовкой графика
+                        const {ctx, chartArea: {top, bottom, left, right, width, height}, scales: {x, y}} = chart;
+
+                        const imtMinPixel = y.getPixelForValue(normalImtMin);
+                        const imtMaxPixel = y.getPixelForValue(normalImtMax);
+
+                        ctx.save();
+                        ctx.fillStyle = 'rgba(0, 255, 0, 0.15)';
+                        ctx.fillRect(left, imtMaxPixel, width, imtMinPixel - imtMaxPixel);
+                        ctx.restore();
+                    }
+                }]
+            });
+        }
+        initializeChart();
         /*]]>*/
     </script>
 

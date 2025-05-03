@@ -58,6 +58,9 @@ public class UserInfo {
     @Column(name="desired_weight")
     private BigDecimal desiredWeight;
 
+    @Column(name="image_url", length=255)
+    private String imageUrl;
+
     public Integer calculateAge() {
         if (dateOfBirth == null) {
             return null; // Or throw an exception, or return a default value
@@ -74,6 +77,13 @@ public class UserInfo {
     // Method to calculate age
 
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public BigDecimal getDesiredWeight() {
         return desiredWeight;
@@ -109,22 +119,22 @@ public class UserInfo {
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "UserInfo{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", dateOfBirth=" + dateOfBirth +
-                ", gender='" + gender + '\'' +
-                ", heightCm=" + heightCm +
-                ", weightKg=" + weightKg +
-                ", activityLevel='" + activityLevel + '\'' +
-                ", caloriesnum=" + caloriesnum +
-                ", purpose='" + purpose + '\'' +
-                ", usr=" + usr +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "UserInfo{" +
+//                "id=" + id +
+//                ", firstName='" + firstName + '\'' +
+//                ", lastName='" + lastName + '\'' +
+//                ", dateOfBirth=" + dateOfBirth +
+//                ", gender='" + gender + '\'' +
+//                ", heightCm=" + heightCm +
+//                ", weightKg=" + weightKg +
+//                ", activityLevel='" + activityLevel + '\'' +
+//                ", caloriesnum=" + caloriesnum +
+//                ", purpose='" + purpose + '\'' +
+//                ", usr=" + usr +
+//                '}';
+//    }
 
     //Убираем поле username из конструктора, т.к. теперь используем Usr
     /*public UserInfo(String username) {
@@ -142,15 +152,15 @@ public class UserInfo {
         this.id = id;
     }
 
-    /*
-    public String getUsername() {
-        return username;
-    }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    */
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
+
 
     public Integer getCaloriesnum() {
         return caloriesnum;

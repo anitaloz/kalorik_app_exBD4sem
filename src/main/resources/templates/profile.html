@@ -24,7 +24,7 @@
 <div class="profile-container" th:if="${editProfileMode == false}">
     <span th:text="${UI.usr.username}"></span>
     <h1>Профиль</h1>
-
+    <img th:src="${UI.imageUrl}" th:alt="${UI.getUsr().getUsername()}" width="150px">
     <div class="profile-item">
         <span class="profile-label">Имя:</span>
         <span th:text="${UI.firstName}"></span>
@@ -58,10 +58,13 @@
 </div>
 
 <div class="profile-container" th:if="${editProfileMode == true}">
-    <form action="/profile/MainInfoSave" method="post">
+    <form action="/profile/MainInfoSave" method="post" enctype="multipart/form-data">
         <span th:text="${UI.usr.username}"></span>
         <h1>Профиль</h1>
-
+        <label>
+            Фотография профиля:<br />
+            <input type="file" name="coverImage" accept="image/*"/>
+        </label><br />
         <div class="form-group">
             <label class="form-label" for="firstName">Имя:</label>
             <input type="text" class="form-input" id="firstName" name="firstName" th:value="${UI.firstName}"/>

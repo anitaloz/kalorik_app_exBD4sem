@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
@@ -108,7 +110,7 @@ public class ProfileController {
     }
 
     @PostMapping("profile/MainInfoSave")
-    public String saveProfile(@ModelAttribute("UI") UserInfo userInfo, RedirectAttributes redirectAttributes) {
+    public String saveProfile(@RequestParam("coverImage") MultipartFile file, @ModelAttribute("UI") UserInfo userInfo, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userService.findByUsername(auth.getName());
 
@@ -145,7 +147,14 @@ public class ProfileController {
         ui.setHeightCm(userInfo.getHeightCm());
         ui.setActivityLevel(userInfo.getActivityLevel());
 
-
+        userInfoService.deleteOldCoverImage(ui);
+        if (!file.isEmpty()) {
+            try {
+                userInfoService.saveCoverImage(ui, file);
+            } catch (Exception e) {
+                return "error";
+            }
+        }
         userInfoService.save(ui);
         return "redirect:/profile";
     }

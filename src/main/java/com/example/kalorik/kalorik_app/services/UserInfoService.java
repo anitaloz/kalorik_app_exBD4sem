@@ -3,9 +3,16 @@ package com.example.kalorik.kalorik_app.services;
 import com.example.kalorik.kalorik_app.domain.User;
 import com.example.kalorik.kalorik_app.domain.UserInfo;
 import com.example.kalorik.kalorik_app.repositories.UserInfoRepo;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service
 public class UserInfoService {
@@ -120,5 +127,48 @@ public class UserInfoService {
             return "Цель не может быть длиннее 30 символов.";
         }
         return null;
+    }
+
+    public void deleteOldCoverImage(UserInfo userInfo) {
+        if(userInfo.getImageUrl()!=null && !userInfo.getImageUrl().isEmpty()) {
+            String oldCoverImage = userInfo.getImageUrl().substring(7);
+            if (!oldCoverImage.isEmpty()) {
+                Path oldFilePath = Paths.get(uploadPath, oldCoverImage);
+                try {
+                    Files.deleteIfExists(oldFilePath);
+                } catch (IOException e) {
+                    // Логируем ошибку, но не прерываем процесс
+                    System.err.println("Failed to delete old cover image: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    @Value("${upload.directory}") // Читаем путь из application.properties
+    private String uploadPath;
+    public void saveCoverImage(UserInfo userInfo, MultipartFile file) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            // 1. Генерируем уникальное имя файла
+            deleteOldCoverImage(userInfo);
+            String uuidFile = UUID.randomUUID().toString();
+            String originalFileName = file.getOriginalFilename();
+            String fileExtension = "";
+            if (originalFileName != null && originalFileName.contains(".")) {
+                fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            }
+            String fileName = uuidFile + fileExtension;
+
+            // 2. Создаем путь для сохранения файла
+            Path filePath = Paths.get(uploadPath, fileName);
+
+            // 3. Сохраняем файл
+            try {
+                Files.write(filePath, file.getBytes());
+            } catch (IOException e) {
+                throw new IOException("Failed to save cover image: " + e.getMessage());
+            }
+            fileName="/images/"+fileName;
+            userInfo.setImageUrl(fileName);
+        }
     }
 }
