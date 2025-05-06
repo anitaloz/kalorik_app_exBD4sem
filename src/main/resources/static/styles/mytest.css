@@ -169,56 +169,59 @@
 }
 /*----------------------*/
 .flatpickr-calendar {
-    background: #fff !important;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
-    border-radius: 5px !important;
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
   }
 
 .flatpickr-day {
-    font-size: 14px !important;
-    color: #333 !important;
+    font-size: 14px;
+    color: #333;
 }
 .flatpickr-day.disabled{
-    background-color: #4d1924 !important;
+    background-color: #4d1924;
 }
 .flatpickr-day:hover, .flatpickr-day.today:hover, .flatpickr-day.disabled:hover {
-    background-color: #fda9c546 !important;
-    border-style: none !important;
-    box-shadow: 5px 3px 10px #e26b8592 !important;
-    color: #333 !important;
+    background-color: #fda9c546;
+    border-style: none;
+    box-shadow: 5px 3px 10px #e26b8592;
+    color: #333;
 }
 .flatpickr-day.selected {
-    background: linear-gradient(120deg, #ff8db3, #faa3c0, #fae3a3b7)!important;
-    background-color: #f8a7c2 !important;
-    color:#fffbfc !important;
-    border-style: none !important;
+    background: linear-gradient(120deg, #ff8db3, #faa3c0, #fae3a3b7);
+    background-color: #f8a7c2;
+    color:#fffbfc;
+    border-style: none;
 }
 .flatpickr-day.selected:hover {
-    background: linear-gradient(120deg, #ff8db39c, #faa3c096, #fae3a3b7) !important;
-    background-color: #ffffff !important;
-    color:#fffbfc !important;
-    border-style: none !important;
-    box-shadow: 5px 3px 10px #e26b8592 !important;
+    background: linear-gradient(120deg, #ff8db39c, #faa3c096, #fae3a3b7);
+    background-color: #ffffff;
+    color:#fffbfc;
+    border-style: none;
+    box-shadow: 5px 3px 10px #e26b8592;
 }
 .flatpickr-day.today{
-    border-radius: 2px !important;
-    border-color: #f8a7c2 !important;
-    border-radius: 100% !important;
+    border-radius: 2px;
+    border-color: #f8a7c2;
+    border-radius: 100%;
+}
+.cur-year{
+    background-color: #e26b85;
 }
 .arrowup, .arrowdown{
-    background-color: #ffffff !important;
+    background-color: #ffffff;
 }
 .flatpickr-weekdays{
-    background: linear-gradient(to right, #ff8db39c, #faa3c096, #fae3a3b7) !important;
-    background-color: #ffffff !important;
+    background: linear-gradient(to right, #ff8db39c, #faa3c096, #fae3a3b7);
+    background-color: #ffffff;
 }
 .flatpickr-weekday {
-    color: #5d202cbb !important;
+    color: #5d202cbb;
   }
 #inputDate:focus {
-    outline: none !important;
-    border-color: #e26f95 !important; /* Синяя обводка при фокусе */
-    box-shadow: 0 0 5px rgba(255, 156, 212, 0.81) !important; /* Тень при фокусе */
+    outline: none;
+    border-color: #e26f95; /* Синяя обводка при фокусе */
+    box-shadow: 0 0 5px rgba(255, 156, 212, 0.81); /* Тень при фокусе */
   }
 .selected-date{
     position: relative;
