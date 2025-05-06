@@ -386,3 +386,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#inputDate", {
+      dateFormat: "Y-m-d", // Формат даты
+      // Другие опции:
+      // enableTime: true,  // Включить выбор времени
+      // ...
+    });
+  });
