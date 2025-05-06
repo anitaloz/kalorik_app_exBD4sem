@@ -1,11 +1,16 @@
 header{
+   /*
     background: linear-gradient(45deg,  #ff94c4, #f4a3fa, #d4a3fa);
-    background-color: #ffffff;
+    */
+    height: 160px;
+    background-color: #e8e8e8;
     width: 100%;
+    border-radius: 0px 0px 15px 15px;
 }
 .header-wrapper{
     position: relative;
     width: 100%;
+    height: 100%;
     padding: 0px 10px 0px 10px;
     display: flex;
     justify-content: center;
@@ -18,7 +23,6 @@ header{
 .header-nav-wrapper{
     display: flex;
     justify-content: center;
-    background-color: #fb88d8;
 }
 .header-nav-wrapper>nav{
     display: flex;
@@ -31,20 +35,55 @@ header{
     padding: 0px;
     height: max-content;
     list-style-type:none;
+    background: linear-gradient(45deg,  #ff94c4, #faa3ce, #faf1a3);
+    background-color: rgb(240, 255, 255);
+    border-radius: 0px 0px 15px 15px;
 }
 .header-nav-wrapper>nav>ul>li{
     display: flex;
     align-items: center;
-    padding: 3px;
+    padding: 4px 8px 4px 8px;
     text-align: center;
     min-height:100%;
-    background-color: rgb(240, 255, 255);
+}
+.header-nav-wrapper>nav>ul>li>div>a{
+    font-size: 24px;
+    font-weight: 500;
+    text-decoration: none;
+    color:#2e121e;
+}
+.header-nav-wrapper>nav>ul>li>div>a:hover{
+    font-size: 26px;
+    font-weight: 500;
+    text-decoration: none;
 }
 .nav-profile{
     display: flex;
     vertical-align: middle;
     align-items: center;
     text-align: center;
+}
+.nav-selected{
+    position: relative;
+    z-index: 1;
+}
+.nav-selected>div{
+    position: relative;
+    z-index: 3;
+}
+.nav-selected::after{
+    content: "";
+    position: absolute;
+    height:inherit;
+    width:inherit;
+    margin: 3px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 2;
+    background-color: #ffffff7e;
+    border-radius: 5px 15px 5px 15px;
 }
 
 
@@ -61,9 +100,8 @@ header{
 }
 /* LOGO */
 .header-logo-back{
-   background-color: rgba(0, 0, 0, 0.297);
-   min-width: 120px;
-   min-height: 120px;
+   min-width: 150px;
+   min-height: 150px;
    background-image: url("../images/l2.png");
    background-size: cover;
    background-repeat: no-repeat;
