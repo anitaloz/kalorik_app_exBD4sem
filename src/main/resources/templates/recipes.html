@@ -44,7 +44,14 @@
         <nav>
             <ul class="px-3 mx-sm-2">
                 <li><a th:href="@{/}">Главная</a></li>
+                <li><div class="nav-profile">
+                    <a th:href="@{/profile}">Профиль</a>
+                    <a th:href="@{/profile}">
+                        <img alt="logo" width="50" th:src="${avatar}" id="profile-logo">
+                    </a>
+                </div>
                 <li><form th:action="@{/logout}" method="post">
+
                     <input type="submit" value="Выйти"/>
                 </form></li>
             </ul>

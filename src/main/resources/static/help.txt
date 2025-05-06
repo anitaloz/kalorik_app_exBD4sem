@@ -77,6 +77,13 @@ create table user_info
     purpose        varchar(30),
     desired_weight numeric(5, 2)
 );
+
+ALTER TABLE user_info ADD COLUMN image_url VARCHAR(255);
+update user_info set image_url='/images/myimage20250430205642.png' where id=1;
+
+
+
+
 create table user_role
 (
     user_id bigint      not null

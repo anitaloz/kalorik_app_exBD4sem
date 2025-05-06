@@ -131,10 +131,59 @@ public class GreetingController {
         Date d=new Date();
         if(inputDate!=null)
             d=inputDate;
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd.MM.yyyy");
         String formattedDate = dateFormat.format(d);
-        String formattedDate2 = dateFormat2.format(d);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date nw = cal.getTime();
+        String formattedDate2;
+        SimpleDateFormat sdfShort = new SimpleDateFormat("E");
+        Date nw1=new Date();
+        if(d.equals(nw) || d.equals(nw1))
+        {
+            formattedDate2="Сегодня";
+        }
+        else {
+            Calendar cal1 = Calendar.getInstance(); // Получаем текущую дату и время
+            cal1.add(Calendar.DATE, -1); // Вычитаем 1 день
+            cal1.set(Calendar.HOUR_OF_DAY, 0);
+            cal1.set(Calendar.MINUTE, 0);
+            cal1.set(Calendar.SECOND, 0);
+            cal1.set(Calendar.MILLISECOND, 0);
+            Date yesterday = cal1.getTime();
+            if (d.equals(yesterday)) {
+                formattedDate2 = "Вчера";
+            } else {
+                Calendar cal2 = Calendar.getInstance(); // Получаем текущую дату и время
+                cal2.add(Calendar.DATE, -2); // Вычитаем 1 день
+                cal2.set(Calendar.HOUR_OF_DAY, 0);
+                cal2.set(Calendar.MINUTE, 0);
+                cal2.set(Calendar.SECOND, 0);
+                cal2.set(Calendar.MILLISECOND, 0);
+                Date befyest = cal2.getTime();
+                if (d.equals(befyest)) {
+                    formattedDate2 = "Позавчера";
+                } else {
+                    Calendar cal3 = Calendar.getInstance(); // Получаем текущую дату и время
+                    cal3.add(Calendar.DATE, +1); // Вычитаем 1 день
+                    cal3.set(Calendar.HOUR_OF_DAY, 0);
+                    cal3.set(Calendar.MINUTE, 0);
+                    cal3.set(Calendar.SECOND, 0);
+                    cal3.set(Calendar.MILLISECOND, 0);
+                    Date tomorrow = cal3.getTime();
+                    if (d.equals(tomorrow)) {
+                        formattedDate2 = "Завтра";
+                    } else formattedDate2 = sdfShort.format(d) + ", " + dateFormat2.format(d);
+                }
+            }
+        }
+        formattedDate2=formattedDate2.substring(0, 1).toUpperCase() + formattedDate2.substring(1);
         List<MealFoodItems> breakfastItems=new ArrayList<MealFoodItems>();
         List<Meals> breakfast=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "breakfast", u);
         for(Meals m:breakfast)
@@ -183,9 +232,9 @@ public class GreetingController {
                 sumch+=m.getFood().getCh()*m.getQuantity()/m.getFood().getServingSize();
             }
         }
-        double belNum=ui.getWeightKg().doubleValue()*1.5;
-        double chNum=ui.getWeightKg().doubleValue()*2;
-        double fatsNum=ui.getWeightKg().doubleValue()*0.8;
+        int belNum=(int)(ui.getWeightKg().doubleValue()*1.5)+1;
+        int chNum=(int)(ui.getWeightKg().doubleValue()*2)+1;
+        int fatsNum=(int)(ui.getWeightKg().doubleValue()*0.8)+1;
         List<Meals> brf=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "breakfast", u);
         List<String> brfmfiSTRING=new ArrayList<String>();
 
@@ -217,6 +266,7 @@ public class GreetingController {
             }
         }
         BigDecimal w=userInfoService.getUserInfoByUsr(u).getWeightKg().setScale(1, RoundingMode.HALF_UP);;
+        String avatar=userInfoService.getUserInfoByUsr(u).getImageUrl();
         model.addAttribute("caloriesNum", ui.getCaloriesnum());
         model.addAttribute("breakfastItems", breakfastItems);
         model.addAttribute("lunchItems", lunchItems);
@@ -234,6 +284,8 @@ public class GreetingController {
         model.addAttribute("lnchmfi", lnchSTRING);
         model.addAttribute("dnmfi", dnSTRING);
         model.addAttribute("currentWeight", w);
+        model.addAttribute("avatar", avatar);
+
         return "main.html";
     }
 

@@ -29,14 +29,6 @@ public class StatisticsController {
     @Autowired
     UserService userService;
 
-//    @GetMapping("/statistics")
-//    String getStat(Model model)
-//    {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User u=userService.findByUsername(auth.getName());
-//        List<Body> lb=bodyService.findBodiesByUser(u);
-//        return "statistics";
-//    }
 
     @GetMapping("/statistics")
     public String showBodyChart(
@@ -80,7 +72,8 @@ public class StatisticsController {
         model.addAttribute("imtData", imt);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
-
+        String avatar=userInfoService.getUserInfoByUsr(u).getImageUrl();
+        model.addAttribute("avatar", avatar);
         return "statistics";
     }
 }

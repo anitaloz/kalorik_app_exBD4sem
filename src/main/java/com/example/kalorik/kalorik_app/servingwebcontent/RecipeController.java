@@ -1,17 +1,18 @@
 package com.example.kalorik.kalorik_app.servingwebcontent;
 
 import com.example.kalorik.kalorik_app.domain.Recipes;
-import com.example.kalorik.kalorik_app.services.RecipeService;
+import com.example.kalorik.kalorik_app.domain.User;
+import com.example.kalorik.kalorik_app.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.kalorik.kalorik_app.domain.Recipes;
-import com.example.kalorik.kalorik_app.services.CategoryService;
 import com.example.kalorik.kalorik_app.services.CategoryService.ResourceNotFoundException;
-import com.example.kalorik.kalorik_app.services.FoodService;
 import com.example.kalorik.kalorik_app.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,10 @@ public class RecipeController {
     private final RecipeService recipeService;
     private final CategoryService categoryService;
     private final FoodService productService; // Новый сервис
-
+    @Autowired
+    private UserInfoService userInfoService;
+    @Autowired
+    private UserService userService;
     @Autowired
     public RecipeController(RecipeService recipeService, 
                           CategoryService categoryService,
@@ -48,7 +52,8 @@ public class RecipeController {
         @RequestParam(required = false) List<Long> productIds, // Новый параметр
         @RequestParam(required = false) Long recipeId,
         Model model) {
-        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User u=userService.findByUsername(auth.getName());
         List<Recipes> recipes;
         
         if (search != null || categoryId != null || (productIds != null && !productIds.isEmpty())) {
@@ -77,14 +82,15 @@ public class RecipeController {
                 .orElseThrow(() -> new ResourceNotFoundException("Recipe not found"));
             model.addAttribute("fullRecipe", fullRecipe);
         }
-        
+
         model.addAttribute("recipes", recipes);
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("allProducts", productService.getAllProducts());
         model.addAttribute("searchQuery", search);
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("selectedProductIds", productIds);
-        
+        String avatar=userInfoService.getUserInfoByUsr(u).getImageUrl();
+        model.addAttribute("avatar", avatar);
         return "recipes";
     }
 }

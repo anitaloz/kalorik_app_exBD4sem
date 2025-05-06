@@ -53,6 +53,7 @@ public class ProfileController {
         model.addAttribute("UI", ui);
         model.addAttribute("editMode", true);
         model.addAttribute("editProfileMode", false);
+
         return "profile";
     }
 
