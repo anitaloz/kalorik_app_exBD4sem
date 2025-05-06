@@ -6,30 +6,74 @@ header{
 .header-wrapper{
     position: relative;
     width: 100%;
-    padding: 0px 15px 0px 15px;
+    padding: 0px 10px 0px 10px;
+    display: flex;
+    justify-content: center;
 }
-.header-wrapper>.row{
-    max-width: 100%;
+.header-wrapper>.header-row{
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
 .header-nav-wrapper{
-    width: 500px;
     display: flex;
-    background-color: #ffffff;
-    justify-content: end;
+    justify-content: center;
+    background-color: #fb88d8;
 }
 .header-nav-wrapper>nav{
-
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+}
+.header-nav-wrapper>nav>ul{
+    display: flex;
+    max-width: 100%;
+    padding: 0px;
+    height: max-content;
+    list-style-type:none;
+}
+.header-nav-wrapper>nav>ul>li{
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    text-align: center;
+    min-height:100%;
+    background-color: rgb(240, 255, 255);
+}
+.nav-profile{
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    text-align: center;
 }
 
 
 
+#profile-logo{
+    position: relative;
+    /*background: linear-gradient(45deg,  #ff69ad, #ffc4e2, #d4a3fa);*/
+    width: 50px;
+    height: auto;
+    transition: scale 300ms;
+}
+#profile-logo:hover{
+    scale: 0.9;
+}
+/* LOGO */
+.header-logo-back{
+   background-color: rgba(0, 0, 0, 0.297);
+   min-width: 120px;
+   min-height: 120px;
+   background-image: url("../images/l2.png");
+   background-size: cover;
+   background-repeat: no-repeat;
+   transition: background-image 0.1s ease;
+}
+.header-logo-back:hover{
+    background-image: url("../images/l1.png");
+}
 .header-logo-wrapper{
     padding: 5px;
-}
-img{
-    filter: drop-shadow: 5px 5px 5px #d4a3fa;
 }
 #header-logo{
     position: relative;
@@ -52,13 +96,4 @@ img{
     {
     transform: rotate(360deg);
     }
-}
-
-/*---------------*/
-#profile-logo{
-    position: relative;
-    /*background: linear-gradient(45deg,  #ff69ad, #ffc4e2, #d4a3fa);*/
-    width: 50px;
-    height: auto;
-    transition: scale 300ms;
 }

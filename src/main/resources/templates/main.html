@@ -27,28 +27,29 @@
 
     <div class="header-wrapper">
 
-        <div class="row">
+        <div class="header-row row">
             <div class="header-logo-wrapper">
-                <a th:href="@{/main}">
-                    <img alt="logo" th:src="@{/images/logo.png}" id="header-logo">
+                <a th:href="@{/main}" >
+                    <div class="header-logo-back"></div>
+                    <!--
+                       <img alt="logo"  th:src="@{/images/logo.png}" src="/Без названия615_20250506170303.png" id="header-logo">
+                       -->
                 </a>
             </div>
 
             <div class="header-nav-wrapper">
-                <nav class="d-flex">
-                    <div class="row">
-                        <ul>
-                            <li><div><a th:href="@{/statistics}">Статистики</a></div></li>
-                            <li><div><a th:href="@{/recipes}">Рецепты</a></div></li>
-                            <li><div class="nav-profile">
-                                    <a th:href="@{/profile}">Профиль</a>
-                                    <a th:href="@{/profile}">
-                                        <img alt="logo" th:src="@{/images/logo.png}" id="profile-logo">
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                <nav>
+                    <ul>
+                        <li><div><a th:href="@{/statistics}">Статистика</a></div></li>
+                        <li><div><a th:href="@{/recipes}">Рецепты</a></div></li>
+                        <li><div class="nav-profile">
+                            <a th:href="@{/profile}">Профиль</a>
+                            <a th:href="@{/profile}">
+                                <img alt="logo" th:src="@{/images/logo.png}" id="profile-logo">
+                            </a>
+                        </div>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </div>
