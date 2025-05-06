@@ -130,7 +130,7 @@ public class UserInfoService {
     }
 
     public void deleteOldCoverImage(UserInfo userInfo) {
-        if(userInfo.getImageUrl()!=null && !userInfo.getImageUrl().isEmpty()) {
+        if(userInfo.getImageUrl()!=null && !userInfo.getImageUrl().isEmpty() && !userInfo.getImageUrl().equals("/images/defaultprofile.png")) {
             String oldCoverImage = userInfo.getImageUrl().substring(7);
             if (!oldCoverImage.isEmpty()) {
                 Path oldFilePath = Paths.get(uploadPath, oldCoverImage);
