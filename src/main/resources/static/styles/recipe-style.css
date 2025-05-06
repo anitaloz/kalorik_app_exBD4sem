@@ -1,0 +1,65 @@
+.recipe-card {
+    transition: transform 0.3s;
+    margin-bottom: 20px;
+    height: 100%;
+    overflow: hidden; /* Важно: обрезает все, что выходит за пределы */
+}
+.recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.recipe-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block; 
+}
+.recipe-image-container {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 0 -15px 15px -15px; /* Компенсируем padding карточки */
+    width: calc(100% + 30px); /* Растягиваем на всю ширину */
+}
+.full-recipe-img {
+    max-height: 400px;
+    object-fit: cover;
+}
+.filter-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.selected-filters {
+    margin-bottom: 15px;
+}
+.badge-filter {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.filter-section {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.nav-profile {
+    display: flex;
+    align-items: center;
+}
+#profile-logo {
+    border-radius: 50%;
+    margin-left: 10px;
+}
+.form-select[multiple] {
+    height: auto;
+}
+.badge{
+    color:white;
+}
