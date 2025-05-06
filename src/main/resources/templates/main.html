@@ -2,11 +2,11 @@
 <head>
     <title>Main Page</title>
     <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
-<!--    <link rel="stylesheet"-->
-<!--          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
-<!--    <script-->
-<!--            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
-    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <!--    <link rel="stylesheet"-->
+    <!--          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+    <!--    <script-->
+    <!--            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
+
     <script th:src="@{jvs/my.js}"></script>
 
     <!-------TEST------------>
@@ -14,31 +14,51 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" th:href="@{/styles/mytest.css}">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-------TEST------------>
 </head>
 <body>
-    <div class="header">
-        <nav>
-            <ul class="px-3 mx-sm-2">
-                <li><a th:href="@{/profile}">Профиль</a></li>
-                <li><a th:href="@{/recipes}">Рецепты</a></li>
-                <li><a th:href="@{/statistics}">Статистики</a></li>
-                <li><form th:action="@{/logout}" method="post">
-                    <input type="submit" value="Выйти"/>
-                </form></li>
-            </ul>
-        </nav>
-    </div>
+<div class="header">
+    <nav>
+        <ul class="px-3 mx-sm-2">
+            <li><a th:href="@{/profile}">Профиль</a></li>
+            <li><a th:href="@{/recipes}">Рецепты</a></li>
+            <li><a th:href="@{/statistics}">Статистики</a></li>
+            <li><form th:action="@{/logout}" method="post">
+                <input type="submit" value="Выйти"/>
+            </form></li>
+        </ul>
+    </nav>
+</div>
 
 <div class="block-main container">
-    <div class="date-control">
-        <form th:action="@{/main}" method="get">
-            <label for="inputDate">Дата: </label>
-            <input type="date" id="inputDate" name="inputDate" th:value="${inputDate != null ? inputDate: ''}"/>
-            <button class="df" type="submit">Посмотреть</button>
-        </form>
+
+    <div class="date-wrapper d-flex">
+
+        <div class="date-control order-2">
+            <form th:action="@{/main}" method="get">
+                <div class="row">
+                    <label for="inputDate"></label>
+                    <div class="date-content col-12">
+                        <input type="date" id="inputDate" name="inputDate" th:value="${inputDate != null ? inputDate: ''}"/>
+                    </div>
+                    <div class="date-content col-12">
+                        <button class="df" type="submit">Посмотреть</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="selected-date order-1">
+            <h1 th:text="${SHOWDate}">!@.u3.8243</h1>
+        </div>
+
     </div>
-    <h1 th:text="${SHOWDate}"></h1>
+
     <span th:text="${sumCalories}"></span>
     <span>/</span>
     <span th:text="${caloriesNum}"></span>
@@ -61,53 +81,81 @@
 
 
     <div class="meals">
-        <h2>Завтрак</h2>
-        <div th:each="mfi, iterStat : ${brfmfi}">
-            <span th:text="${mfi}"></span>
-            <span th:unless="${iterStat.last}">,</span>
-        </div>
-    <!--    по этой кнопке открывается поиск продуктов -->
+        <div class="row">
 
-        <button id="BreakfastAdd">Добавить</button>
-        <button id="BreakfastShow">Посмотреть</button>
-        <div class="out">
-            <div id="formSearchingContainer1"></div>
-            <div class="results container row"></div>
-        </div>
-        <div class="show">
-            <div id="showContainerBF"></div>
-        </div>
+            <div class="meal-wrapper col-lg-4 col-md-12">
+                <div class="meal">
+                    <div class="meal-name">
+                        <h2>Завтрак</h2>
+                    </div>
+                    <div class="meal-content">
+                        <div th:each="mfi, iterStat : ${brfmfi}">
+                            <span th:text="${mfi}"></span>
+                            <span th:unless="${iterStat.last}">,</span>
+                        </div>
+                        <!--по этой кнопке открывается поиск продуктов -->
 
-        <h2>Обед</h2>
-        <div th:each="mfi, iterStat : ${lnchmfi}">
-            <span th:text="${mfi}"></span>
-            <span th:unless="${iterStat.last}">,</span>
-        </div>
-        <!--    по этой кнопке открывается поиск продуктов -->
-        <button id="LunchAdd">Добавить</button>
-        <button id="LunchShow">Посмотреть</button>
-        <div class="out">
-        <div id="formSearchingContainer2"></div>
-        <div class="results container row"></div>
-        </div>
-        <div class="show">
-        <div id="showContainerL"></div>
-        </div>
+                        <button id="BreakfastAdd">Добавить</button>
+                        <button id="BreakfastShow">Посмотреть</button>
+                        <div class="out">
+                            <div id="formSearchingContainer1"></div>
+                            <div class="results container row"></div>
+                        </div>
+                        <div class="show">
+                            <div id="showContainerBF"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <h2>Ужин</h2>
-        <div th:each="mfi, iterStat : ${dnmfi}">
-            <span th:text="${mfi}"></span>
-            <span th:unless="${iterStat.last}">,</span>
-        </div>
-        <!--    по этой кнопке открывается поиск продуктов -->
-        <button id="DinnerAdd">Добавить</button>
-        <button id="DinnerShow">Посмотреть</button>
-        <div class="out">
-                <div id="formSearchingContainer3"></div>
-                <div class="results container row"></div>
-        </div>
-        <div class="show">
-            <div id="showContainerD"></div>
+            <div class="meal-wrapper col-lg-4 col-md-12">
+                <div class="meal">
+                    <div class="meal-name">
+                        <h2>Обед</h2>
+                    </div>
+                    <div class="meal-content">
+                        <div th:each="mfi, iterStat : ${lnchmfi}">
+                            <span th:text="${mfi}"></span>
+                            <span th:unless="${iterStat.last}">,</span>
+                        </div>
+                        <!--    по этой кнопке открывается поиск продуктов -->
+                        <button id="LunchAdd">Добавить</button>
+                        <button id="LunchShow">Посмотреть</button>
+                        <div class="out">
+                            <div id="formSearchingContainer2"></div>
+                            <div class="results container row"></div>
+                        </div>
+                        <div class="show">
+                            <div id="showContainerL"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="meal-wrapper col-lg-4 col-md-12">
+                <div class="meal">
+                    <div class="meal-name">
+                        <h2>Ужин</h2>
+                    </div>
+                    <div class="meal-content">
+                        <div th:each="mfi, iterStat : ${dnmfi}">
+                            <span th:text="${mfi}"></span>
+                            <span th:unless="${iterStat.last}">,</span>
+                        </div>
+                        <!--    по этой кнопке открывается поиск продуктов -->
+                        <button id="DinnerAdd">Добавить</button>
+                        <button id="DinnerShow">Посмотреть</button>
+                        <div class="out">
+                            <div id="formSearchingContainer3"></div>
+                            <div class="results container row"></div>
+                        </div>
+                        <div class="show">
+                            <div id="showContainerD"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
