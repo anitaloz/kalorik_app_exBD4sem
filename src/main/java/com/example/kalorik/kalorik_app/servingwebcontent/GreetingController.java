@@ -348,6 +348,7 @@ public class GreetingController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User usr= userRepo.findByUsername(auth.getName());
         UserInfo ui=new UserInfo(firstName, lastName, dateOfBirth, gender, heightCm, weightKg, activityLevel, caloriesNum, purpose, usr);
+        ui.setImageUrl("/images/defaultprofile.png");
         userInfoService.save(ui);
         Date d=new Date();
         Body b=new Body();
