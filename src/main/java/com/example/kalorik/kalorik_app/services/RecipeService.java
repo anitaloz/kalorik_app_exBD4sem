@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.foreign.Linker.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -124,6 +125,18 @@ public class RecipeService {
     public Recipes getRecipeWithDetails(Long id) {
         return recipeRepository.findByIdWithDetails(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Рецепт с ID " + id + " не найден"));
+    }
+
+
+    public static List<Recipes> calFilter(List<Recipes> r, double caldiff)
+    {
+        List<Recipes> res=new ArrayList<Recipes>();
+        for(Recipes i:r)
+        {
+            if(i.getCalories()<=caldiff)
+                res.add(i);
+        }
+        return res;
     }
 }
 

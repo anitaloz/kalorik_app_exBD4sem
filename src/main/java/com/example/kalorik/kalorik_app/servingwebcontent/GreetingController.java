@@ -30,6 +30,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
+import static java.lang.Math.abs;
+
 @Controller
 public class GreetingController {
     private static final Logger logger = LoggerFactory.getLogger(GreetingController.class);
@@ -324,7 +326,7 @@ public class GreetingController {
             din=recipeService.findByCategoryId(id);
             allrec.addAll(din);
         }
-
+        allrec=RecipeService.calFilter(allrec, ui.getCaloriesnum()-(int)sumCalories);
         model.addAttribute("caloriesNum", ui.getCaloriesnum());
         model.addAttribute("breakfastItems", breakfastItems);
         model.addAttribute("lunchItems", lunchItems);

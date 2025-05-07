@@ -99,12 +99,19 @@ create table recipes (
 );
 
 ALTER TABLE recipes ADD COLUMN image_url VARCHAR(255);
+
+ALTER TABLE recipes ADD COLUMN calories double precision;
+
 select*from recipes;
 update recipes set image_url='/images/omlet.jpg' where id=1;
 update recipes set image_url='/images/grechka.jpg' where id=2;
 update recipes set image_url='/images/pomidor.jpg' where id=3;
 update recipes set image_url='/images/zapekanka.jpg' where id=4;
 
+update recipes set calories=115 where id=1;
+update recipes set calories=104 where id=2;
+update recipes set calories=59 where id=3;
+update recipes set calories=150 where id=4;
 
 
 create table recipe_product (

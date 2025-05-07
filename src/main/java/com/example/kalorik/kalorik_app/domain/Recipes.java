@@ -35,6 +35,15 @@ public class Recipes {
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
     private Set<Categories> categories;
+    private Float calories;
+
+    public Float getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Float calories) {
+        this.calories = calories;
+    }
 
     public Long getId() {
         return id;

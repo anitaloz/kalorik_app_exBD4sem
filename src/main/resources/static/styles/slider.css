@@ -1,5 +1,5 @@
 html{
-    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 body{
@@ -60,7 +60,7 @@ body{
     font-size:0;
     width: 16px;
     height:16px;
-    background-color:#000000;
+    background-color:white;
     border-radius: 100%;
     border-color:rgb(0, 0, 0);
 }

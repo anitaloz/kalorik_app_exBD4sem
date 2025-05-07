@@ -217,14 +217,19 @@
         </div>
     </div>
 
-    <div class="wrapper">
-        <div class="slider">
-
-                <div th:each="it : ${rec}" class="slider_item">
-                    <img th:src="${it.imageUrl}" alt="" width="150">
-                </div>
-        </div>
+    <div th:if="${rec.isEmpty()}">
+        <p>Рекомендаций нет</p>
     </div>
+        <div th:if="${!rec.isEmpty()}" class="wrapper">
+            <div class="slider">
+                <div th:each="it : ${rec}" class="slider_item">
+                    <a th:href="@{/recipes(recipeId=${it.id})}"><img th:src="${it.imageUrl}" alt="" width="150"></a>
+                    <p th:text="${it.name}"></p>
+<!--                    <span th:text="${it.calories}"></span>-->
+                </div>
+            </div>
+        </div>
+
 </div>
 
 </body>
