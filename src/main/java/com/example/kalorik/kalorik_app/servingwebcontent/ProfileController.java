@@ -83,17 +83,20 @@ public class ProfileController {
             return "redirect:/profile/editPurposes"; // Возвращаемся на форму
         }
 
+        if(!userInfo.getWeightKg().equals(ui.getWeightKg()))
+        {
+            Body b=new Body();
+            Date d=new Date();
+            b.setDt(d);
+            b.setWeight(userInfo.getWeightKg());
+            b.setHeight(userInfoService.getUserInfoByUsr(u).getHeightCm());
+            b.setUser(u);
+            bodyService.save(b);
+        }
         ui.setDesiredWeight(userInfo.getDesiredWeight());
         ui.setCaloriesnum(userInfo.getCaloriesnum());
         ui.setPurpose(userInfo.getPurpose());
         ui.setWeightKg(userInfo.getWeightKg());
-        Date d=new Date();
-        Body b=new Body();
-        b.setDt(d);
-        b.setWeight(userInfo.getWeightKg());
-        b.setHeight(userInfoService.getUserInfoByUsr(u).getHeightCm());
-        b.setUser(u);
-        bodyService.save(b);
         userInfoService.save(ui);
         return "redirect:/profile";
     }
