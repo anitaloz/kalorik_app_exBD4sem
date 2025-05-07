@@ -1,5 +1,6 @@
 package com.example.kalorik.kalorik_app.repositories;
 
+import com.example.kalorik.kalorik_app.domain.Categories;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,12 +22,21 @@ public interface RecipeRepository extends JpaRepository<Recipes, Long> {
 
     Optional<Recipes>findById(Long id);
 
+
+
     // Оптимизированный запрос для поиска по категории с явным JOIN
     @Query("SELECT distinct r FROM Recipes r JOIN FETCH r.categories c WHERE c.id = :categoryId")
     List<Recipes> findByCategoryId(@Param("categoryId") Long categoryId);
 
     //List<Recipes> findByCategories_Id(Long categoryId);
-
+//    @Query("SELECT r FROM Recipes r WHERE (:c1 IS NULL OR r.categories = :c1) " +
+//            "AND (:c2 IS NULL OR r.categories = :c2) " +
+//            "AND (:c3 IS NULL OR r.categories = :c3)")
+//    List<Recipes> findRecipesByOptionalCategories(
+//            @Param("c1") Categories c1,
+//            @Param("c2") Categories c2,
+//            @Param("c3") Categories c3
+//    );
 
     // Использование IN для поиска по нескольким продуктам
     @Query("SELECT DISTINCT r FROM Recipes r JOIN FETCH r.products p WHERE p.id IN :productIds")
@@ -55,4 +65,7 @@ public interface RecipeRepository extends JpaRepository<Recipes, Long> {
     @EntityGraph(attributePaths = {"products", "categories"})
     @Query("SELECT r FROM Recipes r WHERE r.id = :id")
     Optional<Recipes> findByIdWithDetails(@Param("id") Long id);
+
+
+
 }

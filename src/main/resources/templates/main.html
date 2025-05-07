@@ -16,10 +16,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" th:href="@{/styles/mytest.css}">
     <link rel="stylesheet" th:href="@{/styles/header-style.css}">
-    
 
+    <link rel="stylesheet" th:href="@{/styles/slider.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script th:src="@{jvs/slick.min.js}"></script>
+    <script th:src="@{jvs/slider.js}"></script>
+
+
     <!-------TEST------------>
 </head>
 
@@ -199,18 +204,27 @@
     </div>
 
 
-    <div class="body_measure">
-        <form action="/main" method="post">
-            <button type="button" id="minus">-</button>
-            <label>
-                <input name="currentWeight" class="currentWeight" th:value="${currentWeight}"></label>
-            <label><input type=hidden name="shDt" class="shDT" th:value="${SHOWDate}"></label>
-            <button type="button" id="plus">+</button>
-            <button type="submit">Сохранить</button>
-        </form>
+    <div class="body_measure-wrapper">
+        <div class="body_measure">
+            <form action="/main" method="post">
+                <button type="button" id="minus">-</button>
+                <label>
+                    <input name="currentWeight" class="currentWeight" th:value="${currentWeight}"></label>
+                <label><input type=hidden name="shDt" class="shDT" th:value="${SHOWDate}"></label>
+                <button type="button" id="plus">+</button>
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
     </div>
 
+    <div class="wrapper">
+        <div class="slider">
 
+                <div th:each="it : ${rec}" class="slider_item">
+                    <img th:src="${it.imageUrl}" alt="" width="150">
+                </div>
+        </div>
+    </div>
 </div>
 
 </body>

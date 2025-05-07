@@ -385,6 +385,7 @@ document.addEventListener("DOMContentLoaded", function() {
         currentWeightInput.value = currentWeight.toFixed(1); // Ограничить одним десятичным знаком
     });
 
+
 });
 
 

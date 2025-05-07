@@ -205,9 +205,10 @@
     border-color: #f8a7c2 !important;
     border-radius: 100% !important;
 }
+/*
 .cur-year{
     background-color: #e26b85 !important;
-}
+}*/
 .arrowup, .arrowdown{
     background-color: #ffffff !important;
 }
@@ -272,4 +273,17 @@
 .df{
     padding: 5px;
     border-radius: 5px;
+}
+/*-----------------------------------*/
+.body_measure-wrapper{
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+}
+.body_measure{
+    padding: 15px;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: #bcbcbc;
 }

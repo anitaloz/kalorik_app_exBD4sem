@@ -63,3 +63,16 @@
 .badge{
     color:white;
 }
+.btn-primary{
+    background-color: #ff7ba8;
+    border-color: #da7b9a;
+}
+.btn-outline-primary{
+    border-color: #ff6798;
+    color: #ff6798;
+}
+.btn-outline-primary:hover{
+    border-color: #ff6798;
+    color: white;
+    background-color: #ff6798;
+}

@@ -41,10 +41,12 @@ public class GreetingController {
 
     @Autowired
     private MealsRepo mealsRepo;
-
+ @Autowired
+    private CategoryService categoryService;
     @Autowired
     private Meal_food_itemsRepo foodItemRepo;
-
+    @Autowired
+    private RecipeService recipeService;
     @Autowired
     UserRepo userRepo;
     @Autowired
@@ -237,44 +239,100 @@ public class GreetingController {
         int fatsNum=(int)(ui.getWeightKg().doubleValue()*0.8)+1;
         List<Meals> brf=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "breakfast", u);
         List<String> brfmfiSTRING=new ArrayList<String>();
-
+        int brfl=0;//пустой
         if(!brf.isEmpty())
         {
             List<MealFoodItems> brfmfi=itemService.findMeal_food_itemsByMeal(brf.getFirst());
+            if(!brfmfi.isEmpty())
+                brfl=1;
             for(MealFoodItems m:brfmfi) {
                 brfmfiSTRING.add(m.getFood().getName());
             }
         }
         List<Meals> lnch=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "lunch", u);
         List<String> lnchSTRING=new ArrayList<String>();
-
+        int lnchfl=0;//пустой
         if(!lnch.isEmpty())
         {
             List<MealFoodItems> lnchmfi=itemService.findMeal_food_itemsByMeal(lnch.getFirst());
+            if(!lnchmfi.isEmpty())
+                lnchfl=1;
             for(MealFoodItems m:lnchmfi) {
                 lnchSTRING.add(m.getFood().getName());
             }
         }
         List<Meals> dn=mealsService.findMealsByMealDateAndMealTitleAndUser(d, "dinner", u);
         List<String> dnSTRING=new ArrayList<String>();
-
+        int dnfl=0;//пустой
         if(!dn.isEmpty())
         {
             List<MealFoodItems> dnmfi=itemService.findMeal_food_itemsByMeal(dn.getFirst());
+            if(!dnmfi.isEmpty())
+                dnfl=1;
             for(MealFoodItems m:dnmfi) {
                 dnSTRING.add(m.getFood().getName());
             }
         }
         BigDecimal w=userInfoService.getUserInfoByUsr(u).getWeightKg().setScale(1, RoundingMode.HALF_UP);;
         String avatar=userInfoService.getUserInfoByUsr(u).getImageUrl();
+
+        List<Recipes> allrec=new ArrayList<Recipes>();
+        if(brfl!=0 && lnchfl==0 && dnfl==0)
+        {
+            Long id= 2L;
+            allrec=recipeService.findByCategoryId(id);
+            id= 3L;
+            List<Recipes> din=recipeService.findByCategoryId(id);
+            allrec.addAll(din);
+        }
+        if(brfl==0 && lnchfl!=0 && dnfl==0)
+        {
+            Long id= 1L;
+            allrec=recipeService.findByCategoryId(id);
+            id= 3L;
+            List<Recipes> din=recipeService.findByCategoryId(id);
+            allrec.addAll(din);
+        }
+        if(brfl==0 && lnchfl==0 && dnfl!=0)
+        {
+            Long id= 2L;
+            allrec=recipeService.findByCategoryId(id);
+            id= 1L;
+            List<Recipes> din=recipeService.findByCategoryId(id);
+            allrec.addAll(din);
+        }
+        if(brfl!=0 && lnchfl!=0 && dnfl==0)
+        {
+            allrec=recipeService.findByCategoryId(3L);
+        }
+        if(brfl!=0 && lnchfl==0 && dnfl!=0)
+        {
+            allrec= recipeService.findByCategoryId(2L);
+        }
+        if(brfl==0 && lnchfl!=0 && dnfl!=0)
+        {
+            allrec=recipeService.findByCategoryId(1L);
+        }
+        if(brfl==0 && lnchfl==0 && dnfl==0)
+        {
+            Long id= 2L;
+            allrec=recipeService.findByCategoryId(id);
+            id= 3L;
+            List<Recipes> din=recipeService.findByCategoryId(id);
+            allrec.addAll(din);
+            id= 1L;
+            din=recipeService.findByCategoryId(id);
+            allrec.addAll(din);
+        }
+
         model.addAttribute("caloriesNum", ui.getCaloriesnum());
         model.addAttribute("breakfastItems", breakfastItems);
         model.addAttribute("lunchItems", lunchItems);
         model.addAttribute("dinnerItems", dinnerItems);
-        model.addAttribute("sumCalories", sumCalories);
-        model.addAttribute("sumFats", sumfats);
-        model.addAttribute("sumBel", sumbel);
-        model.addAttribute("sumCh", sumch);
+        model.addAttribute("sumCalories", (int)sumCalories);
+        model.addAttribute("sumFats", (int)sumfats);
+        model.addAttribute("sumBel", (int)sumbel);
+        model.addAttribute("sumCh", (int)sumch);
         model.addAttribute("chNum", chNum);
         model.addAttribute("belNum", belNum);
         model.addAttribute("fatsNum", fatsNum);
@@ -285,6 +343,7 @@ public class GreetingController {
         model.addAttribute("dnmfi", dnSTRING);
         model.addAttribute("currentWeight", w);
         model.addAttribute("avatar", avatar);
+        model.addAttribute("rec", allrec);
 
         return "main.html";
     }

@@ -25,17 +25,33 @@ public class RecipeService {
     public RecipeService(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
-
     // 1. Получение всех рецептов
     @Transactional(readOnly = true)
     public List<Recipes> getAllRecipes() {
         return recipeRepository.findAll();
     }
 
+
     public Optional<Recipes>getRecipeById(Long id){
         return recipeRepository.findById(id);
     }
+    //@Transactional(readOnly = true)
 
+//    public List<Recipes> findAllByCategoriesContains(Categories c1, Categories c2, Categories c3)
+//    {
+//        return recipeRepository.findRecipesByOptionalCategories(c1, c2, c3);
+//    }
+//    public List<Recipes> findAllByCategoriesContains(Categories c1){
+//        return recipeRepository.findRecipesByOptionalCategories(c1, null, null);
+//    }
+//    @Transactional(readOnly = true)
+//    public List<Recipes> findAllByCategoriesContains(Categories c1, Categories c2){
+//        return recipeRepository.findRecipesByOptionalCategories(c1, c2, null);
+//    }
+//    @Transactional(readOnly = true)
+//    public List<Recipes> findAllByCategoriesContains(Categories c1, Categories c2, Categories c3){
+//        return recipeRepository.findRecipesByOptionalCategories(c1, c2, c3);
+//    }
     // 2. Поиск по названию (без учета регистра)
     @Transactional(readOnly = true)
     public List<Recipes> findByNameContainingIgnoreCase(String name) {
