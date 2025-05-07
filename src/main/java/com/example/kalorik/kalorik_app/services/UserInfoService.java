@@ -117,8 +117,10 @@ public class UserInfoService {
     }
 
     public String validateCaloriesNum(Integer caloriesNum) {
-        if(caloriesNum==0)
+        if(caloriesNum==null || caloriesNum==0)
             return "Выберите количество калорий для потребления";
+        if(caloriesNum<=700)
+            return "Количество калорий должно быть больше 700";
         return null; // пока нет валидации
     }
 
