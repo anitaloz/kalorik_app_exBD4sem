@@ -64,18 +64,6 @@
 </header>
 
 <body>
-    <div class="header">
-        <nav>
-            <ul class="px-3 mx-sm-2">
-                <li><a th:href="@{/profile}">Профиль</a></li>
-                <li><a th:href="@{/recipes}">Рецепты</a></li>
-                <li><a th:href="@{/statistics}">Статистики</a></li>
-                <li><form th:action="@{/logout}" method="post">
-                    <input type="submit" value="Выйти"/>
-                </form></li>
-            </ul>
-        </nav>
-    </div>
 
 <div class="block-main container">
 
@@ -102,37 +90,76 @@
 
     </div>
 
-    <span th:text="${sumCalories}"></span>
-    <span>/</span>
-    <span th:text="${caloriesNum}"></span>
-    <br>
-    <span>Белки: </span>
-    <span th:text="${sumBel}"></span>
-    <span>/</span>
-    <span th:text="${belNum}"></span>
-    <br>
-    <span>Жиры: </span>
-    <span th:text="${sumFats}"></span>
-    <span>/</span>
-    <span th:text="${fatsNum}"></span>
-    <br>
-    <span>Углеводы: </span>
-    <span th:text="${sumCh}"></span>
-    <span>/</span>
-    <span th:text="${chNum}"></span>
-    <br>
+
+    <div class="calories-info">
+
+        <div class="calories-block">
+            <div class="row">
+                <div class="calories-text-wrapper">
+                    <span class="calories-text">Съедено</span>
+                    <span class="calories-num" th:text="${sumCalories}"></span>
+                </div>
+
+                <div class="calories-chart-wrapper">
+                    <div class="calories-chart" th:style="${'--value:' + sumCalories + '; --total:' + caloriesNum + ';'}"></div>
+                </div>
+
+                <div class="calories-text-wrapper">
+                    <span class="calories-text">Осталось</span>
+                    <span class="calories-num" th:text="${caloriesNum}"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="PFC-wrapper">
+
+            <div class="PFC-block col-4">
+                <h4>Белки</h4>
+                <div class="PFC-progress-bar" th:style="${'--current:' + sumBel + '; --max:' + belNum + ';'}">
+                    <div class="PFC-progress-text">
+                        <span th:text="${sumBel}"></span>
+                        <span>/</span>
+                        <span th:text="${belNum}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="PFC-block col-4">
+                <h4>Жиры</h4>
+                <div class="PFC-progress-bar" th:style="${'--current:' + sumFats + '; --max:' + fatsNum + ';'}">
+                    <div class="PFC-progress-text">
+                        <span th:text="${sumFats}"></span>
+                        <span>/</span>
+                        <span th:text="${fatsNum}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="PFC-block col-4">
+                <h4>Углеводы</h4>
+                <div class="PFC-progress-bar" th:style="${'--current:' + sumCh + '; --max:' + chNum + ';'}">
+                    <div class="PFC-progress-text">
+                        <span th:text="${sumCh}"></span>
+                        <span>/</span>
+                        <span th:text="${chNum}"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 
     <div class="meals">
         <div class="row">
 
-            <div class="meal-wrapper col-lg-4 col-md-12">
+            <div class="meal-wrapper col-lg-12 col-md-12">
                 <div class="meal">
                     <div class="meal-name">
                         <h2>Завтрак</h2>
                     </div>
                     <div class="meal-content">
-                        <div th:each="mfi, iterStat : ${brfmfi}">
+                        <div class="products-list" th:each="mfi, iterStat : ${brfmfi}">
                             <span th:text="${mfi}"></span>
                             <span th:unless="${iterStat.last}">,</span>
                         </div>
@@ -151,13 +178,13 @@
                 </div>
             </div>
 
-            <div class="meal-wrapper col-lg-4 col-md-12">
+            <div class="meal-wrapper col-lg-12 col-md-12">
                 <div class="meal">
                     <div class="meal-name">
                         <h2>Обед</h2>
                     </div>
                     <div class="meal-content">
-                        <div th:each="mfi, iterStat : ${lnchmfi}">
+                        <div class="products-list" th:each="mfi, iterStat : ${lnchmfi}">
                             <span th:text="${mfi}"></span>
                             <span th:unless="${iterStat.last}">,</span>
                         </div>
@@ -175,13 +202,13 @@
                 </div>
             </div>
 
-            <div class="meal-wrapper col-lg-4 col-md-12">
+            <div class="meal-wrapper col-lg-12 col-md-12">
                 <div class="meal">
                     <div class="meal-name">
                         <h2>Ужин</h2>
                     </div>
                     <div class="meal-content">
-                        <div th:each="mfi, iterStat : ${dnmfi}">
+                        <div class="products-list" th:each="mfi, iterStat : ${dnmfi}">
                             <span th:text="${mfi}"></span>
                             <span th:unless="${iterStat.last}">,</span>
                         </div>

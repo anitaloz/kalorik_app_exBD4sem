@@ -19,14 +19,16 @@
 {{#products}}
     <div class="found-product">
         <span> {{name}}</span>
-        <i>{{calories}}</i>
-        <i>{{bel}}</i>
-        <i>{{fats}}</i>
+        <i>{{calories}}</i><span> /</span>
+        <i>{{bel}}</i><span> /</span>
+        <i>{{fats}}</i><span> /</span>
         <i>{{ch}}</i>
         <span>{{servingSize}} {{servingUnit.name}}</span>
         <input type="number" placeholder="Количество" id="quantity">
         <span>{{servingUnit.name}}</span>
-        <button class="addProductButton" data-product-id="{{id}}" data-product-unit="{{servingUnit}}" >Добавить</button>
+        <div class="addProductButton-wrapper">
+            <button class="addProductButton" data-product-id="{{id}}" data-product-unit="{{servingUnit}}" >+</button>
+        </div>
         <span class="productAddedMessage" style="display:none;">Продукт добавлен</span>
     </div>
 
