@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 @Service
 public class RecipeService {
     private final RecipeRepository recipeRepository;
@@ -137,6 +138,31 @@ public class RecipeService {
                 res.add(i);
         }
         return res;
+    }
+
+    // 9. Фильтрация по калориям (новый метод)
+    @Transactional(readOnly = true)
+    public List<Recipes> findByCaloriesLessThanEqual(double maxCalories) {
+        return recipeRepository.findByCaloriesLessThanEqual(maxCalories);
+    }
+
+    // 10. Комбинированная фильтрация с учетом калорий
+    @Transactional(readOnly = true)
+    public List<Recipes> findBySearchParamsWithCalories(
+            String name, 
+            Long categoryId, 
+            List<Long> productIds, 
+            Double maxCalories) {
+        
+        List<Recipes> recipes = findBySearchParams(name, categoryId, productIds);
+        
+        if (maxCalories != null) {
+            recipes = recipes.stream()
+                .filter(r -> r.getCalories() != null && r.getCalories() <= maxCalories)
+                .collect(Collectors.toList());
+        }
+        
+        return recipes;
     }
 }
 

@@ -23,6 +23,10 @@ public class MealsService {
         return mealsRepo.findMealsByMealDateAndMealTitleAndUser(date, meal_title, user);
     }
 
+    public List<Meals> findMealsByMealDateAndUser(Date date, User user){
+        return mealsRepo.findMealsByMealDateAndUser(date, user);
+    }
+
     public void save(Meals meal)
     {
         mealsRepo.save(meal);

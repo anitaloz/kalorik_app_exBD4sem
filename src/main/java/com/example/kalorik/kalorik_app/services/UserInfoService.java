@@ -176,4 +176,5 @@ public class UserInfoService {
             userInfo.setImageUrl(fileName);
         }
     }
+    
 }

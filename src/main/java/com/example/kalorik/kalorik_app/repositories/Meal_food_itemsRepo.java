@@ -11,4 +11,6 @@ public interface Meal_food_itemsRepo extends CrudRepository<MealFoodItems, Long>
     List<MealFoodItems> findMeal_food_itemsByMeal(Meals meals);
 
     void deleteMealFoodItemsByMealAndFood(Meals meal, Food food);
+
+    List<MealFoodItems> findByMealId(Long mealId);
 }

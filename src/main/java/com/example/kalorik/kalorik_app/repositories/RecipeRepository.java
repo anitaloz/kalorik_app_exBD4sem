@@ -66,6 +66,7 @@ public interface RecipeRepository extends JpaRepository<Recipes, Long> {
     @Query("SELECT r FROM Recipes r WHERE r.id = :id")
     Optional<Recipes> findByIdWithDetails(@Param("id") Long id);
 
-
+    @Query("SELECT r FROM Recipes r WHERE r.calories <= :maxCalories")
+    List<Recipes> findByCaloriesLessThanEqual(@Param("maxCalories") double maxCalories);
 
 }
