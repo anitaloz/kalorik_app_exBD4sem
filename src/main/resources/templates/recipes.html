@@ -10,6 +10,7 @@
     <link rel="stylesheet" th:href="@{/styles/header-style.css}">
     <link rel="stylesheet" th:href="@{/styles/recipe-style.css}">
     <script th:src="@{jvs/my.js}"></script>
+    
 </head>
 <header>
 
@@ -28,8 +29,8 @@
             <div class="header-nav-wrapper">
                 <nav>
                     <ul>
+                        <li><div><a th:href="@{/}">Главная</a></div></li>
                         <li><div><a th:href="@{/statistics}">Статистика</a></div></li>
-                        <li><div><a th:href="@{/recipes}">Рецепты</a></div></li>
                         <li><div class="nav-profile">
                             <a th:href="@{/profile}">Профиль</a>
                             <a th:href="@{/profile}">
@@ -269,6 +270,7 @@
         </div>
     </div>
 
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
