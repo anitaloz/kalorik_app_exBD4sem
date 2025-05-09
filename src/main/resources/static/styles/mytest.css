@@ -280,6 +280,8 @@
 }
 .date-wrapper{
     justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 .date-control>form{
     max-width: 100%;
@@ -310,25 +312,71 @@
     border-radius: 5px;
 }
 /*-----------------------------------*/
-.body_measure-wrapper{
+.body-measure-wrapper{
     display: flex;
     vertical-align: middle;
     justify-content: center;
-}
-.body_measure{
+    width: 100%;
     padding: 15px;
     border-style: solid;
     border-radius: 10px;
     border-width: 2px;
     border-color: #bcbcbc;
 }
-
-
+.body-measure{
+    padding: 15px;
+}
+.body-measure>form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    vertical-align: middle;
+}
+.redact-body-measure{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: max-content;
+}
+.redact-body-measure>button{
+    padding: 5px;
+    margin: 2px 5px;
+    height: 100%;
+    border-style: none;
+    background-color: #faa3c0;
+}
+.redact-body-measure>label{
+    margin: 2px 5px;
+}
+#body-measure-hidden-id{
+     display: none !important;
+     margin: 0px !important;
+     padding: 0px !important;
+ }
+.redact-body-measure>input{
+    height: 100%;
+    border: solid 3px #bcbcbc;
+    border-radius: 10px;
+}
+#body-measure-button{
+    align-self: center;
+    padding: 5px;
+    max-width: 120px;
+    border-style: none;
+    border-radius: 10px;
+    background: linear-gradient(to right, #ff8db3, #faa3c0, #f8e2a7cc);
+    background-color: #f8a7c2;
+}
+.body-measure h4{
+    text-align: center;
+}
 /*-----calories info---*/
 .calories-info{
     border: solid 3px #aa92d9;
     border-radius: 5px;
     padding: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .calories-block{
     display: flex;
@@ -430,4 +478,15 @@
 }
 .PFC-progress-text::after {
     content: attr(data-value);
+}
+/*--recomendations-block--*/
+.recomendations-block{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.recomendations-block .rec-text{
+    text-align: center;
+}
+.recomendations-block h2{
+    text-align: center;
 }

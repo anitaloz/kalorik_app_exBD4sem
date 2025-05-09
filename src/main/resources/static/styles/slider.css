@@ -15,12 +15,12 @@ body{
     overflow: hidden;
 }
 .slider{
-    margin-top:10%;
     position: relative;
     padding: 5%;
-    background-color: #ac5c00;
-    border:10px;
-    border-color:#000000;
+    background: linear-gradient(to right, #ff8db3, #faa3c0, #f8e2a7cc);
+    background-color: #f8a7c2;
+    border-style: none;
+    border-radius: 10px;
 }
 .slider .slick-arrow{
     position:absolute;
@@ -42,6 +42,10 @@ body{
     right:20px;
     background: url('../images/r.jpg') 0 0 / 100% no-repeat;
 }
+.slider .slick-arrow.slick-prev:active,
+.slider .slick-arrow.slick-next:active{
+    border-style: none;
+}
 
 .slider .slick-dots{
     display:flex;
@@ -58,18 +62,33 @@ body{
 
 .slider .slick-dots button{
     font-size:0;
-    width: 16px;
-    height:16px;
-    background-color:white;
+    width: 10px;
+    height: 10px;
+    border-style: none;
+    background-color: #ffffff;
     border-radius: 100%;
-    border-color:rgb(0, 0, 0);
 }
 
 .slider .slick-dots li.slick-active button{
-    background-color:rgb(255, 136, 0);
-    border-color:rgb(0, 0, 0);
+    background-color: #ff006f;
+    border-style: none;
 }
 
 .slider .slider_item{
-    margin:auto;
+    display: flex;
+    padding: 5px;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    text-align: center;
+    border-style: none;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+.slider .slider_item a{
+    align-self: center;
+    border-radius: 5px;
+    overflow: hidden;
 }

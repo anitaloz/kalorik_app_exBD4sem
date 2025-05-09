@@ -231,31 +231,37 @@
     </div>
 
 
-    <div class="body_measure-wrapper">
-        <div class="body_measure">
+    <div class="body-measure-wrapper">
+        <div class="body-measure">
+            <h4>Вес</h4>
             <form action="/main" method="post">
-                <button type="button" id="minus">-</button>
-                <label>
-                    <input name="currentWeight" class="currentWeight" th:value="${currentWeight}"></label>
-                <label><input type=hidden name="shDt" class="shDT" th:value="${SHOWDate}"></label>
-                <button type="button" id="plus">+</button>
-                <button type="submit">Сохранить</button>
+                <div class="redact-body-measure">
+                    <button type="button" id="minus">-</button>
+                    <label>
+                        <input name="currentWeight" class="currentWeight" th:value="${currentWeight}"></label>
+                    <label id="body-measure-hidden-id"><input type=hidden name="shDt" class="shDT" th:value="${SHOWDate}"></label>
+                    <button type="button" id="plus">+</button>
+                </div>
+                <button id="body-measure-button" type="submit">Сохранить</button>
             </form>
         </div>
     </div>
 
-    <div th:if="${rec.isEmpty()}">
-        <p>Рекомендаций нет</p>
-    </div>
+    <div class="recomendations-block">
+        <h2>Рекомендации по питанию</h2>
+        <div class="rec-text" th:if="${rec.isEmpty()}">
+            <p>Рекомендаций нет</p>
+        </div>
         <div th:if="${!rec.isEmpty()}" class="wrapper">
             <div class="slider">
                 <div th:each="it : ${rec}" class="slider_item">
                     <a th:href="@{/recipes(recipeId=${it.id})}"><img th:src="${it.imageUrl}" alt="" width="150"></a>
                     <p th:text="${it.name}"></p>
-<!--                    <span th:text="${it.calories}"></span>-->
+                    <span th:text="${it.calories}"></span>
                 </div>
             </div>
         </div>
+    </div>
 
 </div>
 
