@@ -385,6 +385,28 @@
 .body-measure h4{
     text-align: center;
 }
+#plus{
+   width: 35px;
+   height: 35px;
+   background-image: url("../images/plus.png");
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-color: #ff8db300;
+   border: solid 3px #ff8db3;
+   border-radius: 50%;
+   padding: 0px;
+}
+#minus{
+   width: 35px;
+   height: 35px;
+   background-image: url("../images/minus.png");
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-color: #ff8db300;
+   border: solid 3px #ff8db3;
+   border-radius: 50%;
+   padding: 0px;
+}
 /*-----calories info---*/
 .calories-info{
     border: solid 3px #aa92d9;
