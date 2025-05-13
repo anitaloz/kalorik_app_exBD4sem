@@ -88,4 +88,11 @@ select:invalid + .invalid-feedback {
     display: block;
 }
 
+#bfPrList{
+    display: block;
+}
+
+.hidden {
+    display: none !important;
+}
 

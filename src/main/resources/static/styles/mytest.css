@@ -227,18 +227,18 @@ deleteProductButton{
 .meal-content{
     margin: 5px;
 }
-#BreakfastAdd, #BreakfastShow,
-#LunchAdd, #LunchShow,
-#DinnerAdd, #DinnerShow{
-    color:#4d1924;
-    font-weight: 600;
-    border-radius: 5px;
-    border-width: 0px;
-    padding: 5px;
-    background: linear-gradient(to right, #ff8db3, #faa3c0);
-    background-color: #f8a7c2;
-    transition: scale 300ms;
-}
+/*#BreakfastAdd, #BreakfastShow,*/
+/*#LunchAdd, #LunchShow,*/
+/*#DinnerAdd, #DinnerShow{*/
+/*    color:#4d1924;*/
+/*    font-weight: 600;*/
+/*    border-radius: 5px;*/
+/*    border-width: 0px;*/
+/*    padding: 5px;*/
+/*    background: linear-gradient(to right, #ff8db3, #faa3c0);*/
+/*    background-color: #f8a7c2;*/
+/*    transition: scale 300ms;*/
+/*}*/
 #BreakfastAdd:hover, #BreakfastShow:hover,
 #LunchAdd:hover, #LunchShow:hover,
 #DinnerAdd:hover, #DinnerShow:hover{
@@ -434,6 +434,40 @@ deleteProductButton{
    border-radius: 50%;
    padding: 0px;
 }
+
+button.sh{
+    width: 35px;
+    height: 35px;
+    background-image: url("../images/show.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #ff8db3;
+    border: solid 3px #ff8db3;
+    border-radius: 50%;
+    padding: 0px;
+}
+button.hid{
+    width: 35px;
+    height: 35px;
+    background-image: url("../images/hide.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #ff8db3;
+    border: solid 3px #ff8db3;
+    border-radius: 50%;
+    padding: 0px;
+}
+button.plus{
+    width: 35px;
+    height: 35px;
+    background-image: url("../images/plus.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #ff8db3;
+    border: solid 3px #ff8db3;
+    border-radius: 50%;
+    padding: 0px;
+}
 #minus, .deleteProductButton{
    width: 35px;
    height: 35px;
@@ -444,6 +478,18 @@ deleteProductButton{
    border: solid 3px #ff8db3;
    border-radius: 50%;
    padding: 0px;
+}
+
+button.minus{
+    width: 35px;
+    height: 35px;
+    background-image: url("../images/minus.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #ff8db3;
+    border: solid 3px #ff8db3;
+    border-radius: 50%;
+    padding: 0px;
 }
 .currentWeight{
     height: 100%;

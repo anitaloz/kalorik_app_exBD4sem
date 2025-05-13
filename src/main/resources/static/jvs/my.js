@@ -25,71 +25,169 @@ document.addEventListener("DOMContentLoaded", function() {
             </form>
         `;
 
+    function toggleHidden(element) {
+        element.classList.toggle('hidden');
+    }
 
-    //КНОПКИ
-    breakfastButton.addEventListener('click', () => {
-        formContainer1.innerHTML = formTemplate;
-        const outh = formContainer1.closest('.out');
-        if (outh.style.display === 'none') {
-            outh.style.display = 'block';
-            outh.querySelector('.results').style.display='none';
+    breakfastButton.addEventListener('click', function() {
+        const out = this.closest('.meal-content').querySelector('.out');
+        let isHidden = out.classList.contains('hidden');
+
+        if (isHidden) {
+            // Показываем форму
+            formContainer1.innerHTML = formTemplate;
+            out.classList.remove('hidden'); // Делаем видимым .out
+            out.querySelector('.results').style.display = 'none'; // Прячем результаты
+
+            // Меняем текст кнопки на "Скрыть"
+            breakfastButton.classList.add('minus');
+            breakfastButton.classList.remove('plus');
+            attachSearchHandler('formSearchingContainer1', '.results', 'breakfast');
+
+        } else {
+            out.classList.add('hidden');
+            breakfastButton.classList.add('plus');
+            breakfastButton.classList.remove('minus');
         }
-        attachSearchHandler('formSearchingContainer1', '.results', 'breakfast');
     });
 
-    document.getElementById('BreakfastShow').addEventListener('click', () => {
 
-        const l=document.getElementById('inputDate');
-        const dateString=l.value;
-        //let currentDate = new Date(dateString);
-
-        //let formattedDate = currentDate.toLocaleDateString('en-CA'); // 'en-CA' для YYYY-MM-DD
-        const outh = showContainerBF.closest('.show');
-        if (outh.style.display === 'none')
-            outh.style.display = 'block';
-        showProducts('showContainerBF', 'breakfast', dateString);
-    });
-
-    document.getElementById('LunchShow').addEventListener('click', () => {
-        const l=document.getElementById('inputDate');
-        const dateString=l.value;// 'en-CA' для YYYY-MM-DD
-        const outh = showContainerL.closest('.show');
-        if (outh.style.display === 'none')
-            outh.style.display = 'block';
-        showProducts('showContainerL', 'lunch', dateString);
-    });
-
-    document.getElementById('DinnerShow').addEventListener('click', () => {
-        const l=document.getElementById('inputDate');
-        const dateString=l.value;
-        const outh = showContainerD.closest('.show');
-        if (outh.style.display === 'none') {
-            outh.style.display = 'block';
-            breakfastResults.style.display='none';
+    document.getElementById('BreakfastShow').addEventListener('click', function() {
+        const out = this.closest('.meal-content').querySelector('.show');
+        const l = document.getElementById('inputDate');
+        let isHidden = out.classList.contains('hidden');
+        const dateString = l.value;
+        if (isHidden) {
+            const bfPrList = this.closest('.meal-content').querySelectorAll('.products-list');
+            bfPrList.forEach(b => {
+                b.style.display = 'none';
+            });
+            out.classList.remove('hidden');
+            const el = this.closest('.meal-content').querySelector('.show');
+            document.getElementById('BreakfastShow').classList.add('hid');
+            document.getElementById('BreakfastShow').classList.remove('sh');
+            showProducts('showContainerBF', 'breakfast', dateString);
+        } else {
+            out.classList.add('hidden');
+            document.getElementById('BreakfastShow').classList.add('sh');
+            document.getElementById('BreakfastShow').classList.remove('hid');
+            const prList = this.closest('.meal-content').querySelectorAll('.products-list');
+            prList.forEach(b=>{
+                if(b.style.display==='none')
+                    b.style.display='block';
+            });
         }
-        showProducts('showContainerD', 'dinner', dateString);
     });
 
-    lunchButton.addEventListener('click', () => {
-        formContainer2.innerHTML = formTemplate;
-        const outh = formContainer2.closest('.out');
-        if (outh.style.display === 'none') {
-            outh.style.display = 'block';
-            outh.querySelector('.results').style.display='none';
+    document.getElementById('LunchShow').addEventListener('click', function() {
+        const out = this.closest('.meal-content').querySelector('.show');
+        const l = document.getElementById('inputDate');
+        let isHidden = out.classList.contains('hidden');
+        const dateString = l.value;
+        if (isHidden) {
+            const bfPrList = this.closest('.meal-content').querySelectorAll('.products-list');
+            bfPrList.forEach(b => {
+                b.style.display = 'none';
+            });
+            out.classList.remove('hidden');
+            document.getElementById('LunchShow').classList.add('hid');
+            document.getElementById('LunchShow').classList.remove('sh');
+            showProducts('showContainerL', 'lunch', dateString);
+        } else {
+            out.classList.add('hidden');
+            document.getElementById('LunchShow').classList.add('sh');
+            document.getElementById('LunchShow').classList.remove('hid');
+            const prList = this.closest('.meal-content').querySelectorAll('.products-list');
+            prList.forEach(b=>{
+                if(b.style.display==='none')
+                    b.style.display='block';
+            });
         }
-        attachSearchHandler('formSearchingContainer2','.results', 'lunch');
     });
 
-    dinnerButton.addEventListener('click', () => {
-        formContainer3.innerHTML = formTemplate;
-        const outh = formContainer3.closest('.out');
-        if (outh.style.display === 'none') {
-            outh.style.display = 'block';
-            outh.querySelector('.results').style.display='none';
+    document.getElementById('DinnerShow').addEventListener('click', function() {
+        const out = this.closest('.meal-content').querySelector('.show');
+        const l = document.getElementById('inputDate');
+        let isHidden = out.classList.contains('hidden');
+        const dateString = l.value;
+        if (isHidden) {
+            const bfPrList = this.closest('.meal-content').querySelectorAll('.products-list');
+            bfPrList.forEach(b => {
+                b.style.display = 'none';
+            });
+            out.classList.remove('hidden');
+            document.getElementById('DinnerShow').classList.add('hid');
+            document.getElementById('DinnerShow').classList.remove('sh');
+            showProducts('showContainerD', 'dinner', dateString);
+        } else {
+            out.classList.add('hidden');
+            document.getElementById('DinnerShow').classList.add('sh');
+            document.getElementById('DinnerShow').classList.remove('hid');
+            const prList = this.closest('.meal-content').querySelectorAll('.products-list');
+            prList.forEach(b=>{
+                if(b.style.display==='none')
+                    b.style.display='block';
+            });
         }
-        attachSearchHandler('formSearchingContainer3', '.results', 'dinner');
     });
 
+    // dinnerButton.addEventListener('click', function() {
+    //     const out = this.closest('.meal-content').querySelector('.out');
+    //     let isHidden = out.classList.contains('hidden');
+    //
+    //     if (isHidden) {
+    //         formContainer3.innerHTML = formTemplate;
+    //         out.classList.remove('hidden');
+    //         out.querySelector('.results').style.display = 'none';
+    //         dinnerButton.textContent = 'Скрыть';
+    //         attachSearchHandler('formSearchingContainer3', '.results', 'dinner');
+    //
+    //     } else {
+    //         out.classList.add('hidden');
+    //         dinnerButton.textContent = 'Добавить';
+    //     }
+    // });
+
+
+
+    lunchButton.addEventListener('click', function() {
+        const out = this.closest('.meal-content').querySelector('.out');
+        let isHidden = out.classList.contains('hidden');
+
+        if (isHidden) {
+            formContainer2.innerHTML = formTemplate;
+            out.classList.remove('hidden');
+            out.querySelector('.results').style.display = 'none';
+            lunchButton.classList.add('minus');
+            lunchButton.classList.remove('plus');
+            attachSearchHandler('formSearchingContainer2', '.results', 'lunch');
+
+        } else {
+            out.classList.add('hidden');
+            lunchButton.classList.add('plus');
+            lunchButton.classList.remove('minus');
+        }
+    });
+
+
+    dinnerButton.addEventListener('click', function() {
+        const out = this.closest('.meal-content').querySelector('.out');
+        let isHidden = out.classList.contains('hidden');
+
+        if (isHidden) {
+            formContainer3.innerHTML = formTemplate;
+            out.classList.remove('hidden');
+            out.querySelector('.results').style.display = 'none';
+            dinnerButton.classList.add('minus');
+            dinnerButton.classList.remove('plus');
+            attachSearchHandler('formSearchingContainer3', '.results', 'dinner');
+
+        } else {
+            out.classList.add('hidden');
+            dinnerButton.classList.add('plus');
+            dinnerButton.classList.remove('minus');
+        }
+    });
 
     //ФУНКЦИИ
     function attachSearchHandler(formContainerId, resultsContainerId, mealTitle) {
@@ -107,25 +205,6 @@ document.addEventListener("DOMContentLoaded", function() {
             searchProducts(filterValue, resultsContainerId, formContainerId, mealTitle);
         });
     }
-
-
-
-//     function searchProducts(filterValue, resultsContainerId, mealTitle) { ... }:  Эта функция выполняет поиск продуктов на сервере и отображает результаты.
-//     •   const resultsContainer = document.getElementById(resultsContainerId);:  Получает элемент HTML контейнера результатов.
-//     •   fetch('/getProducts?filter=' + filterValue):  Отправляет GET-запрос на URL /getProducts с параметром filter.  Этот запрос отправляет значение фильтра на сервер.
-//     •   .then(response => { ... }):  Обрабатывает ответ от сервера.
-//     *   if (!response.ok) { throw new Error('Network response was not ok'); }:  Проверяет, успешно ли выполнен запрос.  Если нет, выбрасывается ошибка.
-//     *   return response.text();:  Получает текст ответа (HTML-код списка продуктов).
-// •   .then(html => { ... }):  Обрабатывает HTML-код списка продуктов.
-//     *   resultsContainer.innerHTML = html;:  Вставляет HTML-код в контейнер результатов.  Это отображает список продуктов на странице.
-//     *   const addButtons = resultsContainer.querySelectorAll('.addProductButton');:  Получает все кнопки с классом .addProductButton (кнопки "Добавить" рядом с продуктами).
-// *   addButtons.forEach(button => { ... });:  Для каждой кнопки "Добавить" добавляет обработчик события click.
-//     *   button.addEventListener('click', function(event) { ... });:  Добавляет обработчик события click к кнопке.
-//     *   event.preventDefault();:  Предотвращает стандартное поведение кнопки (которое могло бы вызвать перезагрузку страницы).
-// *   const productId = this.getAttribute('data-product-id');:  Получает значение атрибута data-product-id кнопки.  Этот атрибут содержит ID продукта, который нужно добавить.
-//     *   addToMeal(productId, mealTitle);:  Вызывает функцию addToMeal, передавая ID продукта и тип приема пищи.  Эта функция должна отправлять запрос на сервер для добавления продукта в базу данных.
-//     •   .catch(error => { ... }):  Обрабатывает ошибки, которые могут возникнуть при выполнении запроса.
-
 
     function searchProducts(filterValue, resultsContainerId, formContainerId, mealTitle) {
         const formContainer = document.getElementById(formContainerId);
@@ -165,18 +244,18 @@ document.addEventListener("DOMContentLoaded", function() {
                     });
                 });
 
-                const hideButtons = resultsContainer.querySelectorAll('.hideProductButton');
-                hideButtons.forEach(button => {
-                    button.addEventListener('click', function(event) {
-                        event.preventDefault();
-
-                        // Находим родительский элемент 'out' кнопки.  Предполагается, что кнопка hide находится внутри формы или контейнера 'out'.
-                        const outhide = button.closest('.out'); // Находим ближайшего родителя с классом 'out'
-                        if (outhide) {
-                            outhide.style.display = 'none';
-                        }
-                    });
-                });
+                // const hideButtons = resultsContainer.querySelectorAll('.hideProductButton');
+                // hideButtons.forEach(button => {
+                //     button.addEventListener('click', function(event) {
+                //         event.preventDefault();
+                //
+                //         // Находим родительский элемент 'out' кнопки.  Предполагается, что кнопка hide находится внутри формы или контейнера 'out'.
+                //         const outhide = button.closest('.out'); // Находим ближайшего родителя с классом 'out'
+                //         if (outhide) {
+                //             outhide.style.display = 'none';
+                //         }
+                //     });
+                // });
 
 
             })
@@ -218,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     if (Array.isArray(mealProducts) && mealProducts.length >= 0) {
                         try {
-                            // **Предварительная обработка данных (расчет калорий):**
+
                             const processedMealProducts = mealProducts.map(product => {
                                 const calculatedCalories = (product.calories / product.servingsize) * product.quantity;
                                 const calculatedBel = (product.bel / product.servingsize) * product.quantity;
@@ -226,10 +305,10 @@ document.addEventListener("DOMContentLoaded", function() {
                                 const calculatedFats = (product.fats / product.servingsize) * product.quantity;
                                 return {
                                     ...product, // Копируем существующие свойства
-                                    calculatedCalories: calculatedCalories.toFixed(2), // Добавляем новое свойство
-                                    calculatedBel: calculatedBel.toFixed(2), // Добавляем новое свойство
-                                    calculatedCh: calculatedCh.toFixed(2), // Добавляем новое свойство
-                                    calculatedFats: calculatedFats.toFixed(2) // Добавляем новое свойство
+                                    calculatedCalories: calculatedCalories.toFixed(0),
+                                    calculatedBel: calculatedBel.toFixed(1),
+                                    calculatedCh: calculatedCh.toFixed(1),
+                                    calculatedFats: calculatedFats.toFixed(1)
                                 };
                             });
 
@@ -264,7 +343,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 {{^mealProducts}}
                     <p>Нет данных для приема пищи.</p>
                 {{/mealProducts}}
-                <button class="hideShowContButton">Скрыть</button>
             `;
 
                             // **Передаем обработанные данные в Mustache:**
@@ -295,16 +373,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     function attachEventHandlers(resultsContainer, mealTitle, mealDate) {
-        const hideButtons = resultsContainer.querySelectorAll('.hideShowContButton');
-        hideButtons.forEach(button => {
-            button.addEventListener('click', function (event) {
-                event.preventDefault();
-                const outhide = button.closest('.show');
-                if (outhide) {
-                    outhide.style.display = 'none';
-                }
-            });
-        });
+        // const hideButtons = resultsContainer.querySelectorAll('.hideShowContButton');
+        // hideButtons.forEach(button => {
+        //     button.addEventListener('click', function (event) {
+        //         event.preventDefault();
+        //         const outhide = button.closest('.show');
+        //         if (outhide) {
+        //             outhide.style.display = 'none';
+        //         }
+        //         const prList = button.closest('.meal-content').querySelectorAll('.products-list');
+        //         prList.forEach(b=>{
+        //             if(b.style.display==='none')
+        //                 b.style.display='block';
+        //         });
+        //     });
+        // });
 
         const deleteButtons = resultsContainer.querySelectorAll('.deleteProductButton');
         deleteButtons.forEach(button => {
@@ -365,16 +448,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
                 console.log('Продукт добавлен в прием пищи');
                 window.location.reload();
-                // const addButton = document.querySelector(`.addProductButton[data-product-id="${productId}"]`); // находим кнопку
-                // const addedMessage = addButton.nextElementSibling; // Берем следующий элемент (span)
-                //
-                // //  Отображаем сообщение
-                // addedMessage.style.display = 'inline';
-                //
-                // //  Скрываем сообщение через 3 секунды (опционально)
-                // setTimeout(() => {
-                //     addedMessage.style.display = 'none';
-                // }, 3000);
+
             })
             .catch(error => {
                 console.error('Ошибка добавления продукта:', error);
