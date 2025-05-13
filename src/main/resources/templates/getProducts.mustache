@@ -18,18 +18,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
 {{#products}}
     <div class="found-product">
-        <div class="found-product-info">
+
+        <div class="found-product-name">
             <span> {{name}}</span>
+        </div>
+        <div class="found-product-add">
+        <div class="found-product-info">
             <i>{{calories}}</i><span> /</span>
             <i>{{bel}}</i><span> /</span>
             <i>{{fats}}</i><span> /</span>
-            <i>{{ch}}</i>
+            <i>{{ch}}</i><span> /</span>
             <span>{{servingSize}} {{servingUnit.name}}</span>
             <input type="number" placeholder="Количество" id="quantity">
             <span>{{servingUnit.name}}</span>
         </div>
         <button class="addProductButton" data-product-id="{{id}}" data-product-unit="{{servingUnit}}" ></button>
 
+</div>
         <span class="productAddedMessage" style="display:none;">Продукт добавлен</span>
     </div>
 

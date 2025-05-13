@@ -90,6 +90,7 @@ public class GreetingController {
     @PostMapping("/main")
     String postMain(@RequestParam LocalDate shDt,  @RequestParam BigDecimal currentWeight)
     {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userRepo.findByUsername(auth.getName());
         Date d=BodyService.convertLocalDateToDate(shDt);

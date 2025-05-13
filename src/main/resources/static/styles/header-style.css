@@ -1,3 +1,7 @@
+body{
+    background-color: #ffffff;
+    background: linear-gradient(0deg,  #ff94c470, #ffbbaa70, #ffffff00);
+}
 header{
    /*
     background: linear-gradient(45deg,  #ff94c4, #f4a3fa, #d4a3fa);

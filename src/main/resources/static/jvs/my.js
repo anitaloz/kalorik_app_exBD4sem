@@ -236,16 +236,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
                             const template = `
                 <h3>Съедено</h3>
+                <table class="product-table">
+                <thead><tr>
+                <td>Продукт</td>
+                <td>Кол-во</td>
+                <td>К</td>
+                <td>Б</td>
+                <td>Ж</td>
+                <td>У</td>
+                <td></td>
+                </tr></thead>
+                <tbody>
                 {{#mealProducts}}
-                    <div class="meal-item" data-product-id="{{id}}">
-                        <span>{{name}}</span> - <span>{{quantity}} {{servingunit}}</span><br>
-                        <i>Калории: {{calculatedCalories}}</i>,
-                        <i>Белки: {{calculatedBel}}</i>,
-                        <i>Жиры: {{calculatedFats}}</i>,
-                        <i>Углеводы: {{calculatedCh}}</i>
-                        <button class="deleteProductButton" data-product-id="{{id}}">Удалить</button>
-                    </div>
+
+                    <tr class="meal-item" data-product-id="{{id}}">
+                        <td><span>{{name}}</span></td>
+                        <td><span>{{quantity}} {{servingunit}}</span></td>
+                        <td>{{calculatedCalories}}</td>
+                        <td>{{calculatedBel}}</td>
+                        <td>{{calculatedFats}}</td>
+                        <td>{{calculatedCh}}</td>
+                        <td><button class="deleteProductButton" data-product-id="{{id}}"></button></td>
+                    </tr>
                 {{/mealProducts}}
+                </tbody>
+                </table>
                 {{^mealProducts}}
                     <p>Нет данных для приема пищи.</p>
                 {{/mealProducts}}

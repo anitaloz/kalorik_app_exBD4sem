@@ -1,11 +1,14 @@
 .block-main{
-    padding: 5px;
+    padding: 20px;
     background-color: #ffffff;
+    border-radius: 15px;
+
 }
 .out{
     max-width: 100%;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 #formSearchingContainer3,
 #formSearchingContainer1,
@@ -67,6 +70,7 @@
     color:black;
 }
 .result-cont{
+    align-self: center;
     margin: 7px;
     height: 200px;
     min-width: 100%;
@@ -104,6 +108,15 @@
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
+}
+.found-product-add{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 65%;
+}
+.found-product-info span{
+    padding: 0px 3px;
 }
 .addProductButton{
     width: 35px;
@@ -154,7 +167,7 @@
     background-color: #ffffff;
 }
 
-.hideProductButton{
+.hideProductButton, .hideShowContButton{
     min-height: 34px;
     max-height: 40px;
     min-width: 30px;
@@ -170,6 +183,11 @@
 }
 .hideProductButton:hover{
     background-color: #e26b85;
+}
+deleteProductButton{
+    border-radius: 10px;
+    border: solid 3px;
+    background-color: #ffc0d1;
 }
 
 .meals{
@@ -336,6 +354,17 @@
     border-radius: 5px;
 }
 /*-----------------------------------*/
+#showContainerBF{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#showContainerBF .product-table{
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+/*-----------------------------------*/
 .body-measure-wrapper{
     display: flex;
     vertical-align: middle;
@@ -405,7 +434,7 @@
    border-radius: 50%;
    padding: 0px;
 }
-#minus{
+#minus, .deleteProductButton{
    width: 35px;
    height: 35px;
    background-image: url("../images/minus.png");
