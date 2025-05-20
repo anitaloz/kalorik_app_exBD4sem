@@ -205,11 +205,18 @@ deleteProductButton{
     position: relative;
     padding: 0px;
     background-color: rgb(255, 255, 255);
-    border-radius: 10px;
 
-    border-color: #ddd2d5;
-    border-style: solid;
-    border-width: 3px;
+    border-radius: 10px;
+    border: solid 2px #ddd2d5;
+
+    overflow: hidden;
+}
+.meal-responsive-div{
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
 }
 .meal-header{
     display: flex;
@@ -227,12 +234,12 @@ deleteProductButton{
 .meal-name{
     color:#fffbfc;
     text-align: center;
-    width: 50%;
+    /*width: 50%;*/
     max-height: 64px;
     padding:5px;
     background: linear-gradient(to right, #ff8db3, #faa3c0, #f8e2a7cc);
     background-color: #f8a7c2;
-    border-radius: 10px 0px 70px 10px;
+    border-radius: 10px 0px 70px 5px;
 }
 .meal-name>h2{
     font-size: 32px;
@@ -240,6 +247,9 @@ deleteProductButton{
 }
 .meal-content{
     margin: 5px;
+}
+.products-list-wrapper{
+    padding: 15px;
 }
 #BreakfastAdd, #BreakfastShow,
 #LunchAdd, #LunchShow,
@@ -455,10 +465,9 @@ deleteProductButton{
     justify-content: center;
     width: 100%;
     padding: 15px;
-    border-style: solid;
+    margin-top: 5px;
     border-radius: 10px;
-    border-width: 2px;
-    border-color: #bcbcbc;
+    border: solid 2px #ddd2d5;
 }
 .body-measure{
     padding: 15px;
@@ -582,8 +591,8 @@ button.minus{
 }
 /*-----calories info---*/
 .calories-info{
-    border: solid 3px #aa92d9;
-    border-radius: 5px;
+    border-radius: 10px;
+    border: solid 2px #ddd2d5;
     padding: 15px;
     margin-top: 5px;
     margin-bottom: 5px;
