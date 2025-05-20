@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     breakfastButton.addEventListener('click', function() {
-        const out = this.closest('.meal-content').querySelector('.out');
+        //const out = this.closest('.meal-content').querySelector('.out');
+        const out = this.closest('.meal').querySelector('.out');
         let isHidden = out.classList.contains('hidden');
 
         if (isHidden) {
@@ -53,17 +54,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     document.getElementById('BreakfastShow').addEventListener('click', function() {
-        const out = this.closest('.meal-content').querySelector('.show');
+        //const out = this.closest('.meal-content').querySelector('.show');
+        //const breakfastShowButton = document.getElementById('BreakfastShow');
+        //console.log("CLICK");
+        //console.log(this);
+        //console.log(this.closest('.meal'));
+        //console.log(this.closest('.meal').querySelector('.show'));
+        const out = this.closest('.meal').querySelector('.show');
+
         const l = document.getElementById('inputDate');
+
+        //console.log(out.classList.contains('hidden'));
+
         let isHidden = out.classList.contains('hidden');
         const dateString = l.value;
         if (isHidden) {
-            const bfPrList = this.closest('.meal-content').querySelectorAll('.products-list');
+            const bfPrList = this.closest('.meal').querySelectorAll('.products-list');
             bfPrList.forEach(b => {
                 b.style.display = 'none';
             });
             out.classList.remove('hidden');
-            const el = this.closest('.meal-content').querySelector('.show');
+            const el = this.closest('.meal').querySelector('.show');
             document.getElementById('BreakfastShow').classList.add('hid');
             document.getElementById('BreakfastShow').classList.remove('sh');
             showProducts('showContainerBF', 'breakfast', dateString);
@@ -71,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
             out.classList.add('hidden');
             document.getElementById('BreakfastShow').classList.add('sh');
             document.getElementById('BreakfastShow').classList.remove('hid');
-            const prList = this.closest('.meal-content').querySelectorAll('.products-list');
+            const prList = this.closest('.meal').querySelectorAll('.products-list');
             prList.forEach(b=>{
                 if(b.style.display==='none')
                     b.style.display='block';
@@ -80,12 +91,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('LunchShow').addEventListener('click', function() {
-        const out = this.closest('.meal-content').querySelector('.show');
+        //const out = this.closest('.meal-content').querySelector('.show');
+        const out = this.closest('.meal').querySelector('.show');
         const l = document.getElementById('inputDate');
         let isHidden = out.classList.contains('hidden');
         const dateString = l.value;
         if (isHidden) {
-            const bfPrList = this.closest('.meal-content').querySelectorAll('.products-list');
+            const bfPrList = this.closest('.meal').querySelectorAll('.products-list');
             bfPrList.forEach(b => {
                 b.style.display = 'none';
             });
@@ -97,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
             out.classList.add('hidden');
             document.getElementById('LunchShow').classList.add('sh');
             document.getElementById('LunchShow').classList.remove('hid');
-            const prList = this.closest('.meal-content').querySelectorAll('.products-list');
+            const prList = this.closest('.meal').querySelectorAll('.products-list');
             prList.forEach(b=>{
                 if(b.style.display==='none')
                     b.style.display='block';
@@ -106,12 +118,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('DinnerShow').addEventListener('click', function() {
-        const out = this.closest('.meal-content').querySelector('.show');
+        //const out = this.closest('.meal-content').querySelector('.show');
+        const out = this.closest('.meal').querySelector('.show');
         const l = document.getElementById('inputDate');
         let isHidden = out.classList.contains('hidden');
         const dateString = l.value;
         if (isHidden) {
-            const bfPrList = this.closest('.meal-content').querySelectorAll('.products-list');
+            const bfPrList = this.closest('.meal').querySelectorAll('.products-list');
             bfPrList.forEach(b => {
                 b.style.display = 'none';
             });
@@ -123,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function() {
             out.classList.add('hidden');
             document.getElementById('DinnerShow').classList.add('sh');
             document.getElementById('DinnerShow').classList.remove('hid');
-            const prList = this.closest('.meal-content').querySelectorAll('.products-list');
+            const prList = this.closest('.meal').querySelectorAll('.products-list');
             prList.forEach(b=>{
                 if(b.style.display==='none')
                     b.style.display='block';
@@ -151,7 +164,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     lunchButton.addEventListener('click', function() {
-        const out = this.closest('.meal-content').querySelector('.out');
+        //const out = this.closest('.meal-content').querySelector('.out');
+        const out = this.closest('.meal').querySelector('.out');
         let isHidden = out.classList.contains('hidden');
 
         if (isHidden) {
@@ -171,7 +185,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     dinnerButton.addEventListener('click', function() {
-        const out = this.closest('.meal-content').querySelector('.out');
+        //const out = this.closest('.meal-content').querySelector('.out');
+        const out = this.closest('.meal').querySelector('.out');;
         let isHidden = out.classList.contains('hidden');
 
         if (isHidden) {
@@ -317,13 +332,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 <h3>Съедено</h3>
                 <table class="product-table">
                 <thead><tr>
-                <td>Продукт</td>
-                <td>Кол-во</td>
-                <td>К</td>
-                <td>Б</td>
-                <td>Ж</td>
-                <td>У</td>
-                <td></td>
+                <th>Продукт</th>
+                <th>Кол-во</th>
+                <th>К</th>
+                <th>Б</th>
+                <th>Ж</th>
+                <th>У</th>
+                <th></th>
                 </tr></thead>
                 <tbody>
                 {{#mealProducts}}
@@ -341,7 +356,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 </tbody>
                 </table>
                 {{^mealProducts}}
-                    <p>Нет данных для приема пищи.</p>
+                    <p class="no-meals-data">Нет данных для приема пищи.</p>
                 {{/mealProducts}}
             `;
 

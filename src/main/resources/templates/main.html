@@ -155,18 +155,29 @@
 
             <div class="meal-wrapper col-lg-12 col-md-12">
                 <div class="meal">
-                    <div class="meal-name">
-                        <h2>Завтрак</h2>
+
+                    <div class="meal-header">
+                        <div class="meal-name">
+                            <h2>Завтрак</h2>
+                        </div>
+                        <div class="meal-buttons">
+                            <button id="BreakfastAdd" class="plus"></button>
+                            <button id="BreakfastShow" class="sh"></button>
+                        </div>
                     </div>
+
                     <div class="meal-content">
-                        <div class="products-list" th:each="mfi, iterStat : ${brfmfi}">
-                            <span th:text="${mfi}"></span>
-                            <span th:unless="${iterStat.last}">,</span>
+                        <div>
+                            <div class="products-list" th:each="mfi, iterStat : ${brfmfi}">
+                                <span th:text="${mfi}"></span>
+                                <span th:unless="${iterStat.last}">,</span>
+                            </div>
                         </div>
                         <!--по этой кнопке открывается поиск продуктов -->
 
+                        <!--
                         <button id="BreakfastAdd" class="plus"></button>
-                        <button id="BreakfastShow" class="sh"></button>
+                        <button id="BreakfastShow" class="sh"></button> -->
                         <div class="out hidden">
                             <div class="searchingShow" id="formSearchingContainer1"></div>
                             <div class="results container row"></div>
@@ -180,8 +191,14 @@
 
             <div class="meal-wrapper col-lg-12 col-md-12">
                 <div class="meal">
-                    <div class="meal-name">
-                        <h2>Обед</h2>
+                    <div class="meal-header">
+                        <div class="meal-name">
+                            <h2>Обед</h2>
+                        </div>
+                        <div class="meal-buttons">
+                            <button id="LunchAdd" class="plus"></button>
+                            <button id="LunchShow" class="sh"></button>
+                        </div>
                     </div>
                     <div class="meal-content">
                         <div class="products-list" th:each="mfi, iterStat : ${lnchmfi}">
@@ -189,8 +206,8 @@
                             <span th:unless="${iterStat.last}">,</span>
                         </div>
                         <!--    по этой кнопке открывается поиск продуктов -->
-                        <button id="LunchAdd" class="plus"></button>
-                        <button id="LunchShow" class="sh"></button>
+                        <!--<button id="LunchAdd" class="plus"></button>
+                        <button id="LunchShow" class="sh"></button>-->
                         <div class="out hidden">
                         <div id="formSearchingContainer2"></div>
                         <div class="results container row"></div>
@@ -204,8 +221,14 @@
 
             <div class="meal-wrapper col-lg-12 col-md-12">
                 <div class="meal">
-                    <div class="meal-name">
-                        <h2>Ужин</h2>
+                    <div class="meal-header">
+                        <div class="meal-name">
+                            <h2>Ужин</h2>
+                        </div>
+                        <div class="meal-buttons">
+                            <button id="DinnerAdd" class="plus"></button>
+                            <button id="DinnerShow" class="sh"></button>
+                        </div>
                     </div>
                     <div class="meal-content">
                         <div class="products-list" th:each="mfi, iterStat : ${dnmfi}">
@@ -213,8 +236,9 @@
                             <span th:unless="${iterStat.last}">,</span>
                         </div>
                         <!--    по этой кнопке открывается поиск продуктов -->
+                        <!--
                         <button id="DinnerAdd" class="plus"></button>
-                        <button id="DinnerShow" class="sh"></button>
+                        <button id="DinnerShow" class="sh"></button>-->
                         <div class="out hidden">
                                 <div id="formSearchingContainer3"></div>
                                 <div class="results container row"></div>
