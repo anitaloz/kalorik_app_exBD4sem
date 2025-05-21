@@ -168,13 +168,13 @@ ALTER SEQUENCE categories_id_seq RESTART WITH 1;
 
 -- Inserting some basic food items
 -- Заполнение таблицы serving_units
-INSERT INTO serving_units (name) VALUES ('грамм');
-INSERT INTO serving_units (name) VALUES ('штука');
-INSERT INTO serving_units (name) VALUES ('столовая ложка');
-INSERT INTO serving_units (name) VALUES ('чайная ложка');
-INSERT INTO serving_units (name) VALUES ('стакан');
+INSERT INTO serving_units (name) VALUES ('гр');
+INSERT INTO serving_units (name) VALUES ('шт');
+INSERT INTO serving_units (name) VALUES ('ст.л.');
+INSERT INTO serving_units (name) VALUES ('ч.л.');
+INSERT INTO serving_units (name) VALUES ('ст');
 INSERT INTO serving_units (name) VALUES ('порция');
-INSERT INTO serving_units (name) VALUES ('миллилитр');
+INSERT INTO serving_units (name) VALUES ('мл');
 
 -- Заполнение таблицы food
 

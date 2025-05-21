@@ -246,7 +246,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         const productSize = this.getAttribute('data-product-size');
 
                         // Находим input для количества внутри родительского элемента кнопки
-                        const quantityInput = this.parentNode.querySelector('#quantity');
+                        const quantityInput = this.closest('tr').querySelector('#quantity');
+
+                        //console.log(this.closest('tr'));
+
                         const quantity = parseFloat(quantityInput.value);
                         if (isNaN(quantity) || quantity <= 0) {
                             alert('Пожалуйста, введите корректное количество.');

@@ -15,8 +15,38 @@
     <!-------TEST------------>
 </head>
 <div class="result-cont container">
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
+<table class="found-product-table">
+    <thead>
+        <th>Продукт</th>
+        <th>К</th>
+        <th>Б</th>
+        <th>Ж</th>
+        <th>У</th>
+        <th>На</th>
+        <th>Кол-во</th>
+        <th></th>
+        <th></th>
+    </thead>
+   <tbody>
 {{#products}}
+
+        <tr>
+            <td> {{name}} </td>
+            <td> {{calories}} </td>
+            <td> {{bel}} </td>
+            <td> {{fats}} </td>
+            <td> {{ch}} </td>
+            <td> {{servingSize}} {{servingUnit.name}} </td>
+            <td> <input type="number" placeholder="Количество" id="quantity"> </td>
+            <td> {{servingUnit.name}} </td>
+            <td> <button class="addProductButton" data-product-id="{{id}}" data-product-unit="{{servingUnit}}" ></button> </td>
+        </tr>
+
+
+<!--
     <div class="found-product">
 
         <div class="found-product-name">
@@ -37,8 +67,11 @@
 </div>
         <span class="productAddedMessage" style="display:none;">Продукт добавлен</span>
     </div>
+    -->
 
 {{/products}}
+</tbody>
+</table>
 
 
 {{^products}}
