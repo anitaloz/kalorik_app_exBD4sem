@@ -71,7 +71,7 @@
 }
 .result-cont{
     align-self: center;
-    margin: 7px;
+    //margin: 7px;
     height: 200px;
     min-width: 100%;
     overflow-y: scroll;
@@ -398,6 +398,7 @@ deleteProductButton{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-bottom: 50px;
 }
 #showContainerBF .product-table,
 #showContainerL .product-table,
@@ -633,11 +634,23 @@ button.minus{
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    background-color: #f0f0f0;
+
     --angle: calc(var(--value) / var(--total) * 360deg);
   background-image: conic-gradient(
-    #aa92d9 0 var(--angle),
-    #e9eaec var(--angle) 360deg
+    #fdd075 0 var(--angle),
+    rgba(240, 240, 240, 0) var(--angle) 360deg
   );
+    /*
+    --angle: calc(var(--value) / var(--total) * 360deg + 180deg);
+    --angle2: calc((var(--value) / var(--total) * 360deg) - 180deg);
+  background-image: conic-gradient(
+    #fdd075 0 var(--angle),
+    rgba(240, 240, 240, 0) var(--angle) 360deg,
+    #fdd075 0 var(--angle2),
+    rgba(240, 240, 240, 0) var(--angle2) 180deg,
+  );
+  */
 }
 .calories-chart::after {
     z-index: 2;
@@ -681,7 +694,7 @@ button.minus{
     left: 0;
     height: 100%;
     width: var(--percentage);
-    background-image: linear-gradient(to right, #ad78da, #8595d6);
+    background-image: linear-gradient(to right, #fdd075, rgba(246, 158, 181, 0.68));
     border-radius: 10px;
     transition: width 0.3s ease;
 }

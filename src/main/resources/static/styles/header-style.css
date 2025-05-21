@@ -6,8 +6,9 @@ header{
    /*
     background: linear-gradient(45deg,  #ff94c4, #f4a3fa, #d4a3fa);
     */
+    background: linear-gradient(to right, #ff8db3, #faa3c0, #f8e2a7cc);
+    background-color: #f8a7c2;
     height: 160px;
-    background-color: #e8e8e8;
     width: 100%;
     border-radius: 0px 0px 15px 15px;
 }
@@ -37,10 +38,12 @@ header{
     display: flex;
     max-width: 100%;
     padding: 0px;
-    height: max-content;
+    /*height: max-content;*/
     list-style-type:none;
+    /*
     background: linear-gradient(45deg,  #ff94c4, #faa3ce, #faf1a3);
     background-color: rgb(240, 255, 255);
+    */
     border-radius: 0px 0px 15px 15px;
 }
 .header-nav-wrapper>nav>ul>li{
