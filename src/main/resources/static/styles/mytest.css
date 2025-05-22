@@ -117,7 +117,7 @@
     max-width: 90px;
 
     border-radius: 10px;
-    border: solid 3px #ff8db3;
+    border: solid 3px #fea4b8;
     background-color: #ffffff00;
     color: #ff8db3;
 }
@@ -509,6 +509,10 @@ deleteProductButton{
 }
 .no-meals-data{
     text-align: center;
+    background-color: #ffeaef;
+    border-radius: 5px;
+    width: 85%;
+    margin: auto;
 }
 /*-----------------------------------*/
 .body-measure-wrapper{
