@@ -10,13 +10,13 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Используем IDENTITY для автоинкремента
     private Long id;
     private String name; //название
-    private Float calories; //калории на 100 грамм
-    private Float bel; //белки на 100 грамм
-    private Float fats;//жиры
-    private Float ch; //углеводы
+    private Double calories; //калории на 100 грамм
+    private Double bel; //белки на 100 грамм
+    private Double fats;//жиры
+    private Double ch; //углеводы
 
     @Column(name = "serving_size") // Явно указываем имя столбца
-    private Float servingSize;//вес/размер порции
+    private Double servingSize;//вес/размер порции
 
     @ManyToOne
     @JoinColumn(name = "serving_unit", referencedColumnName = "id", nullable = false)
@@ -25,7 +25,7 @@ public class Food {
     public Food(){
 
     }
-    public Food(String name, Float calories, Float bel, Float fats, Float ch, Float servingSize, ServingUnits servingUnit)
+    public Food(String name, Double calories, Double bel, Double fats, Double ch, Double servingSize, ServingUnits servingUnit)
     {
         this.name=name;
         this.calories=calories;
@@ -35,19 +35,19 @@ public class Food {
         this.servingSize=servingSize;
         this.servingUnit=servingUnit;
     }
-    public Float getBel() {
+    public Double getBel() {
         return bel;
     }
 
-    public Float getCalories() {
+    public Double getCalories() {
         return calories;
     }
 
-    public Float getCh() {
+    public Double getCh() {
         return ch;
     }
 
-    public Float getFats() {
+    public Double getFats() {
         return fats;
     }
 
@@ -59,19 +59,19 @@ public class Food {
         return name;
     }
 
-    public void setBel(Float bel) {
+    public void setBel(Double bel) {
         this.bel = bel;
     }
 
-    public void setCalories(Float calories) {
+    public void setCalories(Double calories) {
         this.calories = calories;
     }
 
-    public void setCh(Float ch) {
+    public void setCh(Double ch) {
         this.ch = ch;
     }
 
-    public void setFats(Float fats) {
+    public void setFats(Double fats) {
         this.fats = fats;
     }
 
@@ -83,7 +83,7 @@ public class Food {
         this.name = name;
     }
 
-    public Float getServingSize() { // Исправлено имя геттера
+    public Double getServingSize() { // Исправлено имя геттера
         return servingSize;
     }
 
@@ -95,7 +95,7 @@ public class Food {
         this.servingUnit = servingUnit;
     }
 
-    public void setServingSize(Float servingSize) {
+    public void setServingSize(Double servingSize) {
         this.servingSize = servingSize;
     }
 }

@@ -9,7 +9,7 @@
 <!--            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
     <link rel="stylesheet" th:href="@{/styles/style.css}">
     <script th:src="@{jvs/my.js}"></script>
-
+    <script th:src="@{jvs/addProductForm.js}"></script>
     <!-------TEST------------>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -162,9 +162,11 @@
                                 <h2>Завтрак</h2>
                             </div>
                             <div class="products-list-wrapper">
-                                <div class="products-list" th:each="mfi, iterStat : ${brfmfi}">
-                                    <span th:text="${mfi}"></span>
-                                    <span th:unless="${iterStat.last}">,</span>
+                                <span th:if="${brfmfi.isEmpty()}">Вы ничего не съели...</span>
+                                <div class="products-list">
+                                    <span th:each="mfi, iterStat : ${brfmfi}">
+                                        <span th:text="${mfi}"></span><span th:if="${!iterStat.last}">, </span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -200,6 +202,7 @@
                                 <h2>Обед</h2>
                             </div>
                             <div class="products-list-wrapper">
+                                <span th:if="${lnchmfi.isEmpty()}">Вы ничего не съели...</span>
                                 <div class="products-list" th:each="mfi, iterStat : ${lnchmfi}">
                                     <span th:text="${mfi}"></span>
                                     <span th:unless="${iterStat.last}">,</span>
@@ -235,6 +238,7 @@
                                 <h2>Ужин</h2>
                             </div>
                             <div class="products-list-wrapper">
+                                <span th:if="${dnmfi.isEmpty()}">Вы ничего не съели...</span>
                                 <div class="products-list" th:each="mfi, iterStat : ${dnmfi}">
                                     <span th:text="${mfi}"></span>
                                     <span th:unless="${iterStat.last}">,</span>
@@ -293,7 +297,8 @@
                 <div th:each="it : ${rec}" class="slider_item">
                     <a th:href="@{/recipes(recipeId=${it.id})}"><img th:src="${it.imageUrl}" alt="" width="150"></a>
                     <p th:text="${it.name}"></p>
-                    <span th:text="${it.calories}"></span>
+                    <span th:text="${it.calories.intValue()}+' ккал'"></span>
+
                 </div>
             </div>
         </div>

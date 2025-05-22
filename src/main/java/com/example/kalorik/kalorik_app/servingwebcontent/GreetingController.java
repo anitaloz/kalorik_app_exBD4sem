@@ -425,14 +425,19 @@ public class GreetingController {
     @GetMapping("/getProducts") // Измененный URL
     public String getProducts(Model model, @RequestParam(name = "filter", required = false) String filter) {
         Iterable<Food> products;
+        List<Food> l;
         if (filter != null && !filter.isEmpty()) {
             products = foodRepo.findByNameContainingIgnoreCase(filter);
+            l=foodRepo.findByNameContainingIgnoreCase(filter);
         } else {
             products = foodRepo.findAll();
+            l=foodRepo.findAll();
         }
         Iterable<ServingUnits> su=servingUnitRepo.findAll();
         model.addAttribute("products", products);
         model.addAttribute("servingUnits", su);
+        boolean fl=!l.isEmpty();
+        model.addAttribute("fl", fl);
         return "getProducts";  // Возвращаем только список продуктов
     }
 
@@ -444,8 +449,6 @@ public class GreetingController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userRepo.findByUsername(auth.getName());
         List<MealProductInfo> mealProducts = foodService.findByMealDateAndMealTitle(mealTitle, mealDate, u.getId());
-        System.out.println("xxx "+mealDate);
-        // Создаем карту (Map) для JSON ответа
         Map<String, List<MealProductInfo>> response = new HashMap<>();
         response.put("mealProducts", mealProducts);
         return ResponseEntity.ok(response); // Возвращаем JSON
@@ -455,11 +458,11 @@ public class GreetingController {
     @PostMapping("/add")
     public RedirectView add(
             @RequestParam String name,
-            @RequestParam Float calories, // Float
-            @RequestParam Float bel, // Float
-            @RequestParam Float fats, // Float
-            @RequestParam Float ch, // Float
-            @RequestParam Float servingSize, // Float и servingSize
+            @RequestParam Double calories, // Float
+            @RequestParam Double bel, // Float
+            @RequestParam Double fats, // Float
+            @RequestParam Double ch, // Float
+            @RequestParam Double servingSize, // Float и servingSize
             @RequestParam Long servingUnit,
             Model model) { // Изменили тип Model
 
@@ -469,9 +472,6 @@ public class GreetingController {
         return new RedirectView("/");
     }
 
-
-
-    //@RequestParam выдергивает из с запросов либо из формы если передаем постом либо с url она выдергивает значеня
     @PostMapping("/addProductToMeal")
     public ResponseEntity<?> addProductToMeal(@RequestBody AddProductRequest request, Model model) {
         try {

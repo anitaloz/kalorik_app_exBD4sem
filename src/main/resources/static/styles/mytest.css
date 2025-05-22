@@ -9,13 +9,16 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    margin-bottom: 5%;
 }
 #formSearchingContainer3,
 #formSearchingContainer1,
 #formSearchingContainer2{
-    padding: 5px 15px;
+    padding: 5px 2px;
     display: flex;
-    justify-content: flex-start;
+    align-self: center;
+    /* justify-content: center; */
+    width: 85%;
 }
 #formSearchingContainer3>form>button,
 #formSearchingContainer2>form>button,
@@ -41,6 +44,7 @@
     flex-direction: row;
     border: solid 3px #000000;
     border-radius: 5px;
+    width: 100%;
 }
 #formSearchingContainer3>form>button:hover,
 #formSearchingContainer2>form>button:hover,
@@ -57,6 +61,7 @@
     padding: 5px;
     padding-right: 0px;
     border-style: none;
+    width: 100%;
 }
 .results{
     display: flex;
@@ -201,7 +206,7 @@
     border-radius: 50px;
     border-width: 0px;
     background-color: #ffffff;
-  }
+}
 .results>::-webkit-scrollbar-thumb {
     border-radius: 45px;
     border-width: 0px;
@@ -322,7 +327,7 @@ deleteProductButton{
     background: #fff !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
     border-radius: 5px !important;
-  }
+}
 
 .flatpickr-day {
     font-size: 14px !important;
@@ -368,12 +373,12 @@ deleteProductButton{
 }
 .flatpickr-weekday {
     color: #5d202cbb !important;
-  }
+}
 #inputDate:focus {
     outline: none !important;
     border-color: #e26f95 !important;
     box-shadow: 0 0 5px rgba(255, 156, 212, 0.81) !important;
-  }
+}
 .selected-date{
     position: relative;
     padding: 10px;
@@ -521,7 +526,8 @@ deleteProductButton{
     justify-content: center;
     width: 100%;
     padding: 15px;
-    margin-top: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     border-radius: 10px;
     border: solid 2px #ddd2d5;
 }
@@ -551,10 +557,10 @@ deleteProductButton{
     margin: 2px 5px;
 }
 #body-measure-hidden-id{
-     display: none !important;
-     margin: 0px !important;
-     padding: 0px !important;
- }
+    display: none !important;
+    margin: 0px !important;
+    padding: 0px !important;
+}
 .redact-body-measure>input{
     height: 100%;
     border: solid 3px #bcbcbc;
@@ -575,15 +581,15 @@ deleteProductButton{
     text-align: center;
 }
 #plus{
-   width: 35px;
-   height: 35px;
-   background-image: url("../images/plus.png");
-   background-repeat: no-repeat;
-   background-size: cover;
-   background-color: #ff8db3;
-   border: solid 3px #ff8db3;
-   border-radius: 50%;
-   padding: 0px;
+    width: 35px;
+    height: 35px;
+    background-image: url("../images/plus.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #ff8db3;
+    border: solid 3px #ff8db3;
+    border-radius: 50%;
+    padding: 0px;
 }
 
 button.sh{
@@ -620,15 +626,15 @@ button.plus{
     padding: 0px;
 }
 #minus, .deleteProductButton{
-   width: 35px;
-   height: 35px;
-   background-image: url("../images/minus.png");
-   background-repeat: no-repeat;
-   background-size: cover;
-   background-color: #ff8db3;
-   border: solid 3px #ff8db3;
-   border-radius: 50%;
-   padding: 0px;
+    width: 35px;
+    height: 35px;
+    background-image: url("../images/minus.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #ff8db3;
+    border: solid 3px #ff8db3;
+    border-radius: 50%;
+    padding: 0px;
 }
 
 button.minus{
@@ -646,12 +652,12 @@ button.minus{
     height: 100%;
 
     border-radius: 10px;
-        border: solid 3px #ff8db3;
-        background-color: #ffffff00;
-        color: #da648b;
-        font-weight: 500;
-        font-size: 18px;
-        text-align: center;
+    border: solid 3px #ff8db3;
+    background-color: #ffffff00;
+    color: #da648b;
+    font-weight: 500;
+    font-size: 18px;
+    text-align: center;
 }
 /*-----calories info---*/
 .calories-info{
@@ -700,10 +706,10 @@ button.minus{
     background-color: #f0f0f0;
 
     --angle: calc(var(--value) / var(--total) * 360deg);
-  background-image: conic-gradient(
-    #fdd075 0 var(--angle),
-    rgba(240, 240, 240, 0) var(--angle) 360deg
-  );
+    background-image: conic-gradient(
+            #fdd075 0 var(--angle),
+            rgba(240, 240, 240, 0) var(--angle) 360deg
+    );
     /*
     --angle: calc(var(--value) / var(--total) * 360deg + 180deg);
     --angle2: calc((var(--value) / var(--total) * 360deg) - 180deg);
@@ -748,7 +754,7 @@ button.minus{
     border-radius: 10px;
     position: relative;
     overflow: hidden;
-    --percentage: calc(var(--current) / var(--max) * 100%); /* Рассчитываем процент */
+    --percentage: calc(var(--current) / var(--max) * 100%); /* ÃÂ ÃÂ°Ã‘ÂÃ‘ÂÃ‘â€¡ÃÂ¸Ã‘â€šÃ‘â€¹ÃÂ²ÃÂ°ÃÂµÃÂ¼ ÃÂ¿Ã‘â‚¬ÃÂ¾Ã‘â€ ÃÂµÃÂ½Ã‘â€š */
 }
 .PFC-progress-bar::before {
     content: "";

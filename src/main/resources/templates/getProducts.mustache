@@ -1,35 +1,20 @@
-<!DOCTYPE html>
-<html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-
-    <meta charset="UTF-8">
-    <title>addProduct</title>
-    <link rel="stylesheet" th:href="@{/styles/style.css}">
-    <!--    <link rel="icon" th:href="@{/styles/logo.ico}" type="image/x-icon">-->
-
-    <!-------TEST------------>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="@{/styles/mytest.css}">
-    <!-------TEST------------>
-</head>
-<div class="result-cont container">
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
+<div class="result-cont container {{^fl}}addform{{/fl}}">
 <table class="found-product-table">
+    {{#fl}}
     <thead>
         <th>Продукт</th>
         <th>К</th>
         <th>Б</th>
         <th>Ж</th>
         <th>У</th>
-        <th>На</th>
+        <th>Порция</th>
         <th>Кол-во</th>
         <th></th>
         <th></th>
     </thead>
+    {{/fl}}
+    {{^fl}}
+    {{/fl}}
    <tbody>
 {{#products}}
 
@@ -75,30 +60,21 @@
 </table>
 
 {{^products}}
-    <form method="post" action="add">
-
-            <label> <input type="text" name="name" placeholder="Название" /> </label>
-
-            <label> <input type="text" name="calories" placeholder="Калорийность" /> </label>
-
-            <label> <input type="text" name="bel" placeholder="Белки" /> </label>
-
-            <label> <input type="text" name="fats" placeholder="Жиры" /> </label>
-
-            <label> <input type="text" name="ch" placeholder="Углеводы" /> </label>
-
-            <label> <input type="text" name="servingSize" placeholder="Размер порции" /> </label>
-
-            <label> <select name="servingUnit">
-                    <option value=""> Единица измерения </option>
-                    {{#servingUnits}}
-                        <option value="{{id}}">{{name}}</option>
-                    {{/servingUnits}}
-                    </select>
-            </label>
-
-            <button type="submit"></button>
-
+    <form id="addForm" method="post" action="add">
+        <label> <input type="text" name="name" placeholder="Название" /> </label>
+        <label> <input type="text" name="calories" placeholder="Калорийность" /> </label>
+        <label> <input type="text" name="bel" placeholder="Белки" /> </label>
+        <label> <input type="text" name="fats" placeholder="Жиры" /> </label>
+        <label> <input type="text" name="ch" placeholder="Углеводы" /> </label>
+        <label> <input type="text" name="servingSize" placeholder="Размер порции" /> </label>
+        <label>
+            <select name="servingUnit" id="servingUnit">
+                {{#servingUnits}}
+                    <option value="{{id}}">{{name}}</option>
+                {{/servingUnits}}
+            </select>
+        </label>
+        <button type="submit"></button>
     </form>
 {{/products}}
 

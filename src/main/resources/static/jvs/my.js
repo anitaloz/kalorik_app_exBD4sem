@@ -37,8 +37,51 @@ document.addEventListener("DOMContentLoaded", function() {
         if (isHidden) {
             // Показываем форму
             formContainer1.innerHTML = formTemplate;
+
+            const resultsContainer = out.querySelector('.results');
+            fetch('getProducts')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    resultsContainer.innerHTML = html;
+
+                    const addButtons = resultsContainer.querySelectorAll('.addProductButton');
+                    addButtons.forEach(button => {
+                        button.addEventListener('click', function(event) {
+                            event.preventDefault();
+
+                            const productId = this.getAttribute('data-product-id');
+                            const productUnit = this.getAttribute('data-product-unit');
+                            const productSize = this.getAttribute('data-product-size');
+
+                            // Находим input для количества внутри родительского элемента кнопки
+                            const quantityInput = this.closest('tr').querySelector('#quantity');
+
+                            //console.log(this.closest('tr'));
+
+                            const quantity = parseFloat(quantityInput.value);
+                            if (isNaN(quantity) || quantity <= 0) {
+                                alert('Пожалуйста, введите корректное количество.');
+                                return;
+                            }
+                            const l=document.getElementById('inputDate');
+                            const dateString=l.value;
+                            let inputDate=new Date(dateString);
+                            const mealTitle='breakfast';
+                            addProductToMeal(productId, mealTitle, quantity, productUnit, productSize, inputDate);  //Передаем unit
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    resultsContainer.innerHTML = '<p>Ошибка поиска.</p>';
+                });
             out.classList.remove('hidden'); // Делаем видимым .out
-            out.querySelector('.results').style.display = 'none'; // Прячем результаты
+            //out.querySelector('.results').style.display = 'none'; // Прячем результаты
 
             // Меняем текст кнопки на "Скрыть"
             breakfastButton.classList.add('minus');
@@ -170,8 +213,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (isHidden) {
             formContainer2.innerHTML = formTemplate;
+            const resultsContainer = out.querySelector('.results');
+            fetch('getProducts')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    resultsContainer.innerHTML = html;
+
+                    const addButtons = resultsContainer.querySelectorAll('.addProductButton');
+                    addButtons.forEach(button => {
+                        button.addEventListener('click', function(event) {
+                            event.preventDefault();
+
+                            const productId = this.getAttribute('data-product-id');
+                            const productUnit = this.getAttribute('data-product-unit');
+                            const productSize = this.getAttribute('data-product-size');
+
+                            // Находим input для количества внутри родительского элемента кнопки
+                            const quantityInput = this.closest('tr').querySelector('#quantity');
+
+                            //console.log(this.closest('tr'));
+
+                            const quantity = parseFloat(quantityInput.value);
+                            if (isNaN(quantity) || quantity <= 0) {
+                                alert('Пожалуйста, введите корректное количество.');
+                                return;
+                            }
+                            const l=document.getElementById('inputDate');
+                            const dateString=l.value;
+                            let inputDate=new Date(dateString);
+                            const mealTitle='lunch';
+                            addProductToMeal(productId, mealTitle, quantity, productUnit, productSize, inputDate);  //Передаем unit
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    resultsContainer.innerHTML = '<p>Ошибка поиска.</p>';
+                });
+
             out.classList.remove('hidden');
-            out.querySelector('.results').style.display = 'none';
             lunchButton.classList.add('minus');
             lunchButton.classList.remove('plus');
             attachSearchHandler('formSearchingContainer2', '.results', 'lunch');
@@ -191,8 +276,49 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (isHidden) {
             formContainer3.innerHTML = formTemplate;
+            const resultsContainer = out.querySelector('.results');
+            fetch('getProducts')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    resultsContainer.innerHTML = html;
+
+                    const addButtons = resultsContainer.querySelectorAll('.addProductButton');
+                    addButtons.forEach(button => {
+                        button.addEventListener('click', function(event) {
+                            event.preventDefault();
+
+                            const productId = this.getAttribute('data-product-id');
+                            const productUnit = this.getAttribute('data-product-unit');
+                            const productSize = this.getAttribute('data-product-size');
+
+                            // Находим input для количества внутри родительского элемента кнопки
+                            const quantityInput = this.closest('tr').querySelector('#quantity');
+
+                            //console.log(this.closest('tr'));
+
+                            const quantity = parseFloat(quantityInput.value);
+                            if (isNaN(quantity) || quantity <= 0) {
+                                alert('Пожалуйста, введите корректное количество.');
+                                return;
+                            }
+                            const l=document.getElementById('inputDate');
+                            const dateString=l.value;
+                            let inputDate=new Date(dateString);
+                            const mealTitle='dinner';
+                            addProductToMeal(productId, mealTitle, quantity, productUnit, productSize, inputDate);  //Передаем unit
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    resultsContainer.innerHTML = '<p>Ошибка поиска.</p>';
+                });
             out.classList.remove('hidden');
-            out.querySelector('.results').style.display = 'none';
             dinnerButton.classList.add('minus');
             dinnerButton.classList.remove('plus');
             attachSearchHandler('formSearchingContainer3', '.results', 'dinner');
@@ -491,6 +617,7 @@ document.addEventListener("DOMContentLoaded", function() {
         currentWeight += 0.1;
         currentWeightInput.value = currentWeight.toFixed(1); // Ограничить одним десятичным знаком
     });
+
 
 
 });

@@ -96,3 +96,9 @@ select:invalid + .invalid-feedback {
     display: none !important;
 }
 
+.products-list {
+    display: flex;
+    flex-wrap: wrap; /* перенос строк */
+    align-items: center; /* вертикальное выравнивание, по желанию */
+    gap: 0.3em;
+}
