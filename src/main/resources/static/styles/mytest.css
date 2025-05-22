@@ -66,6 +66,7 @@
     min-width: 100%;
     max-width: 100%;
     margin: auto;
+    margin-bottom: 10px;
     background-color: #ffffff;
     color:black;
     padding: 0px !important;
@@ -112,6 +113,14 @@
     width: 100%;
     margin: auto;
 }
+.result-cont input, .result-cont select{
+    max-width: 90px;
+
+    border-radius: 10px;
+    border: solid 3px #ff8db3;
+    background-color: #ffffff00;
+    color: #ff8db3;
+}
 .result-cont thead{
     position: sticky;
     width: 100%;
@@ -123,6 +132,7 @@
 }
 .result-cont th {
     text-align: center;
+    overflow: hidden;
 }
 .result-cont tbody{
     padding-top: 30px;
@@ -153,7 +163,7 @@
 .found-product-info span{
     padding: 0px 3px;
 }
-.addProductButton{
+.addProductButton, .found-product-table button{
     width: 35px;
     height: 35px;
     background-image: url("../images/plus.png");
@@ -408,19 +418,23 @@ deleteProductButton{
     background-color: #a71f4c;
 }
 #inputDate{
-    border-radius: 5px;
-    border-color: #df7f9f;
+    border-radius: 10px;
+    border: solid 3px #ff8db3;
+    background-color: #ffffff00;
+    color: #da648b;
+    font-weight: 500;
+    text-align: center;
     margin: 0px 5px;
 }
 .df{
-    border-radius: 5px;
+    border-radius: 10px;
+    border: solid 3px #ff8db3;
+    background-color: #ffffff00;
+    color: #ff8db3;
+
     font-weight: 500;
     padding: 10px;
     max-width: 120px;
-    border-style: none;
-    border-radius: 10px;
-    background: linear-gradient(to right, #ff8db3, #faa3c0, #f8e2a730);
-    background-color: #f8a7c2;
 }
 /*-----------------------------------*/
 /*-----------------------------------*/
@@ -546,10 +560,11 @@ deleteProductButton{
     align-self: center;
     padding: 10px;
     max-width: 120px;
-    border-style: none;
+
     border-radius: 10px;
-    background: linear-gradient(to right, #ff8db3, #faa3c0, #f8e2a730);
-    background-color: #f8a7c2;
+    border: solid 3px #ff8db3;
+    background-color: #ffffff00;
+    color: #ff8db3;
     font-weight: 500;
 }
 .body-measure h4{
@@ -625,7 +640,14 @@ button.minus{
 }
 .currentWeight{
     height: 100%;
+
     border-radius: 10px;
+        border: solid 3px #ff8db3;
+        background-color: #ffffff00;
+        color: #da648b;
+        font-weight: 500;
+        font-size: 18px;
+        text-align: center;
 }
 /*-----calories info---*/
 .calories-info{

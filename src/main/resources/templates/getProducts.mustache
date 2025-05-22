@@ -70,34 +70,38 @@
     -->
 
 {{/products}}
+
 </tbody>
 </table>
 
-
 {{^products}}
         <form method="post" action="add">
-            <label>
-                <input type="text" name="name" placeholder="Введите название продукта" />
-            </label>
-            <label>
-            <input type="text" name="calories" placeholder="Введите калорийность" />
-            </label>
-            <label>
-            <input type="text" name="bel" placeholder="Введите количество белков" /></label>
-            <label>
-            <input type="text" name="fats" placeholder="Введите количество жиров" /></label>
-            <label>
-            <input type="text" name="ch" placeholder="Введите количество углеводов" /></label>
-            <label>
-            <input type="text" name="servingSize" placeholder="Введите размер порции" /></label>
-            <label>
-                <select name="servingUnit">
-                    <option value="">-- Выберите единицу измерения --</option>
+
+
+            <label> <input type="text" name="name" placeholder="Название" /> </label>
+
+            <label> <input type="text" name="calories" placeholder="Калорийность" /> </label>
+
+            <label> <input type="text" name="bel" placeholder="Белки" /> </label>
+
+            <label> <input type="text" name="fats" placeholder="Жиры" /> </label>
+
+            <label> <input type="text" name="ch" placeholder="Углеводы" /> </label>
+
+            <label> <input type="text" name="servingSize" placeholder="Размер порции" /> </label>
+
+            <label> <select name="servingUnit">
+                    <option value=""> Единица измерения </option>
                     {{#servingUnits}}
                         <option value="{{id}}">{{name}}</option>
                     {{/servingUnits}}
-                </select></label>
-            <button type="submit">Добавить</button>
+                    </select>
+            </label>
+
+            <button type="submit"></button>
+
         </form>
 {{/products}}
+
+
 </div>
