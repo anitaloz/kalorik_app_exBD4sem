@@ -76,19 +76,30 @@ body{
 
 .slider .slider_item{
     display: flex;
-    padding: 5px;
+    padding: 15px 10px;
     flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 4px;
-    margin-bottom: 4px;
+    margin: 4px auto;
     text-align: center;
     border-style: none;
-    border-radius: 10px;
+    border-radius: 7px;
     background-color: #ffffff;
+    justify-content: center;
 }
 .slider .slider_item a{
     align-self: center;
     border-radius: 5px;
     overflow: hidden;
+    text-decoration: none;
+    color:black;
+}
+
+
+.slider .slider_item a h5{
+    margin-bottom:15px;
+}
+
+.slider .slider_item a p{
+    font-weight: 500;
+    line-height: 1.2;
+    margin-top:15px;
 }

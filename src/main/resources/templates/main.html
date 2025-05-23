@@ -295,10 +295,11 @@
         <div th:if="${!rec.isEmpty()}" class="wrapper">
             <div class="slider">
                 <div th:each="it : ${rec}" class="slider_item">
-                    <a th:href="@{/recipes(recipeId=${it.id})}"><img th:src="${it.imageUrl}" alt="" width="150"></a>
-                    <p th:text="${it.name}"></p>
-                    <span th:text="${it.calories.intValue()}+' ккал'"></span>
-
+                    <a th:href="@{/recipes(recipeId=${it.id})}">
+                        <h5 th:text="${it.name}"></h5>
+                        <img th:src="${it.imageUrl}" alt="" width="150">
+                        <p th:text="${it.calories.intValue()}+' ккал'"></p>
+                    </a>
                 </div>
             </div>
         </div>
