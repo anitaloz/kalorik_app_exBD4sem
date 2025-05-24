@@ -129,7 +129,7 @@ public class UserInfoService {
             return "Цель не может быть длиннее 30 символов.";
         }
         else if (purpose!=null && !purpose.matches("^[a-zA-Zа-яА-Я\\s]+$")) { // Added whitespace
-            return "Имя должно содержать только буквы и пробелы.";
+            return "Цель должна содержать только буквы и пробелы.";
         }
         return null;
     }
