@@ -67,7 +67,6 @@
     display: flex;
     align-self: center;
     /*min-height: 180px;*/
-    max-height: 280px;
     min-width: 100%;
     max-width: 100%;
     margin: auto;
@@ -90,6 +89,24 @@
     border-radius: 10px;
     border: solid 2px #ddd2d5;
     background-color:#ffffff;
+}
+.addform{
+    overflow-y: hidden;
+    vertical-align: middle;
+    height: auto;
+}
+.result-cont #addForm{
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+    margin: auto;
+}
+.result-cont p{
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+    margin: 0px;
 }
 #quantity{
     max-width: 105px;
@@ -180,7 +197,15 @@
     padding: 0px;
     margin-top: auto;
     margin-bottom: auto;
-}/*
+}
+.result-cont .addProductButton-2{
+    border-radius: 10px;
+    border: solid 3px #ff8db3;
+    background-color: #ffffff00;
+    color: #ff8db3;
+    font-weight: 500;
+}
+/*
 .addProductButton-wrapper::after{
     content: "";
     position: absolute;

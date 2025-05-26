@@ -60,6 +60,7 @@
 </table>
 
 {{^products}}
+    <p>Добавить новый продукт</p>
     <form id="addForm" method="post" action="add">
         <label> <input type="text" name="name" placeholder="Название" /> </label>
         <label> <input type="text" name="calories" placeholder="Калорийность" /> </label>
@@ -74,7 +75,7 @@
                 {{/servingUnits}}
             </select>
         </label>
-        <button type="submit"></button>
+        <button class="addProductButton-2" type="submit">Добавить</button>
     </form>
 {{/products}}
 
