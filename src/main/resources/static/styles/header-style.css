@@ -59,8 +59,21 @@ header{
     text-decoration: none;
     color:#2e121e;
 }
-.header-nav-wrapper>nav>ul>li>div>a:hover{
-
+.header-nav-wrapper form{
+    height: 39px;
+    vertical-align: middle;
+    text-align: center;
+}
+.header-nav-wrapper form input{
+    height: 100%;
+    text-align: center;
+    border-style: none;
+    background-color: #00000000;
+    padding: 0px;
+    font-size: 26px;
+    font-weight: 500;
+    text-decoration: none;
+    color:#2e121e;
 }
 .nav-profile{
     display: flex;

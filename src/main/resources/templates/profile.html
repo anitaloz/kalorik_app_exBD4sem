@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Your Profile</title>
@@ -57,15 +57,20 @@
     <div class="profile-container" th:if="${editProfileMode == false}">
         <span class="profile-login" th:text="${UI.usr.username}"></span>
         <h1>Профиль</h1>
-        <img th:src="${UI.imageUrl}" th:alt="${UI.getUsr().getUsername()}" width="150px">
-        <div class="profile-item">
-            <span class="profile-label">Имя:</span>
-            <span th:text="${UI.firstName}"></span>
-        </div>
 
-        <div class="profile-item">
-            <span class="profile-label">Фамилия:</span>
-            <span th:text="${UI.lastName}"></span>
+        <div class="profile-main-info">
+            <img th:src="${UI.imageUrl}" th:alt="${UI.getUsr().getUsername()}" width="150px">
+            <div class="name-info">
+                <div class="profile-item">
+                    <span class="profile-label"></span>
+                    <span th:text="${UI.firstName}"></span>
+                </div>
+
+                <div class="profile-item">
+                    <span class="profile-label"></span>
+                    <span th:text="${UI.lastName}"></span>
+                </div>
+            </div>
         </div>
 
         <div class="profile-item">
@@ -95,7 +100,8 @@
         <form action="/profile/MainInfoSave" method="post" enctype="multipart/form-data">
             <span class="profile-login" th:text="${UI.usr.username}"></span>
             <h1>Профиль</h1>
-            <label>
+
+            <label class="custom-file-upload">
                 Фотография профиля:<br />
                 <input type="file" name="coverImage" accept="image/*"/>
                 <span>Выбрать файл</span>
@@ -178,30 +184,32 @@
     </div>
 
     <div th:if="${editMode == true}">
-        <form action="/profile/save" method="post">
-            <div class="form-group">
-                <label class="form-label" for="purpose">Цель:</label>
-                <input type="text" class="form-input" id="purpose" name="purpose" th:value="${UI.purpose}"/>
-                <span th:if="${purposeError != null}" th:text="${purposeError}" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="form-label" for="caloriesNum">Калории:</label>
-                <input type="number" class="form-input" id="caloriesnum" name="caloriesnum" th:value="${UI.caloriesnum}"/>
-                <span th:if="${caloriesNumError != null}" th:text="${caloriesNumError}" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="form-label" for="weightKg">Текущий вес:</label>
-                <input type="number" step="0.01" class="form-input" id="weightKg" name="weightKg" th:value="${UI.weightKg}"/>
-                <span th:if="${weightKgError != null}" th:text="${weightKgError}" class="text-danger"></span>
-            </div>
-            <div class="form-group" th:if="${UI.purpose == 'похудение'}">
-                <label class="form-label" for="desiredWeight">Желаемый вес:</label>
-                <input type="number" step="0.01" class="form-input" id="desiredWeight" name="desiredWeight" th:value="${UI.desiredWeight}"/>
-                <span th:if="${desiredWeightError != null}" th:text="${desiredWeightError}" class="text-danger"></span>
-            </div>
-            <button type="submit" class="edit-button">Сохранить</button>
-            <button type="button" class="edit-button" onclick="location.href='/profile'">Отменить изменения</button>
-        </form>
+        <div class="purposes-container">
+            <form action="/profile/save" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="purpose">Цель:</label>
+                    <input type="text" class="form-input" id="purpose" name="purpose" th:value="${UI.purpose}"/>
+                    <span th:if="${purposeError != null}" th:text="${purposeError}" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="caloriesNum">Калории:</label>
+                    <input type="number" class="form-input" id="caloriesnum" name="caloriesnum" th:value="${UI.caloriesnum}"/>
+                    <span th:if="${caloriesNumError != null}" th:text="${caloriesNumError}" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="weightKg">Текущий вес:</label>
+                    <input type="number" step="0.01" class="form-input" id="weightKg" name="weightKg" th:value="${UI.weightKg}"/>
+                    <span th:if="${weightKgError != null}" th:text="${weightKgError}" class="text-danger"></span>
+                </div>
+                <div class="form-group" th:if="${UI.purpose == 'похудение'}">
+                    <label class="form-label" for="desiredWeight">Желаемый вес:</label>
+                    <input type="number" step="0.01" class="form-input" id="desiredWeight" name="desiredWeight" th:value="${UI.desiredWeight}"/>
+                    <span th:if="${desiredWeightError != null}" th:text="${desiredWeightError}" class="text-danger"></span>
+                </div>
+                <button type="submit" class="edit-button">Сохранить</button>
+                <button type="button" class="edit-button" onclick="location.href='/profile'">Отменить изменения</button>
+            </form>
+        </div>
     </div>
 
 </div>

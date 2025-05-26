@@ -16,7 +16,6 @@
 }
 .profile-container img{
     text-align: center;
-    margin: auto;
 }
 .profile-login{
     position: absolute;
@@ -29,8 +28,20 @@
     background-color: #ffffff;
 
 }
+.profile-main-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    vertical-align: middle;
+}
+.name-info{
+    padding: 10px;
+    font-size: 28px;
+    font-weight: 500;
+}
 .profile-item {
-   margin-bottom: 10px;
+    font-size: 20px;
+    padding: 5px;
 }
 
 .profile-label {
@@ -42,13 +53,20 @@ input, select{
 }
 .edit-button{
     margin: auto;
-    padding: 5px;
+    padding: 8px 16px;
     border-radius: 10px;
     border-style: none;
     background-color: #ff8db3;
     color: #ffffff;
     font-weight: 500;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
 }
+.edit-button:hover {
+    background-color: #ffbad1;
+  }
+
+
 .custom-file-upload input[type="file"] {
     display: none;
 }
@@ -63,14 +81,16 @@ input, select{
     display: inline-block;
     margin-top: 6px;
     padding: 8px 16px;
-    background-color: #007bff;
+    background-color: #ff8db3;
     color: white;
+    font-weight: 500;
+    font-size: 18px;
     border-radius: 4px;
     transition: background-color 0.3s ease;
     user-select: none;
   }
   .custom-file-upload:hover span {
-    background-color: #0056b3;
+    background-color: #ffbad1;
   }
 /*-------------------------------------------*/
 .purposes-container {
