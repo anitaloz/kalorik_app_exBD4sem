@@ -1,0 +1,161 @@
+.profile-page-container{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.profile-container {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+}
+.profile-container h1{
+    text-align: center;
+}
+.profile-container img{
+    text-align: center;
+    margin: auto;
+}
+.profile-login{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 8px 2px 8px 2px;
+    padding: 10px;
+    font-weight: 500;
+    background: linear-gradient(to right, #ff8db389, #faa3c06d, #f8e2a774);
+    background-color: #ffffff;
+
+}
+.profile-item {
+   margin-bottom: 10px;
+}
+
+.profile-label {
+   font-weight: bold;
+   margin-right: 5px;
+}
+input, select{
+    border-radius: 3px;
+}
+.edit-button{
+    margin: auto;
+    padding: 5px;
+    border-radius: 10px;
+    border-style: none;
+    background-color: #ff8db3;
+    color: #ffffff;
+    font-weight: 500;
+}
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #444;
+  }
+  .custom-file-upload span {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  .custom-file-upload:hover span {
+    background-color: #0056b3;
+  }
+/*-------------------------------------------*/
+.purposes-container {
+   background-color: #fff;
+   padding: 20px;
+
+   border-radius: 8px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   max-width: 800px;
+   margin: auto;
+   margin-top:5%;
+}
+/*----------------------*/
+.flatpickr-calendar {
+    background: #fff !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 5px !important;
+}
+
+.flatpickr-day {
+    font-size: 14px !important;
+    color: #333 !important;
+}
+.flatpickr-day.disabled{
+    background-color: #4d1924 !important;
+}
+.flatpickr-day:hover, .flatpickr-day.today:hover, .flatpickr-day.disabled:hover {
+    background-color: #fda9c546 !important;
+    border-style: none !important;
+    box-shadow: 5px 3px 10px #e26b8592 !important;
+    color: #333 !important;
+}
+.flatpickr-day.selected {
+    background: linear-gradient(120deg, #ff8db3, #faa3c0, #fae3a3b7) !important;
+    background-color: #f8a7c2 !important;
+    color:#fffbfc !important;
+    border-style: none !important;
+}
+.flatpickr-day.selected:hover {
+    background: linear-gradient(120deg, #ff8db39c, #faa3c096, #fae3a3b7) !important;
+    background-color: #ffffff !important;
+    color:#fffbfc !important;
+    border-style: none !important;
+    box-shadow: 5px 3px 10px #e26b8592 !important;
+}
+.flatpickr-day.today{
+    border-radius: 2px !important;
+    border-color: #f8a7c2 !important;
+    border-radius: 100% !important;
+}
+/*
+.cur-year{
+    background-color: #e26b85 !important;
+}*/
+.arrowup, .arrowdown{
+    background-color: #ffffff !important;
+}
+.flatpickr-weekdays{
+    background: linear-gradient(to right, #ff8db39c, #faa3c096, #fae3a3b7) !important;
+    background-color: #ffffff !important;
+}
+.flatpickr-weekday {
+    color: #5d202cbb !important;
+}
+#dateOfBirth:focus {
+    outline: none !important;
+    border-color: #e26f95 !important;
+    box-shadow: 0 0 5px rgba(255, 156, 212, 0.81) !important;
+}
+.selected-date{
+    position: relative;
+    padding: 10px;
+    margin: 0px;
+    background: linear-gradient(45deg,  #ff8db3, #faa3c0, #fae3a3);
+    background-color: #ffffff;
+    border-radius: 48px 5px 48px 5px;
+    max-height: 92px;
+    z-index: 6;
+}
+.selected-date>h1{
+    position: relative;
+    padding: 10px;
+    margin: 0px;
+    background-color: #ffffff;
+    border-radius: 44px 5px 43px 5px;
+    max-height: 92px;
+    z-index: 2;
+}
