@@ -633,3 +633,29 @@ document.addEventListener('DOMContentLoaded', function() {
       // ...
     });
   });
+
+ document.addEventListener('DOMContentLoaded', function() {
+     flatpickr("#dateOfBirth", {
+       dateFormat: "Y-m-d", // Формат даты
+       // Другие опции:
+       // enableTime: true,  // Включить выбор времени
+       // ...
+     });
+   });
+
+   document.addEventListener('DOMContentLoaded', function() {
+        flatpickr("#startDate", {
+          dateFormat: "Y-m-d", // Формат даты
+          // Другие опции:
+          // enableTime: true,  // Включить выбор времени
+          // ...
+        });
+      });
+      document.addEventListener('DOMContentLoaded', function() {
+           flatpickr("#endDate", {
+             dateFormat: "Y-m-d", // Формат даты
+             // Другие опции:
+             // enableTime: true,  // Включить выбор времени
+             // ...
+           });
+         });

@@ -1,19 +1,126 @@
+.block-main{
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+}
+h2{
+    text-align: center;
+}
+.block-wrapper{
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.date-form{
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.date-form-dates{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.date-form-btn{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.date-form-btn button{
+    margin: auto;
+}
+.date-form-btn button:hover{
+    background-color: #ffffff;
+    border-style: solid;
+    border-color: #ff8db3;
+    color: #ff8db3;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    border-color: #ffffff;
 }
-
 th, td {
-    border: 1px solid #ddd;
+    border: 1px solid #ffffff;
     padding: 8px;
     text-align: left;
 }
-
 th {
-    background-color: #f2f2f2;
+    background-color:  rgba(255, 185, 204, 0.87);
+}
+tr:nth-child(even) {
+    background-color: rgba(255, 219, 229, 0.87);
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
+.btn-primary{
+    margin-top: 6px;
+    padding: 8px 16px;
+    background-color: #ff8db3;
+    color: white;
+    font-weight: 500;
+    font-size: 18px;
+    border-radius: 4px;
+    border-style: none;
+}
+/*----------------------*/
+.flatpickr-calendar {
+    background: #fff !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 5px !important;
+}
+
+.flatpickr-day {
+    font-size: 14px !important;
+    color: #333 !important;
+}
+.flatpickr-day.disabled{
+    background-color: #4d1924 !important;
+}
+.flatpickr-day:hover, .flatpickr-day.today:hover, .flatpickr-day.disabled:hover {
+    background-color: #fda9c546 !important;
+    border-style: none !important;
+    box-shadow: 5px 3px 10px #e26b8592 !important;
+    color: #333 !important;
+}
+.flatpickr-day.selected {
+    background: linear-gradient(120deg, #ff8db3, #faa3c0, #fae3a3b7) !important;
+    background-color: #f8a7c2 !important;
+    color:#fffbfc !important;
+    border-style: none !important;
+}
+.flatpickr-day.selected:hover {
+    background: linear-gradient(120deg, #ff8db39c, #faa3c096, #fae3a3b7) !important;
+    background-color: #ffffff !important;
+    color:#fffbfc !important;
+    border-style: none !important;
+    box-shadow: 5px 3px 10px #e26b8592 !important;
+}
+.flatpickr-day.today{
+    border-radius: 2px !important;
+    border-color: #f8a7c2 !important;
+    border-radius: 100% !important;
+}
+.arrowup, .arrowdown{
+    background-color: #ffffff !important;
+}
+.flatpickr-weekdays{
+    background: linear-gradient(to right, #ff8db39c, #faa3c096, #fae3a3b7) !important;
+    background-color: #ffffff !important;
+}
+.flatpickr-weekday {
+    color: #5d202cbb !important;
+}
+#startDate:focus, #endDate:focus {
+    outline: none !important;
+    border-color: #e26f95 !important;
+    box-shadow: 0 0 5px rgba(255, 156, 212, 0.81) !important;
+}
+.form-control:disabled, .form-control[readonly]{
+    background-color: #ffffff;
+    opacity: 1;
 }

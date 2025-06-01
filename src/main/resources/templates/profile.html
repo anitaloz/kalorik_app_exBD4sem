@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Your Profile</title>
@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <link rel="stylesheet" th:href="@{/styles/header-style.css}">
@@ -17,6 +19,7 @@
 
     <link rel="stylesheet" href="./profile-style.css">
     <link rel="stylesheet" href="./header-style.css">
+    <script th:src="@{jvs/my.js}"></script>
 </head>
 
 <header>
@@ -75,22 +78,22 @@
 
         <div class="profile-item">
             <span class="profile-label">Дата рождения:</span>
-            <span th:text="${#dates.format(UI.dateOfBirth, 'dd.MM.yyyy')}"></span>
+            <span class="profile-span" th:text="${#dates.format(UI.dateOfBirth, 'dd.MM.yyyy')}"></span>
         </div>
 
         <div class="profile-item">
             <span class="profile-label">Пол:</span>
-            <span th:text="${UI.gender}"></span>
+            <span class="profile-span" th:text="${UI.gender}"></span>
         </div>
 
         <div class="profile-item">
             <span class="profile-label">Рост (см):</span>
-            <span th:text="${UI.heightCm}"></span>
+            <span class="profile-span" th:text="${UI.heightCm}"></span>
         </div>
 
         <div class="profile-item">
             <span class="profile-label">Уровень активности:</span>
-            <span th:text="${UI.activityLevel}"></span>
+            <span class="profile-span" th:text="${UI.activityLevel}"></span>
         </div>
         <button class="edit-button" onclick="location.href='/profile/editMainInfo'">Редактировать</button>
     </div>
@@ -122,7 +125,12 @@
 
             <div class="form-group">
                 <label class="form-label" for="dateOfBirth">Дата рождения:</label>
+
                 <input type="date" class="form-input" id="dateOfBirth" name="dateOfBirth" th:value="${UI.dateOfBirth}"/>
+                <!--
+                <input type="date" class="form-input" id="dateOfBirth" name="dateOfBirth" th:value="${UI.dateOfBirth}"/>
+               -->
+
                 <span th:if="${dateOfBirthError != null}" th:text="${dateOfBirthError}" class="text-danger"></span>
             </div>
 
@@ -163,19 +171,19 @@
             <h2>Цели</h2>
             <div class="purposes-item">
                 <span class="purposes-label">Цель: </span>
-                <span th:text="${UI.purpose}"></span>
+                <span class="purpose-span" th:text="${UI.purpose}"></span>
             </div>
             <div class="purposes-item">
                 <span class="purposes-label">Калории: </span>
-                <span th:text="${UI.caloriesnum}"></span>
+                <span class="purpose-span" th:text="${UI.caloriesnum}"></span>
             </div>
             <div class="purposes-item">
                 <span class="purposes-label">Текущий вес: </span>
-                <span th:text="${UI.weightKg}"></span>
+                <span class="purpose-span" th:text="${UI.weightKg}"></span>
             </div>
             <div class="purposes-item" th:if="${UI.purpose == 'похудение'}">
                 <span class="purposes-label">Желаемый вес: </span>
-                <span th:text="${UI.desiredWeight}"></span>
+                <span class="purpose-span" th:text="${UI.desiredWeight}"></span>
             </div>
             <button class="edit-button" onclick="location.href='/profile/editPurposes'">Редактировать</button>
         </div>

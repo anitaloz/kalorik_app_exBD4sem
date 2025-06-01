@@ -26,6 +26,7 @@
     padding: 5px;
     /*height: 100%;*/
     max-height: 40px;
+    width: 15%;
     border-radius: 0px 1px 1px 0px;
     background-color: pink;
     border-style: none
@@ -100,6 +101,7 @@
     flex-direction: column;
     max-width: 70%;
     margin: auto;
+    margin-bottom: 10px;
 }
 .result-cont p{
     font-weight: 500;
@@ -107,6 +109,7 @@
     width: 100%;
     padding: 5px;
     margin: 0px;
+    font-size: 18px;
 }
 #quantity{
     max-width: 105px;
@@ -135,13 +138,18 @@
     width: 100%;
     margin: auto;
 }
+.found-product-table label{
+    background-color: #000000 !important;
+    display: flex;
+    justify-content: center;
+}
 .result-cont input, .result-cont select{
     max-width: 90px;
 
     border-radius: 10px;
-    border: solid 3px #fea4b8;
+    border: solid 2px #000000;
     background-color: #ffffff00;
-    color: #ff8db3;
+    color: #000000;
 }
 .result-cont thead{
     position: sticky;
@@ -199,11 +207,14 @@
     margin-bottom: auto;
 }
 .result-cont .addProductButton-2{
-    border-radius: 10px;
-    border: solid 3px #ff8db3;
-    background-color: #ffffff00;
-    color: #ff8db3;
+    margin-top: 6px;
+    padding: 8px 16px;
+    background-color: #ff8db3;
+    color: white;
     font-weight: 500;
+    font-size: 18px;
+    border-radius: 4px;
+    border-style: none;
 }
 /*
 .addProductButton-wrapper::after{
@@ -679,7 +690,7 @@ button.minus{
     border-radius: 10px;
     border: solid 3px #ff8db3;
     background-color: #ffffff00;
-    color: #da648b;
+    color: #000000;
     font-weight: 500;
     font-size: 18px;
     text-align: center;

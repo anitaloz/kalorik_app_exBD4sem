@@ -34,19 +34,21 @@
     justify-content: flex-start;
     vertical-align: middle;
 }
+.profile-item {
+    padding: 5px;
+}
 .name-info{
     padding: 10px;
     font-size: 28px;
     font-weight: 500;
 }
-.profile-item {
-    font-size: 20px;
-    padding: 5px;
-}
-
 .profile-label {
    font-weight: bold;
    margin-right: 5px;
+   font-size: 19px;
+}
+.profile-span{
+    font-size: 18px;
 }
 input, select{
     border-radius: 3px;
@@ -103,40 +105,50 @@ input, select{
    margin: auto;
    margin-top:5%;
 }
+.purposes-label{
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: 19px;
+}
+.purpose-span{
+    font-size: 18px;
+}
 /*----------------------*/
-.flatpickr-calendar {
+.profile-container .flatpickr-calendar {
     background: #fff !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
     border-radius: 5px !important;
 }
 
-.flatpickr-day {
+.profile-container .flatpickr-day {
     font-size: 14px !important;
     color: #333 !important;
 }
-.flatpickr-day.disabled{
+.profile-container .flatpickr-day.disabled{
     background-color: #4d1924 !important;
 }
-.flatpickr-day:hover, .flatpickr-day.today:hover, .flatpickr-day.disabled:hover {
+.profile-container .flatpickr-day:hover,
+.profile-container .flatpickr-day.today:hover,
+.profile-container .flatpickr-day.disabled:hover {
     background-color: #fda9c546 !important;
     border-style: none !important;
     box-shadow: 5px 3px 10px #e26b8592 !important;
     color: #333 !important;
 }
-.flatpickr-day.selected {
+.profile-container .flatpickr-day.selected {
     background: linear-gradient(120deg, #ff8db3, #faa3c0, #fae3a3b7) !important;
     background-color: #f8a7c2 !important;
     color:#fffbfc !important;
     border-style: none !important;
 }
-.flatpickr-day.selected:hover {
+.profile-container .flatpickr-day.selected:hover {
     background: linear-gradient(120deg, #ff8db39c, #faa3c096, #fae3a3b7) !important;
     background-color: #ffffff !important;
     color:#fffbfc !important;
     border-style: none !important;
     box-shadow: 5px 3px 10px #e26b8592 !important;
 }
-.flatpickr-day.today{
+.profile-container  .flatpickr-day.today{
     border-radius: 2px !important;
     border-color: #f8a7c2 !important;
     border-radius: 100% !important;
@@ -145,37 +157,19 @@ input, select{
 .cur-year{
     background-color: #e26b85 !important;
 }*/
-.arrowup, .arrowdown{
+.profile-container .arrowup,
+.profile-container .arrowdown{
     background-color: #ffffff !important;
 }
-.flatpickr-weekdays{
+.profile-container .flatpickr-weekdays{
     background: linear-gradient(to right, #ff8db39c, #faa3c096, #fae3a3b7) !important;
     background-color: #ffffff !important;
 }
-.flatpickr-weekday {
+.profile-container .flatpickr-weekday {
     color: #5d202cbb !important;
 }
-#dateOfBirth:focus {
+.profile-container #dateOfBirth:focus {
     outline: none !important;
     border-color: #e26f95 !important;
     box-shadow: 0 0 5px rgba(255, 156, 212, 0.81) !important;
-}
-.selected-date{
-    position: relative;
-    padding: 10px;
-    margin: 0px;
-    background: linear-gradient(45deg,  #ff8db3, #faa3c0, #fae3a3);
-    background-color: #ffffff;
-    border-radius: 48px 5px 48px 5px;
-    max-height: 92px;
-    z-index: 6;
-}
-.selected-date>h1{
-    position: relative;
-    padding: 10px;
-    margin: 0px;
-    background-color: #ffffff;
-    border-radius: 44px 5px 43px 5px;
-    max-height: 92px;
-    z-index: 2;
 }

@@ -8,79 +8,137 @@
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js" integrity="sha512-ZwR1/gSZM3ai6vCdI+LVF1zSq/5HznD3ZSTk7kajkaj4D292NLuduDCO1c/NT8Id+jE58KYLKT7hXnbtryGmMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
     <link rel="stylesheet" th:href="@{/styles/stat.css}">
+    <link rel="stylesheet" th:href="@{/styles/header-style.css}">
+    <script th:src="@{jvs/my.js}"></script>
 </head>
+
+
+<header>
+
+    <div class="header-wrapper">
+
+        <div class="header-row row">
+            <div class="header-logo-wrapper">
+                <a th:href="@{/main}" >
+                    <div class="header-logo-back"></div>
+                    <!--
+                       <img alt="logo"  th:src="@{/images/logo.png}" src="/Без названия615_20250506170303.png" id="header-logo">
+                       -->
+                </a>
+            </div>
+
+            <div class="header-nav-wrapper">
+                <nav>
+                    <ul>
+                        <li><div><a th:href="@{/main}">Главная</a></div></li>
+                        <li><div><a th:href="@{/recipes}">Рецепты</a></div></li>
+                        <li><div class="nav-profile">
+                            <a th:href="@{/profile}">Профиль</a>
+                            <a th:href="@{/profile}">
+                                <img alt="logo" th:src="${avatar}" id="profile-logo">
+                            </a>
+                        </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+
+</header>
+
+
 <body>
 
 <div class="block-main container">
 
-    <!-- Форма для ввода ID пользователя (если нужно) и выбора диапазона дат-->
-    <form th:action="@{/statistics}" method="get">
-        <div class="mb-3">
-            <label for="startDate" class="form-label">Start Date:</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}">
+    <div class="block-wrapper">
+        <!--Форма для выбора диапазона дат-->
+        <form class="date-form" th:action="@{/statistics}" method="get">
+            <div class="date-form-dates">
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Start Date:</label>
+                    <input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">End Date:</label>
+                    <input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}">
+                </div>
+            </div>
+            <div class="date-form-btn">
+                <button type="submit" class="btn btn-primary">Обновить графики</button>
+            </div>
+        </form>
+
+        <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+            <span th:text="${errorMessage}"></span>
         </div>
-
-        <div class="mb-3">
-            <label for="endDate" class="form-label">End Date:</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Update Chart</button>
-    </form>
-
-    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
-        <span th:text="${errorMessage}"></span>
     </div>
 
-    <h2>Вес</h2>
-    <canvas id="weightChart" width="400" height="200"></canvas>
-    <br />
-    <h2>ИМТ</h2>
-    <canvas id="imtChart" width="400" height="200"></canvas>
+    <div class="block-wrapper">
+        <h2>Вес</h2>
+        <canvas id="weightChart" width="400" height="200"></canvas>
+        <br />
+    </div>
 
-    <br/>
-    <h2>Соответствие индекса массы тела (ИМТ)</h2>
-    <p>Индекс массы тела - это показатель соответствия между массой человека и его ростом.</p>
+    <div class="block-wrapper">
+        <h2>ИМТ</h2>
+        <canvas id="imtChart" width="400" height="200"></canvas>
+    </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Индекс массы тела</th>
-            <th>Соответствие между массой человека и его ростом</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>16 и менее</td>
-            <td>Выраженный дефицит массы тела</td>
-        </tr>
-        <tr>
-            <td>16 - 18,5</td>
-            <td>Недостаточная (дефицит) масса тела</td>
-        </tr>
-        <tr>
-            <td>18,5 - 25</td>
-            <td>Норма</td>
-        </tr>
-        <tr>
-            <td>25 - 30</td>
-            <td>Избыточная масса тела (предожирение)</td>
-        </tr>
-        <tr>
-            <td>30 - 35</td>
-            <td>Ожирение первой степени</td>
-        </tr>
-        <tr>
-            <td>35 - 40</td>
-            <td>Ожирение второй степени</td>
-        </tr>
-        <tr>
-            <td>40 и более</td>
-            <td>Ожирение третьей степени (морбидное)</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="block-wrapper">
+        <br/>
+        <h2>Соответствие индекса массы тела (ИМТ)</h2>
+        <p>Индекс массы тела - это показатель соответствия между массой человека и его ростом.</p>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Индекс массы тела</th>
+                <th>Соответствие между массой человека и его ростом</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>16 и менее</td>
+                <td>Выраженный дефицит массы тела</td>
+            </tr>
+            <tr>
+                <td>16 - 18,5</td>
+                <td>Недостаточная (дефицит) масса тела</td>
+            </tr>
+            <tr>
+                <td>18,5 - 25</td>
+                <td>Норма</td>
+            </tr>
+            <tr>
+                <td>25 - 30</td>
+                <td>Избыточная масса тела (предожирение)</td>
+            </tr>
+            <tr>
+                <td>30 - 35</td>
+                <td>Ожирение первой степени</td>
+            </tr>
+            <tr>
+                <td>35 - 40</td>
+                <td>Ожирение второй степени</td>
+            </tr>
+            <tr>
+                <td>40 и более</td>
+                <td>Ожирение третьей степени (морбидное)</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
     <script th:inline="javascript">
         /*<![CDATA[*/
