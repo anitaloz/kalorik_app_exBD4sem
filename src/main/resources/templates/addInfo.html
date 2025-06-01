@@ -3,84 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Add info</title>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script
             src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" th:href="@{/styles/style.css}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link rel="stylesheet" th:href="@{/styles/form-style.css}">
+
     <!--    <link rel="icon" th:href="@{/styles/logo.ico}" type="image/x-icon">-->
     <script th:src="@{/js/my.js}"></script>
 </head>
+
 <body>
-<h1>AddInfo</h1>
-<form action="" method="post">
-    <label>
-        Имя:<br/>
-        <input type="text" name="firstName" th:value="${firstName}" placeholder="Имя"/>
-        <span th:if="${firstNameError != null}" th:text="${firstNameError}" class="text-danger"></span>
-    </label><br/>
+<div class="container">
+    <h1 class="addInfo-text">Заполните информацию о себе</h1>
+    <form class="addInfo-form" action="" method="post">
+        <label>
+            Имя:<br/>
+            <input type="text" name="firstName" th:value="${firstName}" placeholder="Имя"/>
+            <span th:if="${firstNameError != null}" th:text="${firstNameError}" class="text-danger"></span>
+        </label><br/>
 
-    <label>
-        Фамилия:<br/>
-        <input type="text" name="lastName" th:value="${lastName}" placeholder="Фамилия"/>
-        <span th:if="${lastNameError != null}" th:text="${lastNameError}" class="text-danger"></span>
-    </label><br/>
+        <label>
+            Фамилия:<br/>
+            <input type="text" name="lastName" th:value="${lastName}" placeholder="Фамилия"/>
+            <span th:if="${lastNameError != null}" th:text="${lastNameError}" class="text-danger"></span>
+        </label><br/>
 
-    <label>
-        Дата рождения:<br/>
-        <input type="date" name="dateOfBirth" th:value="${dateOfBirth}" placeholder="Дата рождения"/>
-        <span th:if="${dateOfBirthError != null}" th:text="${dateOfBirthError}" class="text-danger"></span>
-    </label><br/>
+        <label>
+            Дата рождения:<br/>
+            <input type="date" id="dateOfBirth-2" name="dateOfBirth" th:value="${dateOfBirth}" placeholder="Дата рождения"/>
+            <span th:if="${dateOfBirthError != null}" th:text="${dateOfBirthError}" class="text-danger"></span>
+        </label><br/>
 
-    <label>
-        Пол:<br/>
-        <input type="radio" id="male" name="gender" value="Мужской" th:checked="${gender == 'Мужской'}"/>
-        <label for="male">Мужской</label><br/>
+        <label>
+            Пол:<br/>
+            <input type="radio" id="male" name="gender" value="Мужской" th:checked="${gender == 'Мужской'}"/>
+            <label for="male">Мужской</label><br/>
 
-        <input type="radio" id="female" name="gender" value="Женский" th:checked="${gender == 'Женский'}"/>
-        <label for="female">Женский</label><br/>
+            <input type="radio" id="female" name="gender" value="Женский" th:checked="${gender == 'Женский'}"/>
+            <label for="female">Женский</label><br/>
 
-        <span th:if="${genderError != null}" th:text="${genderError}" class="text-danger"></span>
-    </label><br/>
+            <span th:if="${genderError != null}" th:text="${genderError}" class="text-danger"></span>
+        </label><br/>
 
-    <label>
-        Рост в сантиметрах:<br/>
-        <input type="number" name="heightCm" th:value="${heightCm}" placeholder="Рост в сантиметрах"/>
-        <span th:if="${heightCmError != null}" th:text="${heightCmError}" class="text-danger"></span>
-    </label><br/>
+        <label>
+            Рост в сантиметрах:<br/>
+            <input type="number" name="heightCm" th:value="${heightCm}" placeholder="Рост в сантиметрах"/>
+            <span th:if="${heightCmError != null}" th:text="${heightCmError}" class="text-danger"></span>
+        </label><br/>
 
-    <label>
-        Вес в килограммах:<br/>
-        <input type="number" name="weightKg" th:value="${weightKg}" placeholder="Вес в килограммах"/>
-        <span th:if="${weightKgError != null}" th:text="${weightKgError}" class="text-danger"></span>
-    </label><br/>
+        <label>
+            Вес в килограммах:<br/>
+            <input type="number" name="weightKg" th:value="${weightKg}" placeholder="Вес в килограммах"/>
+            <span th:if="${weightKgError != null}" th:text="${weightKgError}" class="text-danger"></span>
+        </label><br/>
 
-    <label>
-        Образ жизни:<br/>
-        <select name="activityLevel">
-            <option value="Сидячий" th:selected="${activityLevel == 'Сидячий'}">Сидячий</option>
-            <option value="Легкая активность" th:selected="${activityLevel == 'Легкая активность'}">Легкая активность</option>
-            <option value="Умеренная активность" th:selected="${activityLevel == 'Умеренная активность'}">Умеренная активность</option>
-            <option value="Высокая активность" th:selected="${activityLevel == 'Высокая активность'}">Высокая активность</option>
-            <option value="Очень высокая активность" th:selected="${activityLevel == 'Очень высокая активность'}">Очень высокая активность</option>
-        </select>
-        <span th:if="${activityLevelError != null}" th:text="${activityLevelError}" class="text-danger"></span>
-    </label><br/>
+        <label>
+            Образ жизни:<br/>
+            <select name="activityLevel">
+                <option value="Сидячий" th:selected="${activityLevel == 'Сидячий'}">Сидячий</option>
+                <option value="Легкая активность" th:selected="${activityLevel == 'Легкая активность'}">Легкая активность</option>
+                <option value="Умеренная активность" th:selected="${activityLevel == 'Умеренная активность'}">Умеренная активность</option>
+                <option value="Высокая активность" th:selected="${activityLevel == 'Высокая активность'}">Высокая активность</option>
+                <option value="Очень высокая активность" th:selected="${activityLevel == 'Очень высокая активность'}">Очень высокая активность</option>
+            </select>
+            <span th:if="${activityLevelError != null}" th:text="${activityLevelError}" class="text-danger"></span>
+        </label><br/>
 
-    <label>
-        Количество калорий:<br/>
-        <input type="text" name="caloriesNum" th:value="${caloriesNum}" placeholder="Количество калорий"/>
-        <span th:if="${caloriesNumError != null}" th:text="${caloriesNumError}" class="text-danger"></span>
-    </label><br/>
+        <label>
+            Количество калорий:<br/>
+            <input type="text" name="caloriesNum" th:value="${caloriesNum}" placeholder="Количество калорий"/>
+            <span th:if="${caloriesNumError != null}" th:text="${caloriesNumError}" class="text-danger"></span>
+        </label><br/>
 
-    <label>
-        Цель:<br/>
-        <input type="text" name="purpose" th:value="${purpose}" placeholder="Цель"/>
-        <span th:if="${purposeError != null}" th:text="${purposeError}" class="text-danger"></span>
-    </label><br/>
+        <label>
+            Цель:<br/>
+            <input type="text" name="purpose" th:value="${purpose}" placeholder="Цель"/>
+            <span th:if="${purposeError != null}" th:text="${purposeError}" class="text-danger"></span>
+        </label><br/>
 
-    <input type="submit" value="Добавить"/>
-</form>
-
+        <input class="addInfo-btn" type="submit" value="Добавить"/>
+    </form>
+</div>
 </body>
 </html>

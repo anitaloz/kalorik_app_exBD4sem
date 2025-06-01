@@ -4,15 +4,23 @@
 
     <meta charset="UTF-8">
     <title>Регистрация и Вход</title>
-    <link rel="stylesheet" th:href="@{/styles/style.css}">
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/styles/form-style.css}">
     <!--    <link rel="icon" th:href="@{/styles/logo.ico}" type="image/x-icon">-->
 </head>
 <body>
-<div class="contentlog">
-    <a th:href="@{/registration}">Зарегистрироваться</a><br>
-    <br>
-    <a th:href="@{/login}">Войти</a>
-</div>
+    <div class="contentlog">
+        <div class="main-wrap">
+            <a th:href="@{/registration}">Зарегистрироваться</a><br>
+            <br>
+            <a th:href="@{/login}">Войти</a>
+        </div>
+    </div>
 </body>
 </html>
 
