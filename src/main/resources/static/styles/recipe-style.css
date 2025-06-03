@@ -1,8 +1,20 @@
+.block-main{
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+
+}
+h1{
+    text-align: center;
+}
+
 .recipe-card {
     transition: transform 0.3s;
     margin-bottom: 20px;
     height: 100%;
-    overflow: hidden; /* Важно: обрезает все, что выходит за пределы */
+    overflow: hidden;
+    border-radius: 10px;
+    border: solid 1px #ddd2d5;
 }
 .recipe-card:hover {
     transform: translateY(-5px);
@@ -21,8 +33,8 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin: 0 -15px 15px -15px; /* Компенсируем padding карточки */
-    width: calc(100% + 30px); /* Растягиваем на всю ширину */
+    margin: 0 -15px 15px -15px;
+    width: calc(100% + 30px);
 }
 .full-recipe-img {
     max-height: 400px;
@@ -31,7 +43,8 @@
 .filter-section {
     background-color: #f8f9fa;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
+    border: solid 2px #ddd2d5;
     margin-bottom: 20px;
 }
 .selected-filters {
@@ -70,8 +83,13 @@
     border-color: #da7b9a;
 }
 .btn-primary:hover{
+/*
     background-color: #ff256e;
     border-color: #da7b9a;
+    */
+    border-color: #ff8db3;
+    background-color: rgba(255, 247, 250, 0.862);
+    color: #ff8db3;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -90,8 +108,13 @@
     border-color: #da7b9a;
 }
 .btn-success:hover{
+/*
     background-color: #ff256e;
     border-color: #da7b9a;
+    */
+    border-color: #ff8db3;
+    background-color: rgba(255, 247, 250, 0.862);
+    color: #ff8db3;
 }
 .btn-success:active,
 .btn-success.active,
@@ -110,9 +133,13 @@
     color: #ff7ba8;
 }
 .btn-outline-primary:hover{
+/*
     border-color: #ff6798;
     color: white;
-    background-color: #ff256e;
+    background-color: #ff256e;*/
+    border-color: #f179a1;
+    color: white;
+    background-color: #f179a1;
 }
 .btn-outline-primary:active,
 .btn-outline-primary.active,
@@ -131,8 +158,13 @@
     border-color: #da7b9a;
 }
 .btn-secondary:hover{
+/*
     background-color: #ff256e;
     border-color: #da7b9a;
+    */
+    border-color: #ff8db3;
+    background-color: rgba(255, 247, 250, 0.862);
+    color: #ff8db3;
 }
 .btn-secondary:active,
 .btn-secondary.active,
@@ -141,14 +173,14 @@
     border-color: #da7b9a !important;
 }
 .btn-secondary:focus{
-    box-shadow: 0 0 0 0.25rem rgb(240, 178, 207) !important; /* розовая тень */
-    outline: 0; /* убираем стандартный outline */
+    box-shadow: 0 0 0 0.25rem rgb(240, 178, 207) !important
+    outline: 0;
 }
 
 /* поиск */
 .form-control:focus{
     border-color: #da7b9a !important;
-    box-shadow: 0 0 0 0.25rem rgb(240, 178, 207) !important; /* розовая тень */
+    box-shadow: 0 0 0 0.25rem rgb(240, 178, 207) !important;
 }
 .dropdown-menu.inner {
     background-color: #ff69b4 !important;
@@ -164,3 +196,14 @@
     background-color: #ff69b4 !important;
     color: white !important;
   }
+
+.btn-close{
+    background-color: #ff8db3;
+    border: solid 3px #ff8db3;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background-image: url("../images/close.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}

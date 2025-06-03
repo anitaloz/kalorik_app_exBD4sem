@@ -60,12 +60,12 @@
 
 <body>
 
-<div class="block-main container">
+<div class="block-main container mt-3">
 
     <div class="block-wrapper">
         <!--Форма для выбора диапазона дат-->
         <form class="date-form" th:action="@{/statistics}" method="get">
-            <div class="date-form-dates">
+            <!--<div class="date-form-dates"> -->
                 <div class="mb-3">
                     <label for="startDate" class="form-label">Start Date:</label>
                     <input type="date" class="form-control" id="startDate" name="startDate" th:value="${startDate}">
@@ -75,7 +75,7 @@
                     <label for="endDate" class="form-label">End Date:</label>
                     <input type="date" class="form-control" id="endDate" name="endDate" th:value="${endDate}">
                 </div>
-            </div>
+            <!-- </div> -->
             <div class="date-form-btn">
                 <button type="submit" class="btn btn-primary">Обновить графики</button>
             </div>

@@ -105,8 +105,8 @@
             <span class="profile-login" th:text="${UI.usr.username}"></span>
             <h1>Профиль</h1>
 
-            <label class="custom-file-upload">
-                Фотография профиля:<br />
+            <label class="custom-file-upload form-label">
+                Фотография профиля:
                 <input type="file" name="coverImage" accept="image/*"/>
                 <span>Выбрать файл</span>
             </label>
@@ -193,7 +193,7 @@
     </div>
 
     <div th:if="${editMode == true}">
-        <div class="purposes-container">
+        <div class="purposes-container-edit">
             <form action="/profile/save" method="post">
                 <div class="form-group">
                     <label class="form-label" for="purpose">Цель:</label>

@@ -51,6 +51,13 @@
 #formSearchingContainer2>form>button:hover,
 #formSearchingContainer1>form>button:hover{
     background-color: #e26b85;
+    outline: 0;
+}
+#formSearchingContainer3>form>button:active,
+#formSearchingContainer2>form>button:active,
+#formSearchingContainer1>form>button:active{
+    background-color: #e26b85;
+    outline: 0;
 }
 #formSearchingContainer3>form>input,
 #formSearchingContainer2>form>input,
@@ -63,6 +70,7 @@
     padding-right: 0px;
     border-style: none;
     width: 100%;
+    outline: 0;
 }
 .results{
     display: flex;
@@ -99,9 +107,20 @@
 .result-cont #addForm{
     display: flex;
     flex-direction: column;
+    justify-content: center;
     max-width: 70%;
     margin: auto;
     margin-bottom: 10px;
+}
+.result-cont #addForm label{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.result-cont #addForm label input,
+.result-cont #addForm label select{
+    min-width: 30%;
+    margin: auto;
 }
 .result-cont p{
     font-weight: 500;
@@ -137,11 +156,6 @@
     border-collapse: separate;
     width: 100%;
     margin: auto;
-}
-.found-product-table label{
-    background-color: #000000 !important;
-    display: flex;
-    justify-content: center;
 }
 .result-cont input, .result-cont select{
     max-width: 90px;
@@ -207,7 +221,6 @@
     margin-bottom: auto;
 }
 .result-cont .addProductButton-2{
-    margin-top: 6px;
     padding: 8px 16px;
     background-color: #ff8db3;
     color: white;
@@ -215,6 +228,15 @@
     font-size: 18px;
     border-radius: 4px;
     border-style: none;
+    height: 43px;
+    width: 40%;
+    margin: auto;
+    margin-top: 6px;
+}
+.result-cont .addProductButton-2:hover{
+    background-color: white;
+    color: #ff8db3;
+    border: 2px solid #ff8db3;
 }
 /*
 .addProductButton-wrapper::after{
@@ -412,8 +434,8 @@ deleteProductButton{
 }
 #inputDate:focus {
     outline: none !important;
-    border-color: #e26f95 !important;
-    box-shadow: 0 0 5px rgba(255, 156, 212, 0.81) !important;
+    border-color: #da7b9a !important;
+    box-shadow: 0 0 0 0.25rem rgb(240, 178, 207) !important;
 }
 .selected-date{
     position: relative;
