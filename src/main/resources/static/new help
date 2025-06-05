@@ -1,0 +1,471 @@
+drop table if exists recipe_category;
+drop table if exists body;
+drop table if exists categories;
+drop table if exists recipe_product;
+drop table if exists recipes;
+drop table if exists user_role;
+drop table if exists user_info;
+drop table if exists meal_food_items;
+drop table if exists meals;
+drop table if exists usr;
+drop table if exists food;
+drop table if exists serving_units;
+
+-- Создание таблиц
+create table serving_units
+(
+    id bigserial primary key,
+    name varchar(50)
+);
+create table food
+(
+    id           bigserial
+        primary key,
+    name         varchar(255),
+    calories     double precision,
+    bel          double precision,
+    fats         double precision,
+    ch           double precision,
+    serving_unit bigserial,
+    serving_size double precision,
+    CONSTRAINT fk_unit
+        FOREIGN KEY (serving_unit)
+            REFERENCES serving_units(id)
+);
+create table usr
+(
+    id       bigserial
+        primary key,
+    username varchar(50)  not null
+        unique,
+    password varchar(255) not null,
+    active   varchar(30)
+);
+create table meals
+(
+    id         bigserial
+        primary key,
+    user_id    bigint
+        references usr,
+    meal_date  date not null,
+    meal_title varchar(50)
+);
+create table meal_food_items
+(
+    meal_id      bigint           not null
+        references meals
+            on delete cascade,
+    food_item_id bigint           not null
+        references food
+            on delete cascade,
+    quantity     double precision not null,
+    primary key (meal_id, food_item_id)
+);
+create table user_info
+(
+    id             bigserial
+        primary key,
+    username       varchar(50) not null
+        unique
+        references usr (username),
+    first_name     varchar(50),
+    last_name      varchar(50),
+    date_of_birth  date,
+    gender         varchar(10),
+    height_cm      integer,
+    weight_kg      numeric(5, 2),
+    activity_level varchar(50),
+    caloriesnum    integer,
+    purpose        varchar(30),
+    desired_weight numeric(5, 2),
+	image_url VARCHAR(255)
+);
+create table user_role
+(
+    user_id bigint      not null
+        references usr,
+    roles   varchar(30) not null,
+    primary key (user_id, roles)
+);
+create table recipes (
+ id bigserial PRIMARY KEY,
+ name VARCHAR(100),
+ text TEXT,
+ image_url VARCHAR(255),
+ calories double precision
+);
+create table recipe_product (
+ recipe_id bigserial,
+ product_id bigserial,
+ PRIMARY KEY(recipe_id, product_id),
+ CONSTRAINT fk_recipe
+  FOREIGN KEY (recipe_id )
+  REFERENCES recipes(id),
+ CONSTRAINT fk_product
+  FOREIGN KEY (product_id)
+  REFERENCES food(id)
+);
+create table categories (
+ id bigserial PRIMARY KEY,
+ name varchar(50)
+);
+create table recipe_category (
+ recipe_id bigserial,
+ category_id bigserial,
+ PRIMARY KEY(recipe_id, category_id),
+ CONSTRAINT fk_recipe
+  FOREIGN KEY (recipe_id )
+  REFERENCES recipes(id),
+ CONSTRAINT fk_category
+  FOREIGN KEY (category_id)
+  REFERENCES categories(id)
+);
+create table body
+(
+    id      bigserial
+        primary key,
+    user_id bigint
+        references usr
+        constraint fk_body
+            references usr,
+    weight  numeric(5, 2),
+    height  integer,
+    dt      date
+);
+-- Удаление и начало с айди 1
+--TRUNCATE TABLE recipes CASCADE;
+--ALTER SEQUENCE recipes_id_seq RESTART WITH 1;
+--TRUNCATE TABLE food CASCADE;
+--ALTER SEQUENCE food_id_seq RESTART WITH 1;
+--TRUNCATE TABLE categories CASCADE;
+--ALTER SEQUENCE categories_id_seq RESTART WITH 1;
+
+-- Заполнение таблиц
+INSERT INTO categories (name) VALUES
+('Завтраки'), ('Обеды'), ('Ужины'), ('Десерты'),
+('Вегетарианские'), ('Низкокалорийные'), ('Высокобелковые');
+
+INSERT INTO serving_units (name) VALUES
+('порция'), ('гр'), ('шт'), ('ст.л.'),
+('ч.л.'), ('ст'), ('мл');
+
+
+-- Заполнение таблицы food
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Яблоко', 95, 0.5, 0.3, 25, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Банан', 105, 1.3, 0.4, 27, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Апельсин', 62, 1.2, 0.2, 15, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Груша', 102, 0.7, 0.2, 27, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Куриная грудка (вареная)', 165, 31, 3.6, 0, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Говядина (вареная)', 250, 26, 15, 0, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Лосось (жареный)', 208, 20, 13, 0, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Рис (вареный)', 130, 2.7, 0.3, 28, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Гречка (вареная)', 132, 5.6, 1.2, 25, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Овсянка (вареная)', 68, 2.4, 1.3, 12, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Картофель (вареный)', 77, 2, 0.1, 17, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Брокколи (вареная)', 55, 3.7, 0.6, 6, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Морковь (вареная)', 41, 0.9, 0.2, 10, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Сыр Чеддер', 403, 23, 33, 1.3, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Творог (5%)', 121, 18, 5, 2.8, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Хлеб (белый)', 265, 8, 3, 50, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Масло сливочное', 717, 0.8, 81, 0.8, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Яйцо (куриное)', 78, 6.3, 5.3, 0.6, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Орехи грецкие', 654, 14, 65, 14, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Помидор', 22, 1, 0.2, 5, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Масло оливковое', 120, 0, 14, 0, 4, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Сахар', 20, 0, 0, 5, 5, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Молоко (3.2%)', 60, 3, 3.2, 5, 6, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Кефир (2.5%)', 53, 3, 2.5, 4, 7, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Зелень (петрушка, укроп)', 36, 3, 0.7, 5, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Мед', 304, 0.8, 0, 82, 4, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Авокадо', 160, 2, 15, 9, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Огурцы', 15, 0.8, 0.1, 3, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Кофе с молоком', 30, 1, 1.5, 3, 6, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Майонез', 680, 1, 75, 1, 4, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Свинина (вареная)', 230, 26, 13, 0, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Тунец (консервированный)', 130, 29, 1, 0, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Ячневая крупа (вареная)', 105, 3, 1, 22, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Перловая крупа (вареная)', 124, 3, 0.5, 27, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Пшено (вареное)', 90, 3, 1, 18, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Чечевица (вареная)', 116, 9, 0.4, 20, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Фасоль (вареная)', 93, 6, 0.4, 17, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Горох (вареный)', 81, 5, 0.2, 14, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Шпинат (вареный)', 23, 3, 0.4, 4, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Цветная капуста (вареная)', 25, 2, 0.3, 5, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Кабачок (вареный)', 24, 0.6, 0.3, 5, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Баклажан (вареный)', 24, 1, 0.1, 6, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Грибы шампиньоны (жареные)', 55, 4, 4, 2, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Тофу', 144, 16, 9, 3, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Арахис', 587, 24, 50, 22, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Перец болгарский', 31, 1, 0.3, 6, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Киви', 61, 1, 0.5, 15, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Апельсиновый сок', 45, 0.7, 0.2, 10, 6, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Семена льна', 55, 2, 4, 3, 4, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Растительное масло', 884, 0, 100, 0, 7, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Индейка (вареная)', 157, 29, 3.3, 0, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Минтай (вареный)', 79, 18, 0.8, 0, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Хек (вареный)', 86, 17, 1.5, 0, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Нут (вареный)', 164, 9, 3, 27, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Кукуруза (вареная)', 96, 3, 1.5, 21, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Тыква (вареная)', 26, 1, 0.3, 6, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Свекла (вареная)', 43, 2, 0.2, 10, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Изюм', 299, 3, 0.5, 79, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Курага', 241, 5, 0.5, 62, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Чернослив', 240, 2, 0.7, 64, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Семена подсолнечника', 584, 21, 50, 24, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Семена тыквы', 559, 30, 49, 11, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Мандарин (средний)', 53, 0.8, 0.3, 13, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Абрикос (средний)', 48, 1, 0.4, 11, 3, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Томатный сок', 17, 1, 0.1, 3, 6, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Протеиновый коктейль (1 порция)', 150, 30, 2, 5, 1, 1);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Репчатый лук (сырой)', 40, 1.1, 0.1, 7.6, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Ягоды', 40, 0.7, 0.3, 6, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Фета', 275, 16, 20, 2.5, 2, 100);
+INSERT INTO food (name, calories, bel, fats, ch, serving_unit, serving_size) VALUES
+('Киноа', 120 , 14.1, 6.1, 57, 2, 100);
+
+-- Заполнение таблицы recipes
+
+INSERT INTO recipes (name, text, image_url, calories) VALUES
+('Овсянка с фруктами и орехами', '1. Сварите овсянку на воде или молоке. 2. Добавьте нарезанные фрукты (яблоко, банан). 3. Посыпьте орехами и полейте медом.', '/images/recipes/oatmeal_with_fruits_and_nuts.jpg', 350),
+('Куриная грудка с брокколи и рисом', '1. Отварите рис. 2. Отварите брокколи. 3. Подавайте с вареной куриной грудкой.', '/images/recipes/chicken_breast_broccoli_rice.jpg', 400),
+('Салат из тунца с овощами', '1. Смешайте консервированного тунца с нарезанными огурцами, помидорами и зеленью. 2. Заправьте оливковым маслом.', '/images/recipes/tuna_salad_with_vegetables.jpg', 250),
+('Творог с медом', '1. Выложите творог в миску. 2. Полейте медом. 3. По желанию можно добавить ягоды/фрукты', '/images/recipes/cottage_cheese_with_berries_and_honey.jpg', 200),
+('Гречка с грибами и луком', '1. Отварите гречку. 2. Обжарьте грибы с луком. 3. Смешайте гречку с грибами.', '/images/recipes/buckwheat_with_mushrooms_and_onions.jpg', 380),
+('Лосось с овощами на пару', '1. Приготовьте лосось на пару. 2. Приготовьте овощи на пару (морковь, брокколи, цветная капуста). 3. Подавайте лосось с овощами.', '/images/recipes/salmon_with_steamed_vegetables.jpg', 450),
+('Омлет с помидорами и сыром', '1. Взбейте яйца с небольшим количеством молока. 2. Добавьте нарезанные помидоры и тертый сыр. 3. Обжарьте на сковороде до готовности.', '/images/recipes/omelette_with_tomatoes_and_cheese.jpg', 300),
+('Чечевичный суп', '1. Отварите чечевицу. 2. Обжарьте овощи (лук, морковь). 3. Смешайте чечевицу с овощами и доведите до готовности.', '/images/recipes/lentil_soup.jpg', 280),
+('Фруктовый салат', '1. Нарежьте яблоко, банан, апельсин и киви. 2. Смешайте фрукты в миске. 3. Полейте небольшим количеством апельсинового сока или меда (по желанию).', '/images/recipes/fruit_salad.jpg', 180),
+('Картофельное пюре с маслом', '1. Отварите картофель до мягкости. 2. Слейте воду и разомните картофель в пюре. 3. Добавьте сливочное масло и перемешайте.', '/images/recipes/mashed_potatoes_with_butter.jpg', 220),
+('Салат с авокадо, помидорами и яйцом', '1. Нарежьте авокадо, помидоры и вареное яйцо. 2. Смешайте все ингредиенты. 3. Заправьте оливковым маслом и лимонным соком.', '/images/recipes/avocado_tomato_egg_salad.jpg', 320),
+('Тыквенный суп-пюре', '1. Запеките тыкву. 2. Обжарьте лук. 3. Смешайте запеченную тыкву, обжаренный лук и бульон, взбейте в блендере.', '/images/recipes/pumpkin_soup_puree.jpg', 200),
+('Курица с овощами в томатном соусе', '1. Обжарьте куриную грудку. 2. Добавьте нарезанные овощи (перец болгарский, кабачок, лук). 3. Залейте томатным соком и тушите до готовности.', '/images/recipes/chicken_vegetables_tomato_sauce.jpg', 380),
+('Смузи с бананом, шпинатом и семенами льна', '1. Смешайте банан, шпинат, семена льна и молоко в блендере. 2. Взбейте до однородной консистенции. 3. Подавайте сразу.', '/images/recipes/banana_spinach_flax_seed_smoothie.jpg', 250),
+('Перловая каша с говядиной', '1. Отварите перловую крупу. 2. Обжарьте говядину с луком. 3. Смешайте крупу с говядиной и тушите до готовности.', '/images/recipes/barley_porridge_with_beef.jpg', 420),
+('Запеканка из цветной капусты с сыром', '1. Отварите цветную капусту. 2. Выложите в форму для запекания. 3. Посыпьте тертым сыром и запеките до золотистой корочки.', '/images/recipes/cauliflower_cheese_bake.jpg', 350),
+('Нут с овощами и специями', '1. Отварите нут. 2. Обжарьте овощи (лук, морковь, перец болгарский) со специями. 3. Смешайте нут с овощами и тушите до готовности.', '/images/recipes/chickpeas_with_vegetables_spices.jpg', 300),
+('Салат из свеклы с черносливом и орехами', '1. Отварите свеклу и нарежьте кубиками. 2. Добавьте нарезанный чернослив и грецкие орехи. 3. Заправьте сметаной или йогуртом.', '/images/recipes/beetroot_prune_walnut_salad.jpg', 280),
+('Минтай, запеченный с овощами', '1. Выложите на противень нарезанные овощи (лук, морковь, кабачок). 2. Сверху положите филе минтая. 3. Запеките до готовности.', '/images/recipes/baked_pollock_with_vegetables.jpg', 330),
+('Пшенная каша с тыквой', '1. Отварите пшенную крупу. 2. Нарежьте тыкву кубиками и добавьте в кашу. 3. Варите до готовности тыквы.', '/images/recipes/millet_porridge_with_pumpkin.jpg', 360),
+('Сэндвич с курицей и авокадо', '1. Намажьте хлеб авокадо. 2. Положите сверху вареную куриную грудку. 3. Добавьте помидоры и зелень.', '/images/recipes/chicken_avocado_sandwich.jpg', 400),
+('Салат с киноа, огурцом и фетой', '1. Отварите киноа. 2. Нарежьте огурец и фету кубиками. 3. Смешайте киноа, огурец, фету и зелень. Заправьте оливковым маслом.', '/images/recipes/quinoa_cucumber_feta_salad.jpg', 280),
+('Протеиновый коктейль с ягодами', '1. Смешайте протеиновый порошок, ягоды и молоко в блендере. 2. Взбейте до однородной консистенции. 3. Подавайте сразу.', '/images/recipes/berry_protein_shake.jpg', 220),
+('Фасоль с овощами в томатном соусе', '1. Отварите фасоль. 2. Обжарьте лук, морковь и перец болгарский. 3. Добавьте фасоль и томатный соус. Тушите до готовности.', '/images/recipes/beans_vegetables_tomato_sauce.jpg', 310),
+('Ячневая каша с грибами', '1. Отварите ячневую крупу. 2. Обжарьте грибы с луком. 3. Смешайте кашу с грибами и тушите до готовности.', '/images/recipes/barley_porridge_with_mushrooms.jpg', 390);
+
+-- Заполнение таблицы recipe_category
+-- Предполагаем, что ID рецептов начинаются с 1 и идут по порядку
+
+INSERT INTO recipe_category (recipe_id, category_id) VALUES
+(1, 1), (1, 5), (1, 6), -- Овсянка: Завтрак, Вегетарианское, Низкокалорийное
+(2, 2), (2, 3), (2, 7), (2, 6), -- Курица с брокколи: Обед, Ужин, Высокобелковое, Низкокалорийное
+(3, 2), (3, 3), (3, 6), (3, 7), -- Салат с тунцом: Обед, Ужин, Низкокалорийное, Высокобелковое
+(4, 1), (4, 4), (4, 6), (4, 7), -- Творог: Завтрак, Десерт, Низкокалорийное, Высокобелковое
+(5, 2), (5, 3), (5, 5), -- Гречка с грибами: Обед, Ужин, Вегетарианское
+(6, 2), (6, 3), (6, 7), (6, 6), -- Лосось: Обед, Ужин, Высокобелковое, Низкокалорийное
+(7, 1), (7, 2), (7, 7), -- Омлет: Завтрак, Обед, Высокобелковое
+(8, 2), (8, 5), (8, 6), -- Чечевичный суп: Обед, Вегетарианское, Низкокалорийное
+(9, 4), (9, 5), (9, 6), -- Фруктовый салат: Десерт, Вегетарианское, Низкокалорийное
+(10, 2), (10, 3), (10, 5), -- Картофельное пюре: Обед, Ужин, Вегетарианское
+(11, 2), (11, 3), (11, 6), -- Салат с авокадо: Обед, Ужин, Низкокалорийное
+(12, 2), (12, 5), (12, 6), -- Тыквенный суп: Обед, Вегетарианское, Низкокалорийное
+(13, 2), (13, 3), (13, 7), -- Курица с овощами: Обед, Ужин, Высокобелковое
+(14, 1), (14, 5), (14, 6), -- Смузи: Завтрак, Вегетарианское, Низкокалорийное
+(15, 2), (15, 3), -- Перловая каша: Обед, Ужин
+(16, 2), (16, 3), (16, 5), -- Запеканка из цветной капусты: Обед, Ужин, Вегетарианское
+(17, 2), (17, 3), (17, 5), (17, 6), -- Нут с овощами: Обед, Ужин, Вегетарианское, Низкокалорийное
+(18, 2), (18, 3), (18, 5), (18, 6), -- Салат из свеклы: Обед, Ужин, Вегетарианское, Низкокалорийное
+(19, 2), (19, 3), (19, 7), (19, 6), -- Минтай с овощами: Обед, Ужин, Высокобелковое, Низкокалорийное
+(20, 1), (20, 5), -- Пшенная каша: Завтрак, Вегетарианское
+(21, 1), (21, 2), (21, 7), -- Сэндвич: Завтрак, Обед, Высокобелковое
+(22, 2), (22, 6), (22, 5), -- Салат с киноа: Обед, Низкокалорийное, Вегетарианское
+(23, 1), (23, 7), -- Протеиновый коктейль: Завтрак, Высокобелковое
+(24, 2), (24, 3), (24, 5), (24, 6), -- Фасоль с овощами: Обед, Ужин, Вегетарианское, Низкокалорийное
+(25, 2), (25, 3); -- Ячневая каша: Обед, Ужин
+
+-- Заполнение таблицы recipe_product
+--  Вставляем id продуктов по порядку из вашего списка
+
+INSERT INTO recipe_product (recipe_id, product_id) VALUES
+-- Овсянка
+(1, 10),  -- Овсянка
+(1, 1),  -- Яблоко
+(1, 2),  -- Банан
+(1, 19), -- Орехи грецкие
+(1, 26), -- Мед
+-- Куриная грудка с брокколи и рисом
+(2, 5),  -- Куриная грудка
+(2, 12), -- Брокколи
+(2, 8),  -- Рис
+-- Салат из тунца с овощами
+(3, 32), -- Тунец
+(3, 20), -- Помидор
+(3, 28), -- Огурцы
+(3, 25), -- Зелень
+(3, 21), -- Масло оливковое
+-- Творог с медом
+(4, 15), -- Творог
+(4, 26), -- Мед
+-- Гречка с грибами и луком
+(5, 9),  -- Гречка
+(5, 43), -- Грибы шампиньоны
+(5, 67),
+-- Лосось с овощами на пару
+(6, 7),  -- Лосось
+(6, 13), -- Морковь
+(6, 12), -- Брокколи
+(6, 40), -- Цветная капуста
+-- Омлет с помидорами и сыром
+(7, 18), -- Яйцо
+(7, 20), -- Помидор
+(7, 14), -- Сыр Чеддер
+-- Чечевичный суп
+(8, 36), -- Чечевица
+(8, 67),
+(8, 13),
+-- Фруктовый салат
+(9, 1),  -- Яблоко
+(9, 2),  -- Банан
+(9, 3),  -- Апельсин
+(9, 46), -- Киви
+-- Картофельное пюре с маслом
+(10, 11), -- Картофель
+(10, 17), -- Масло сливочное
+-- Салат с авокадо
+(11, 27), -- Авокадо
+(11, 20), -- Помидор
+(11, 18), -- Яйцо
+(11, 21), -- Масло оливковое
+-- Тыквенный суп-пюре
+(12, 54), -- Тыква
+(12, 67), -- Лук
+-- Курица с овощами в томатном соусе
+(13, 5),  -- Куриная грудка
+(13, 45), -- Перец болгарский
+(13, 42), -- Кабачок
+(13, 67), -- Лук
+(13, 60), -- Томатный сок
+-- Смузи с бананом
+(14, 2),  -- Банан
+(14, 39), -- Шпинат
+(14, 48), -- Семена льна
+(14, 23), -- Молоко
+-- Перловая каша с говядиной
+(15, 34), -- Перловая крупа
+(15, 6),  -- Говядина
+(15, 67), -- Лук
+-- Запеканка из цветной капусты с сыром
+(16, 40), -- Цветная капуста
+(16, 14), -- Сыр чеддер
+-- Нут с овощами и специями
+(17, 53), -- Нут
+(17, 67), -- Лук
+(17, 13), -- Морковь
+(17, 45), -- Перец болгарский
+-- Салат из свеклы с черносливом
+(18, 55), -- Свекла
+(18, 58), -- Чернослив
+(18, 19), -- Орехи грецкие
+-- Минтай, запеченный с овощами
+(19, 51), -- Минтай
+(19, 67), -- Лук
+(19, 13), -- Морковь
+(19, 42), -- Кабачок
+-- Пшенная каша с тыквой
+(20, 35), -- Пшено
+(20, 54), -- Тыква
+-- Сендвич с курицей
+(21, 16), -- Хлеб
+(21, 5),  -- Курица
+(21, 27), -- Авокадо
+(21, 20),  -- Помидор
+-- Салат с киноа
+(22, 70),  -- Киноа
+(22, 28), -- Огурец
+(22, 69),  -- Фета
+-- Протеиновый коктейль с ягодами
+(23, 61), -- Протеиновый коктейль
+(23, 68), -- Ягоды
+-- Фасоль с овощами
+(24, 37), -- Фасоль
+(24, 67), -- Лук
+(24, 13), -- Морковь
+(24, 45), -- Перец болгарский
+-- Ячневая каша с грибами
+(25, 33), -- Ячневая крупа
+(25, 43); -- Грибы
+
+
+-- Тестовый пользователь
+INSERT INTO usr (username, password, active) VALUES ('user2', '$2a$10$rUlFho11k.WeCGqaD3ojVutvsJCIFk8Bygbf/15X2eAnBBkO3AVKW', 'true');
+INSERT INTO user_role (user_id, roles) VALUES (1, 'USER');
+INSERT INTO user_info (username, first_name, last_name, date_of_birth, gender, height_cm, weight_kg, activity_level, caloriesnum, purpose, image_url) VALUES
+('user2', 'name', 'lastname', '2005-07-31', 'Женский', 175, 80, 'Сидячий', 2680, 'Похудение', '/images/da612c73-f6aa-46da-b953-e479b90a86c3.png');
