@@ -31,16 +31,19 @@ body{
     height: 30px;
     color:#ffffff;
     border:0;
+    border-radius: 50%;
 }
-
+.slider .slick-arrow:focus, .slider .slick-arrow:active{
+    outline: 0;
+}
 .slider .slick-arrow.slick-prev{
     left:20px;
-    background: url('../images/l.jpg') 0 0 / 100% no-repeat;
+    background: url('../images/l.png') 0 0 / 100% no-repeat;
 }
 
 .slider .slick-arrow.slick-next{
     right:20px;
-    background: url('../images/r.jpg') 0 0 / 100% no-repeat;
+    background: url('../images/r.png') 0 0 / 100% no-repeat;
 }
 .slider .slick-arrow.slick-prev:active,
 .slider .slick-arrow.slick-next:active{
