@@ -84,6 +84,7 @@ input, select{
     font-size: 18px;
     transition: background-color 0.3s ease;
 }
+
 .edit-button:hover {
     background-color:#e26b85;
   }

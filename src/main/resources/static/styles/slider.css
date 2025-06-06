@@ -36,6 +36,7 @@ body{
 .slider .slick-arrow:focus, .slider .slick-arrow:active{
     outline: 0;
 }
+
 .slider .slick-arrow.slick-prev{
     left:20px;
     background: url('../images/l.png') 0 0 / 100% no-repeat;
