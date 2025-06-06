@@ -43,7 +43,7 @@
 #mealTitle{
     display: flex;
     flex-direction: row;
-    border: solid 3px #000000;
+    border: solid 2px #ddd2d5;
     border-radius: 5px;
     width: 100%;
 }
@@ -53,24 +53,24 @@
     background-color: #e26b85;
     outline: 0;
 }
-#formSearchingContainer3>form>button:active,
-#formSearchingContainer2>form>button:active,
-#formSearchingContainer1>form>button:active{
+#formSearchingContainer3 button:focus,
+#formSearchingContainer2 button:focus,
+#formSearchingContainer1 button:focus{
     background-color: #e26b85;
-    outline: 0;
+    outline: none;
 }
-#formSearchingContainer3>form>input,
-#formSearchingContainer2>form>input,
-#formSearchingContainer1>form>input,
-#formSearchingContainer3>form>input:focus,
-#formSearchingContainer2>form>input:focus,
-#formSearchingContainer1>form>input:focus{
+#formSearchingContainer3 input,
+#formSearchingContainer2 input,
+#formSearchingContainer1 input,
+#formSearchingContainer3 input:focus,
+#formSearchingContainer2 input:focus,
+#formSearchingContainer1 input:focus{
     max-height: 40px;
     padding: 5px;
     padding-right: 0px;
-    border-style: none;
+    border-style:none;
     width: 100%;
-    outline: 0;
+    outline: none;
 }
 .results{
     display: flex;
@@ -88,14 +88,14 @@
     position: relative;
     align-self: center;
     height: 200px;
-    min-width: 85% ;
-    max-width: 85% !important;
+    min-width: 84.7% ;
+    max-width: 84.7% !important;
     overflow-y: scroll;
     margin: auto;
     padding-left: 5px !important;
     padding-right: 0px !important;
 
-    border-radius: 10px;
+    border-radius: 4px;
     border: solid 2px #ddd2d5;
     background-color:#ffffff;
 }
@@ -103,6 +103,15 @@
     overflow-y: hidden;
     vertical-align: middle;
     height: auto;
+}
+#plus:hover{
+    scale: 0.9;
+}
+#minus:hover{
+    scale: 0.9;
+}
+body button:focus{
+    outline:none;
 }
 .result-cont #addForm{
     display: flex;
@@ -132,7 +141,7 @@
 }
 #quantity{
     max-width: 105px;
-    border-radius: 5px;
+    border-radius: 4px;
 }
 #quantity:focus{
     border-style:none;
@@ -159,9 +168,8 @@
 }
 .result-cont input, .result-cont select{
     max-width: 90px;
-
-    border-radius: 10px;
-    border: solid 2px #000000;
+    border-radius: 4px;
+    border: solid 1px #000000a6;
     background-color: #ffffff00;
     color: #000000;
 }
