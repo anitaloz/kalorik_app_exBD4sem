@@ -1,6 +1,8 @@
 body{
     background-color: #ffffff;
     background: linear-gradient(0deg,  #ff94c470, #ffbbaa70, #ffffff00);
+    height: 100%;
+    background-repeat: no-repeat;
 }
 header{
    /*
