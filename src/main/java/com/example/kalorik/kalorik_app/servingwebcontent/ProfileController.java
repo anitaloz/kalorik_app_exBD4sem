@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ProfileController {
@@ -91,12 +93,21 @@ public class ProfileController {
 
         if(!userInfo.getWeightKg().equals(ui.getWeightKg()))
         {
-            Body b=new Body();
-            Date d=new Date();
-            b.setDt(d);
-            b.setWeight(userInfo.getWeightKg());
-            b.setHeight(userInfoService.getUserInfoByUsr(u).getHeightCm());
-            b.setUser(u);
+            LocalDate cd=LocalDate.now();
+            Date d=BodyService.convertLocalDateToDate(cd);
+            List<Body> bodyList=bodyService.findBodiesByUserAndDt(u, d);
+            Body b;
+            if(bodyList.isEmpty()) {
+                b = new Body();
+                b.setDt(d);
+                b.setWeight(userInfo.getWeightKg());
+                b.setHeight(userInfoService.getUserInfoByUsr(u).getHeightCm());
+                b.setUser(u);
+            }
+            else{
+                b=bodyList.getFirst();
+                b.setWeight(userInfo.getWeightKg());
+            }
             bodyService.save(b);
         }
         ui.setDesiredWeight(userInfo.getDesiredWeight());

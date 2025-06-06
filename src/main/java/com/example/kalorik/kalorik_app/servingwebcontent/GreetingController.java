@@ -95,7 +95,6 @@ public class GreetingController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userRepo.findByUsername(auth.getName());
         Date d=BodyService.convertLocalDateToDate(shDt);
-        System.out.println(shDt);
         List<Body> bodyList=bodyService.findBodiesByUserAndDt(u, d);
         Body b;
         if(bodyList.isEmpty()) {

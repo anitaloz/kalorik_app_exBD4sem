@@ -32,7 +32,7 @@ public class RegistrationController {
         if (str == null || str.isEmpty()) {
             return false; // Или true, в зависимости от ваших требований
         }
-        String regex = "^[a-zA-Z._1-9]+$";
+        String regex = "^[a-zA-Z._0-9]+$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(str);
@@ -57,6 +57,16 @@ public class RegistrationController {
             return "registration.html";
         }
 
+        if(user.getPassword()==null)
+        {
+            model.addAttribute("message", "Введите пароль");
+            return "registration.html";
+        }
+        if(user.getPassword().length()<5)
+        {
+            model.addAttribute("message", "Длина пароля 5 символов и выше");
+            return "registration.html";
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
