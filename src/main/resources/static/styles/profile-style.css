@@ -78,21 +78,26 @@ input, select{
     margin: auto;
     padding: 8px 16px;
     border-radius: 4px;
-    border-style: none;
     background-color: #ff8db3;
     color: #ffffff;
     font-weight: 500;
     font-size: 18px;
     transition: background-color 0.3s ease;
     height: 43px;
+    border: solid 2px #ff8db3;
 }
 
 .edit-button:hover {
 /* #e26b85 */
     background-color:#ffffff;
     color: #ff8db3;
-    border: solid 3px #ff8db3;
+    border: solid 2px #ff8db3;
   }
+
+.profile-container .edit-button:focus {
+    /* #e26b85 */
+    outline:none;
+}
 
 /*
 .custom-file-upload input[type="file"] {

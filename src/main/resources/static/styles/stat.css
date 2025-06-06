@@ -26,9 +26,7 @@ h2{
     display: flex;
     justify-content: center;
 }
-.date-form-btn button{
-    margin: auto;
-}
+
 .date-form-btn button:hover{
     background-color: #ffffff;
     border: 2px solid #ff8db3;
@@ -63,15 +61,15 @@ tr:nth-child(even) {
 }
 
 .btn-primary{
-    margin-top: 6px;
-    padding: 8px 16px;
+    margin-top: 30px;
+    padding: 2px 16px;
     background-color: #ff8db3;
     color: white;
     font-weight: 500;
     font-size: 18px;
     border-radius: 4px;
-    border-style: none;
-    height: 43px;
+    border: solid 2px;
+    height: 40px;
 }
 /*----------------------*/
 .flatpickr-calendar {

@@ -625,35 +625,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     flatpickr("#inputDate", {
-      dateFormat: "Y-m-d", // Формат даты
-      // Другие опции:
-      // enableTime: true,  // Включить выбор времени
-      // ...
+        dateFormat: "Y-m-d", // Формат даты
+        // Другие опции:
+        // enableTime: true,  // Включить выбор времени
+        // ...
     });
-  });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
-     flatpickr("#dateOfBirth-2", {
-       dateFormat: "Y-m-d", // Формат даты
-       // Другие опции:
-       // enableTime: true,  // Включить выбор времени
-       // ...
-     });
-   });
+    flatpickr("#dateOfBirth-2", {
+        dateFormat: "Y-m-d", // Формат даты
+        // Другие опции:
+        // enableTime: true,  // Включить выбор времени
+        // ...
+    });
+});
 
-   document.addEventListener('DOMContentLoaded', function() {
-        flatpickr("#startDate", {
-          dateFormat: "Y-m-d", // Формат даты
-          // Другие опции:
-          // enableTime: true,  // Включить выбор времени
-          // ...
-        });
-      });
-      document.addEventListener('DOMContentLoaded', function() {
-           flatpickr("#endDate", {
-             dateFormat: "Y-m-d", // Формат даты
-             // Другие опции:
-             // enableTime: true,  // Включить выбор времени
-             // ...
-           });
-         });
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#startDate", {
+        dateFormat: "Y-m-d", // Формат даты
+        // Другие опции:
+        // enableTime: true,  // Включить выбор времени
+        // ...
+    });
+});
+document.addEventListener('DOMContentLoaded', function() {
+    flatpickr("#endDate", {
+        dateFormat: "Y-m-d", // Формат даты
+        // Другие опции:
+        // enableTime: true,  // Включить выбор времени
+        // ...
+    });
+});

@@ -160,7 +160,7 @@ public class ProfileController {
         ui.setHeightCm(userInfo.getHeightCm());
         ui.setActivityLevel(userInfo.getActivityLevel());
 
-        if(!ui.getImageUrl().equals("/images/defaultprofile.png")) {
+        if(!ui.getImageUrl().equals("/images/defaultprofile.png") && !file.isEmpty()) {
             userInfoService.deleteOldCoverImage(ui);
         }
         if (!file.isEmpty()) {
