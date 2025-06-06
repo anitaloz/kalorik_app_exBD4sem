@@ -41,28 +41,38 @@ body{
 }
 .form-style input{
     min-width: 85%;
-    border-radius: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-style input:focus{
+    border-color: pink;
+    outline: none;
+    box-shadow: 0 0 5px #ffc0cb;
 }
 .form-wrapper a{
     text-decoration: none;
-    font-size: 16pt;
     font-weight: 500;
     color: #000000;
 }
 .form-wrapper a:hover{
     text-decoration: underline;
-    font-size: 16pt;
     font-weight: 500;
     color: #000000;
 }
 #loginp{
     margin-top: 10px;
-    border-radius: 10px;
-    border: solid 2px #000000;
-    background-color: #ffffff00;
+    background-color: lightpink;
     color: #000000;
     font-weight: 400;
-
+    border-color: lightpink;
+    outline: none;
 }
 
 .contentlog{
@@ -94,35 +104,120 @@ body{
 .addInfo-text{
     text-align: center;
 }
-.addInfo-form{
-    text-align: center;
+
+.add-info-container{
+    padding-top:5%;
+}
+.addInfo-form {
+    text-align: left;
     margin: auto;
-    max-width: 60vw;
+    width: 90vw;
+    margin-top: 30px;
+    max-width: 550px;
     padding: 20px;
     border-radius: 10px;
-    background-color:rgb(255, 250, 251);
+    background-color: rgb(255, 250, 251);
     box-shadow: 0 3px 10px rgba(244, 98, 125, 0.204);
 }
-.addInfo-form input, .addInfo-form select{
-    border-radius: 5px;
+
+
+/*}*/
+/*.addInfo-form input, .addInfo-form select{*/
+
+/*    border-radius: 3px;*/
+/*}*/
+/*.addInfo-btn{*/
+/*    margin-top: 6px;*/
+/*    padding: 8px 16px;*/
+/*    background-color: #ff8db3;*/
+/*    color: white;*/
+/*    font-weight: 500;*/
+/*    font-size: 18px;*/
+/*    border-radius: 4px;*/
+/*    border-style: none;*/
+/*}*/
+/*.addInfo-btn:hover{*/
+/*    color: #ff8db3;*/
+/*    background-color: white;*/
+/*    border-color: #ff8db3;*/
+/*    border-style: solid;*/
+/*}*/
+
+/*.addInfo-form {*/
+/*    max-width: 400px; !* ограничиваем ширину формы *!*/
+/*    margin: 20px auto; !* центрируем форму по горизонтали *!*/
+/*    padding: 20px;*/
+/*    background-color: #f9f9f9; !* светлый фон *!*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 8px;*/
+/*    font-family: Arial, sans-serif;*/
+/*    box-shadow: 0 2px 8px rgba(0,0,0,0.1);*/
+/*}*/
+
+.addInfo-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
 }
-.addInfo-btn{
-    margin-top: 6px;
-    padding: 8px 16px;
-    background-color: #ff8db3;
-    color: white;
-    font-weight: 500;
-    font-size: 18px;
+
+.addInfo-form input[type="text"],
+.addInfo-form input[type="date"],
+.addInfo-form input[type="number"],
+.addInfo-form select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    border-style: none;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
 }
-.addInfo-btn: hover{
-    color: #ff8db3;
-    background-color: white;
-    border-color: #ff8db3;
-    border-style: solid;
+
+.addInfo-form input[type="text"]:focus,
+.addInfo-form input[type="date"]:focus,
+.addInfo-form input[type="number"]:focus,
+.addInfo-form select:focus {
+    border-color: #e26b85;
+    outline: none;
+    box-shadow: 0 0 5px rgba(172, 54, 93, 0.85);
 }
-/*--------------------*/
+
+.addInfo-form input[type="radio"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.addInfo-form label[for="male"],
+.addInfo-form label[for="female"] {
+    font-weight: normal;
+    margin-right: 15px;
+    color: #555;
+    cursor: pointer;
+    display: inline;
+    vertical-align: middle;
+}
+
+.addInfo-form .addInfo-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #e26b85;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.addInfo-form .addInfo-btn:hover {
+    background-color: #ff8db3;
+}
+
+    /*--------------------*/
 .flatpickr-calendar {
     background: #fff !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;

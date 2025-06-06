@@ -145,6 +145,9 @@ public class RecipeController {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findByUsername(auth.getName());
+        if (userInfoService.getUserInfoByUsr(currentUser)==null){
+            return "redirect:/addInfo";
+        }
         List<Recipes> recipes;
         System.out.println("filterByCalories: " + filterByCalories); // Логируем параметр
         // Рассчитываем оставшийся калораж, если требуется фильтрация

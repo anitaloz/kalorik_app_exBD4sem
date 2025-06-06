@@ -38,6 +38,9 @@ public class ProfileController {
     String getProfile(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userService.findByUsername(auth.getName());
+        if (userInfoService.getUserInfoByUsr(u)==null){
+            return "redirect:/addInfo";
+        }
         UserInfo ui = userInfoService.getUserInfoByUsr(u);
         model.addAttribute("UI", ui);
         model.addAttribute("editMode", false);
@@ -49,6 +52,9 @@ public class ProfileController {
     public String showEditProfile(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userService.findByUsername(auth.getName());
+        if (userInfoService.getUserInfoByUsr(u)==null){
+            return "redirect:/addInfo";
+        }
         UserInfo ui = userInfoService.getUserInfoByUsr(u);
         model.addAttribute("UI", ui);
         model.addAttribute("editMode", true);
@@ -105,6 +111,9 @@ public class ProfileController {
     public String showEditInfo(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userService.findByUsername(auth.getName());
+        if (userInfoService.getUserInfoByUsr(u)==null){
+            return "redirect:/addInfo";
+        }
         UserInfo ui = userInfoService.getUserInfoByUsr(u);
 
         model.addAttribute("UI", ui);

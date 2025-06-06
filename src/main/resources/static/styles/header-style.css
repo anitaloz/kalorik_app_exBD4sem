@@ -74,6 +74,7 @@ header{
     font-weight: 500;
     text-decoration: none;
     color:#2e121e;
+    margin-top:0;
 }
 .nav-profile{
     display: flex;
