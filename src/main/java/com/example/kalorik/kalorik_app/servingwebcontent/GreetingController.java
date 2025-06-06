@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -110,8 +111,12 @@ public class GreetingController {
         }
         bodyService.save(b);
         UserInfo ui=userInfoService.getUserInfoByUsr(u);
-        ui.setWeightKg(currentWeight);
-        userInfoService.save(ui);
+        LocalDate cd1=LocalDate.now();
+        Date cd=BodyService.convertLocalDateToDate(cd1);
+        if(d.equals(cd)) {
+            ui.setWeightKg(currentWeight);
+            userInfoService.save(ui);
+        }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(d);
 
@@ -276,7 +281,34 @@ public class GreetingController {
                 dnSTRING.add(m.getFood().getName());
             }
         }
-        BigDecimal w=userInfoService.getUserInfoByUsr(u).getWeightKg().setScale(1, RoundingMode.HALF_UP);;
+        LocalDate cd1= LocalDate.now();
+        Date cd=BodyService.convertLocalDateToDate(cd1);
+        System.out.println(inputDate);
+        System.out.println(cd);
+        BigDecimal w=new BigDecimal(0);
+        if(inputDate==null || inputDate.equals(cd)) {
+            w = userInfoService.getUserInfoByUsr(u).getWeightKg().setScale(1, RoundingMode.HALF_UP);
+        }
+        else {
+            long oneDayInMillis = 24 * 60 * 60 * 1000;
+
+            Date tomorrow = new Date(inputDate.getTime() + oneDayInMillis);
+            List<Body> lb=bodyService.findBodiesByUserAndDtBeforeOrderByDt(u, tomorrow);
+            if(!lb.isEmpty()) {
+                w = lb.getLast().getWeight().setScale(1, RoundingMode.HALF_UP);;
+            }
+            else
+            {
+                List<Body> lda=bodyService.findBodiesByUserOrderByDt(u);
+                if(!lda.isEmpty())
+                {
+                    w=lda.getFirst().getWeight().setScale(1, RoundingMode.HALF_UP);;
+                }
+                else {
+                    w = userInfoService.getUserInfoByUsr(u).getWeightKg().setScale(1, RoundingMode.HALF_UP);
+                }
+            }
+        }
         String avatar=userInfoService.getUserInfoByUsr(u).getImageUrl();
 
         List<Recipes> allrec=new ArrayList<Recipes>();
