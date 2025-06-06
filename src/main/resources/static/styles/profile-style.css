@@ -184,57 +184,57 @@ input, select{
     font-size: 18px;
 }
 /*----------------------*/
-.profile-container .flatpickr-calendar {
+.flatpickr-calendar {
     background: #fff !important;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
     border-radius: 5px !important;
 }
 
-.profile-container .flatpickr-day {
+.flatpickr-day {
     font-size: 14px !important;
     color: #333 !important;
 }
-.profile-container .flatpickr-day.disabled{
+.flatpickr-day.disabled{
     background-color: #4d1924 !important;
 }
-.profile-container .flatpickr-day:hover,
-.profile-container .flatpickr-day.today:hover,
-.profile-container .flatpickr-day.disabled:hover {
+.flatpickr-day:hover,
+.flatpickr-day.today:hover,
+.flatpickr-day.disabled:hover {
     background-color: #fda9c546 !important;
     border-style: none !important;
     box-shadow: 5px 3px 10px #e26b8592 !important;
     color: #333 !important;
 }
-.profile-container .flatpickr-day.selected {
+.flatpickr-day.selected {
     background: linear-gradient(120deg, #ff8db3, #faa3c0, #fae3a3b7) !important;
     background-color: #f8a7c2 !important;
     color:#fffbfc !important;
     border-style: none !important;
 }
-.profile-container .flatpickr-day.selected:hover {
+.flatpickr-day.selected:hover {
     background: linear-gradient(120deg, #ff8db39c, #faa3c096, #fae3a3b7) !important;
     background-color: #ffffff !important;
     color:#fffbfc !important;
     border-style: none !important;
     box-shadow: 5px 3px 10px #e26b8592 !important;
 }
-.profile-container  .flatpickr-day.today{
+.flatpickr-day.today{
     border-radius: 2px !important;
     border-color: #f8a7c2 !important;
     border-radius: 100% !important;
 }
-.profile-container .arrowup,
-.profile-container .arrowdown{
+.arrowup,
+.arrowdown{
     background-color: #ffffff !important;
 }
-.profile-container .flatpickr-weekdays{
+.flatpickr-weekdays{
     background: linear-gradient(to right, #ff8db39c, #faa3c096, #fae3a3b7) !important;
     background-color: #ffffff !important;
 }
-.profile-container .flatpickr-weekday {
+.flatpickr-weekday {
     color: #5d202cbb !important;
 }
-.profile-container #dateOfBirth:focus {
+#dateOfBirth:focus {
     outline: none !important;
     border-color: #e26f95 !important;
     box-shadow: 0 0 5px rgba(255, 156, 212, 0.81) !important;
