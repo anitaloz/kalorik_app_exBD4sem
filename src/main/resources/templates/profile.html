@@ -18,9 +18,7 @@
     <link rel="stylesheet" th:href="@{/styles/header-style.css}">
     <link rel="stylesheet" th:href="@{/styles/profile-style.css}">
 
-    <link rel="stylesheet" href="./profile-style.css">
-    <link rel="stylesheet" href="./header-style.css">
-    <script th:src="@{jvs/my.js}"></script>
+    <script th:src="@{jvs/my.js}" defer></script>
 </head>
 
 <header>
@@ -107,8 +105,8 @@
 
             <label class="custom-file-upload form-label">
                 Фотография профиля:
-                <input type="file" name="coverImage" accept="image/*"/>
-                <span>Выбрать файл</span>
+                <input type="file" name="coverImage" accept="image/*" id="coverImageInput"/>
+                <span id="file-name">Выбрать файл</span>
             </label>
 
             <div class="form-group">

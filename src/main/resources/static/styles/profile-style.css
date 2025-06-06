@@ -76,20 +76,24 @@ input, select{
 .edit-button{
     margin: auto;
     padding: 8px 16px;
-    border-radius: 5px;
+    border-radius: 4px;
     border-style: none;
     background-color: #ff8db3;
     color: #ffffff;
     font-weight: 500;
     font-size: 18px;
     transition: background-color 0.3s ease;
+    height: 43px;
 }
 
 .edit-button:hover {
-    background-color:#e26b85;
+/* #e26b85 */
+    background-color:#ffffff;
+    color: #ff8db3;
+    border: solid 3px #ff8db3;
   }
 
-
+/*
 .custom-file-upload input[type="file"] {
     display: none;
 }
@@ -115,12 +119,52 @@ input, select{
   .custom-file-upload:hover span {
     background-color: #e26b85;
   }
+  */
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    position: relative; /* Для позиционирования span */
+    overflow: hidden; /* Скрывает input */
+}
 
+.custom-file-upload input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0; /* Скрывает input */
+    width: 100%;    /* Растягивает input на всю ширину label */
+    height: 100%;   /* Растягивает input на всю высоту label */
+    cursor: pointer;
+}
+
+.custom-file-upload span {
+    display: inline-block; /* Чтобы можно было менять текст */
+}
+
+/* Дополнительные стили (по желанию) */
+.custom-file-upload:hover {
+    background-color: #eee;
+}
+
+.form-label {
+    display: block; /* Отображает label на новой строке */
+    margin-bottom: 5px;
+}
+
+
+
+/*------------------------------------*/
 .form-label{
     font-size: 18px;
     font-weight: 500;
 }
-/*-------------------------------------------*/
+
 .purposes-container, .purposes-container-edit{
    background-color: #fff;
    padding: 20px;

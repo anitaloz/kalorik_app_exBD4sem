@@ -490,7 +490,7 @@ deleteProductButton{
     margin: 0px 5px;
 }
 .df{
-    border-radius: 10px;
+    border-radius: 4px;
     border: solid 3px #ff8db3;
     background-color: #ffffff00;
     color: #ff8db3;
@@ -498,7 +498,13 @@ deleteProductButton{
     font-weight: 500;
     padding: 10px;
     max-width: 120px;
+
+    transition: background-color 0.3s ease;
 }
+.df:hover{
+    background-color: #ff8db3;
+    color: #ffffff;
+ }
 /*-----------------------------------*/
 /*-----------------------------------*/
 #showContainerBF h3,
@@ -629,11 +635,17 @@ deleteProductButton{
     padding: 10px;
     max-width: 120px;
 
-    border-radius: 10px;
+    border-radius: 4px;
     border: solid 3px #ff8db3;
     background-color: #ffffff00;
     color: #ff8db3;
     font-weight: 500;
+
+    transition: background-color 0.3s ease;
+}
+#body-measure-button:hover{
+    background-color: #ff8db3;
+    color: #ffffff;
 }
 .body-measure h4{
     text-align: center;

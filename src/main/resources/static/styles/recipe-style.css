@@ -207,3 +207,6 @@ h1{
     background-repeat: no-repeat;
     background-size: cover;
 }
+.btn-close:hover, .btn-close:active{
+    outline: 0;
+}
