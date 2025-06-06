@@ -1,3 +1,6 @@
+html{
+    height: max-content;
+}
 .profile-page-container{
     margin-top: 20px;
     margin-bottom: 20px;
@@ -51,7 +54,23 @@
     font-size: 18px;
 }
 input, select{
-    border-radius: 3px;
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.profile-container input[type="text"]:focus,
+.profile-container input[type="date"]:focus,
+.profile-container input[type="number"]:focus,
+.profile-container select:focus {
+    border-color: #e26b85;
+    outline: none;
+    box-shadow: 0 0 5px rgba(172, 54, 93, 0.85);
 }
 
 .edit-button{
@@ -59,14 +78,14 @@ input, select{
     padding: 8px 16px;
     border-radius: 10px;
     border-style: none;
-    background-color: #ff8db3;
+    background-color: #e26b85;
     color: #ffffff;
     font-weight: 500;
     font-size: 18px;
     transition: background-color 0.3s ease;
 }
 .edit-button:hover {
-    background-color: #ffbad1;
+    background-color:#e26b85;
   }
 
 
@@ -84,7 +103,7 @@ input, select{
     display: inline-block;
     margin-top: 6px;
     padding: 8px 16px;
-    background-color: #ff8db3;
+    background-color: #e26b85;
     color: white;
     font-weight: 500;
     font-size: 18px;
@@ -93,7 +112,7 @@ input, select{
     user-select: none;
   }
   .custom-file-upload:hover span {
-    background-color: #ffbad1;
+    background-color: #e26b85;
   }
 
 .form-label{
@@ -109,7 +128,7 @@ input, select{
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
    max-width: 800px;
    margin: auto;
-   margin-top:5%;
+   margin-top:30px;
 }
 .purposes-label{
     font-weight: bold;

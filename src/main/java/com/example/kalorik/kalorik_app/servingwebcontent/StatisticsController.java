@@ -39,6 +39,9 @@ public class StatisticsController {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User u=userService.findByUsername(auth.getName());
+        if (userInfoService.getUserInfoByUsr(u)==null){
+            return "redirect:/addInfo";
+        }
         List<Body> bodyData=bodyService.findBodiesByUserOrderByDt(u);
         if (startDate != null && endDate != null) {
             //Получаем данные за определенный период
