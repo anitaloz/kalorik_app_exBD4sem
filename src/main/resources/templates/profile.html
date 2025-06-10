@@ -29,9 +29,6 @@
             <div class="header-logo-wrapper">
                 <a th:href="@{/main}" >
                     <div class="header-logo-back"></div>
-                    <!--
-                       <img alt="logo"  th:src="@{/images/logo.png}" src="/Без названия615_20250506170303.png" id="header-logo">
-                       -->
                 </a>
             </div>
 
@@ -126,10 +123,6 @@
                 <label class="form-label" for="dateOfBirth">Дата рождения:</label>
 
                 <input type="date" class="form-input" id="dateOfBirth" name="dateOfBirth" th:value="${UI.dateOfBirth}"/>
-                <!--
-                <input type="date" class="form-input" id="dateOfBirth" name="dateOfBirth" th:value="${UI.dateOfBirth}"/>
-               -->
-
                 <span th:if="${dateOfBirthError != null}" th:text="${dateOfBirthError}" class="text-danger"></span>
             </div>
 

@@ -39,23 +39,16 @@ public class CategoryService {
         return categoryRepository.findByNameContaining(name);
     }
 
-    // public List<Categories> getCategoriesByNameContaining(String name) {
-    //     return categoryRepository.findByNameContainingIgnoreCase(name);
-    // }
-
     public List<Categories> getCategoriesByIdsOrName(Set<Long> ids, String name) {
         return categoryRepository.findByIdsOrName(ids, name);
     }
 
-    // public List<Object[]> getCategoriesWithRecipeCount() {
-    //     return categoryRepository.findCategoriesWithRecipeCount();
-    // }
 
     public Categories saveCategory(Categories category) {
         return categoryRepository.save(category);
     }
 
-    // Custom Exception for Resource Not Found
+
     public static class ResourceNotFoundException extends RuntimeException {
         public ResourceNotFoundException(String message) {
             super(message);

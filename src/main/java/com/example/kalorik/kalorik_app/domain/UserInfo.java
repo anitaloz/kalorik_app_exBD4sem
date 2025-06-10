@@ -18,10 +18,6 @@ public class UserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Больше не нужно это поле, т.к. username перенесен в класс Usr
-    //@Column(name = "username", unique = true, nullable = false, length = 50)
-    //private String username;
-
     @Column(name = "first_name", length = 50)
     private String firstName;
 
